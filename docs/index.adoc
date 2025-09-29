@@ -20,6 +20,8 @@
 :tip-caption: Consejo
 :warning-caption: Advertencia
 
+include::cover.adoc[]
+include::context-and-scope.adoc[]
 include::introduction.adoc[]
 include::stakeholders.adoc[]
 include::qualities.adoc[]
