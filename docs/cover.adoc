@@ -1,0 +1,30 @@
+= BlueLotus System
+:author: Equipo 01
+
+:revnumber: Hito 1
+:revdate: 2025-09-05
+:toc: left
+:doctype: book
+:toclevels: 2
+:sectnums:
+
+== Datos del proyecto
+
+* **Proyecto**: BlueLotus System
+* **Integrantes del equipo**:
+  ** Rodrigo Ivan Ahumada Rodriguez
+  ** Abraham Cano Ramírez
+  ** Mauricio Noriega Delgado
+* **Programa Educativo**: Ingeniería de Software
+* **Experiencia Educativa**: Diseño de Software
+* **Profesor**: Dr. Jorge Octavio Ocharán Hernández
+* **Fecha (primer hito)**: 05 de octubre de 2025
+* **Repositorio**: https://github.com/SweetBlue16/HotelBookingSystem
+
+== Control de versiones
+
+[cols="1,1,2,3", options="header"]
+|===
+| Versión | Fecha | Autor | Descripción de los cambios
+| 0.1 | 05/09/2025 | Todos | Estructura inicial del documento y secciones básicas.
+|===

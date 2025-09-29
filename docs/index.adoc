@@ -22,11 +22,9 @@
 
 include::cover.adoc[]
 include::context-and-scope.adoc[]
-include::introduction.adoc[]
-include::stakeholders.adoc[]
-include::qualities.adoc[]
-include::decisions.adoc[]
-include::appendix.adoc[]
+include::quality-attributes.adoc[]
+include::requirement-definition.adoc[]
+
 include::views/deployment-view.adoc[]
 include::views/development-view.adoc[]
 include::views/logical-view.adoc[]
