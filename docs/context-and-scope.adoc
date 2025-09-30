@@ -50,6 +50,16 @@ pretende garantizar una alta disponibilidad, consistencia y escalabilidad.
   - Manejar hasta 300 QPS (consultas por segundo) en disponibilidad.
 * Seguridad: cumplimiento con estándares de seguridad para manejo de datos sensibles.
 
+== Público objetivo del Documento
+
+El documento está dirigido a:
+
+* **Desarrolladores de software**: responsables del diseño, implementación y pruebas.
+* **Analistas de negocio**: encargados de validar que los requisitos cumplen con las necesidades.
+* **Administradores de la cadena hotelera**: definen reglas de negocio y políticas de operación.
+* **Recepcionistas y personal operativo**: usuarios finales que interactuarán con el sistema.
+* **Auditores**: responsables de verificar la trazabilidad y confiabilidad de las operaciones.
+
 
 
 
