@@ -1,7 +1,13 @@
 = 2. Definición de Requerimientos
 
 == 2.1 Planteamiento del problema
+La distribución y nula centralización de los sistemas de la cadena hotelera Blue Lotus, han implicado que cada hotel maneje sus propios procesos y bases de datos sin una conexión unificada. Esta situación, genera una basta cantidad de errores e inconsistencias en todo el control administrativo, financiero y operativo de la organización, afectando calidad de servicio al cliente. Cuando la información no se encuentra consolidada, los procesos se vuelven más lentos, menos confiables y con mayores posibilidades de fallos.
 
+La falta de un sistema centralizado, provoca que tareas como administración de reservas, habitaciones, consumos y servicios se realicen de manera aislada en cada sucursal. Esto ocasiona que la generación de reportes globales sean prácticamente imposibles, dificultando la toma de decisiones estratégicas y la capacidad de dar seguimiento al desempeño de cada sucursal. Estas deficiencias no solo afectan el día a día de la operación, sino que también limitan el potencial de crecimiento de la cadena en un sector altamente competitivo como lo es el turismo y la hotelería.
+
+Resulta indispensable el desarrollo e implementación de un sistema centralizado que integre todas las áreas de operación de la cadena Blue Lotus. Dicho sistema permitirá unificar la información de reservas, clientes, inventarios y finanzas en una sola plataforma, pudiendo acceder a ella desde cualquier sucursal. Esto lograría mejorar la precisión y consistencia de datos, reducir duplicidad de registros y facilitar la generación de reportes globales. Además, al contar con procesos automatizados, la empresa incrementaría la eficiencia operativa y garantizaría una experiencia homogénea a los clientes, sin importar qué sucursal de toda la cadena desean hospedarse.
+
+El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo errores administrativos y el gasto en sistemas aislados si es que requieren mantenimiento individual. Además, al mejorar la calidad del servicio mediante procesos ágiles y confiables, la cadena podría incrementar la fidelización de clientes, así como atraer a nuevos huéspedes, generando mayores ingresos.
 
 == 2.2 Alcance y propósito del diseño
 
