@@ -1,9 +1,21 @@
 = 1. Contexto y Alcance del Sistema
 
-Este apartado busca explicar de manera sencilla el problema que queremos resolver y los límites
-del sistema que vamos a construir. La idea es que todos, tanto quienes desarrollamos como quienes
-van a usar el sistema, tengamos un mismo lenguaje y entendimiento del proyecto.
+El presente apartado establece el marco del problema de negocio y los límites del sistema de reservaciones.
+Se define qué se va a construir, para quién y con qué propósito, generando un lenguaje común entre los interesados.
+En este apartado vamos a explicar que queremos lograr con el sistema refiriendonos a la visión del sistema, que cosas podra realizar y que cosas no podra realizar, para quien esta escritro el documento y la lista de conceptos clave para que todos los interesados tengan el mismo entendimiento.
 
-Aquí se presenta la visión general, lo que va a cubrir el sistema (alcance), a quién va dirigido
-este documento y un pequeño glosario con términos básicos.
+== 1.1 Visión del Sistema
+
+Este sistema de reservaciones estará dirigido a clientes, huéspedes, recepcionistas, administradores
+y equipos de auditoría de una cadena hotelera que opera con más de 5,000 hoteles y 1,000,000 de habitaciones.
+
+La visión del sistema consiste en proporcionar una **plataforma centralizada, robusta y confiable** que permita:
+
+* Gestionar inventario, así como las tarifas de cada tipo de habitación, reservaciones en cada uno de los hoteles.
+* Brindar una experiencia fluida y confiable al cliente final, con reservas en tiempo real.
+* Reducir la curva de aprendizaje de recepcionistas, garantizando la trazabilidad de cada transacción.
+* Optimizar el proceso de reservación a través de precios dinámicos y políticas de *overbooking*.
+
+En diferencia de los sistemas actuales, los cuales son propensos a errores, esta solución
+pretende garantizar una alta disponibilidad, consistencia y escalabilidad.
 
