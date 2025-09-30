@@ -1,4 +1,5 @@
-= 2. Definición de Requerimientos
+== Definición de Requerimientos
+
 
 == 2.1 Planteamiento del problema
 La distribución y nula centralización de los sistemas de la cadena hotelera Blue Lotus, han implicado que cada hotel maneje sus propios procesos y bases de datos sin una conexión unificada. Esta situación, genera una basta cantidad de errores e inconsistencias en todo el control administrativo, financiero y operativo de la organización, afectando calidad de servicio al cliente. Cuando la información no se encuentra consolidada, los procesos se vuelven más lentos, menos confiables y con mayores posibilidades de fallos.
@@ -8,24 +9,25 @@ La falta de un sistema centralizado, provoca que tareas como administración de 
 Resulta indispensable el desarrollo e implementación de un sistema centralizado que integre todas las áreas de operación de la cadena Blue Lotus. Dicho sistema permitirá unificar la información de reservas, clientes, inventarios y finanzas en una sola plataforma, pudiendo acceder a ella desde cualquier sucursal. Esto lograría mejorar la precisión y consistencia de datos, reducir duplicidad de registros y facilitar la generación de reportes globales. Además, al contar con procesos automatizados, la empresa incrementaría la eficiencia operativa y garantizaría una experiencia homogénea a los clientes, sin importar qué sucursal de toda la cadena desean hospedarse.
 
 El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo errores administrativos y el gasto en sistemas aislados si es que requieren mantenimiento individual. Además, al mejorar la calidad del servicio mediante procesos ágiles y confiables, la cadena podría incrementar la fidelización de clientes, así como atraer a nuevos huéspedes, generando mayores ingresos.
+=== Alcance y propósito del diseño
 
-== 2.2 Alcance y propósito del diseño
 
+=== Diagrama de casos de uso
+En esta sección se presentan los diagramas de casos de uso para los diferentes actores del sistema de reservas de hotel.
 
-== 2.3 Diagrama de casos de uso
 .Diagrama de casos de uso del AC-01 Huésped
-image::images/GuestUseCaseDiagram.png[]
+image::images/GuestUseCaseDiagram.png[width=600, align=center]
 
 .Diagrama de casos de uso del AC-02 Recepcionista
-image::images/ReceptionistUseCaseDiagram.png[]
+image::images/ReceptionistUseCaseDiagram.png[width=600, align=center]
 
 .Diagrama de casos de uso del AC-03 Administrador
-image::images/AdministratorUseCaseDiagram.png[]
+image::images/AdministratorUseCaseDiagram.png[width=600, align=center]
 
 .Diagrama de casos de uso del AC-04 Auditor
-image::images/AuditorUseCaseDiagram.png[]
+image::images/AuditorUseCaseDiagram.png[width=600, align=center]
 
-== 2.4 Descripciones de casos de uso
-
+=== Descripciones de casos de uso
+a
 
 
