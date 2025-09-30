@@ -60,6 +60,20 @@ El documento está dirigido a:
 * **Recepcionistas y personal operativo**: usuarios finales que interactuarán con el sistema.
 * **Auditores**: responsables de verificar la trazabilidad y confiabilidad de las operaciones.
 
+==  Glosario de Términos Clave
 
+* **Overbooking**: Práctica de reservar más habitaciones de las disponibles para maximizar ingresos,
+con una política de hasta el 10% en este sistema.
+* **TPS (Transactions Per Second)**: Medida del número de transacciones procesadas por segundo.
+* **QPS (Queries Per Second)**: Medida del número de consultas procesadas por segundo.
+* **Backoffice**: Módulo de administración interna para gestionar hoteles, habitaciones, tarifas y políticas.
+* **RDBMS (Relational Database Management System)**: Sistema de gestión de bases de datos relacional,
+obligatorio para garantizar consistencia de transacciones.
+* **Check-in/Check-out**: Registro de entrada y salida de huéspedes en el hotel.
+* **Trazabilidad**: Capacidad de seguir y auditar cada transacción en el sistema.
+* **Disponibilidad**: Estado de las habitaciones que indica si están libres o no en un momento dado.
+* **Latencia**: Tiempo de espera entre que se realiza una acción en el sistema (ejemplo: confirmar una reserva) y se obtiene una respuesta.
+* **Escalabilidad**: Capacidad del sistema para mantener un buen rendimiento aunque aumente la cantidad de usuarios, transacciones o consultas.
+* **Privacidad de la información**: Protección de los datos personales y de pago de los clientes, cumpliendo regulaciones locales.
 
 
