@@ -1,0 +1,9 @@
+= 1. Contexto y Alcance del Sistema
+
+Este apartado busca explicar de manera sencilla el problema que queremos resolver y los límites
+del sistema que vamos a construir. La idea es que todos, tanto quienes desarrollamos como quienes
+van a usar el sistema, tengamos un mismo lenguaje y entendimiento del proyecto.
+
+Aquí se presenta la visión general, lo que va a cubrir el sistema (alcance), a quién va dirigido
+este documento y un pequeño glosario con términos básicos.
+
