@@ -8,7 +8,10 @@ La falta de un sistema centralizado, provoca que tareas como administración de 
 
 Resulta indispensable el desarrollo e implementación de un sistema centralizado que integre todas las áreas de operación de la cadena Blue Lotus. Dicho sistema permitirá unificar la información de reservas, clientes, inventarios y finanzas en una sola plataforma, pudiendo acceder a ella desde cualquier sucursal. Esto lograría mejorar la precisión y consistencia de datos, reducir duplicidad de registros y facilitar la generación de reportes globales. Además, al contar con procesos automatizados, la empresa incrementaría la eficiencia operativa y garantizaría una experiencia homogénea a los clientes, sin importar qué sucursal de toda la cadena desean hospedarse.
 
-El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo errores administrativos y el gasto en sistemas aislados si es que requieren mantenimiento individual. Además, al mejorar la calidad del servicio mediante procesos ágiles y confiables, la cadena podría incrementar la fidelización de clientes, así como atraer a nuevos huéspedes, generando mayores ingresos.
+El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo errores administrativos y el gasto en sistemas aislados si es que requieren mantenimiento individual. Además, contribuirá en la mejora de la calidad del servicio, respaldada por procesos más ágiles y confiables, favoreciendo la fidelizción de los clientes actuales y la atracción a nuevos huéspedes. Esto, generará un aumento en los ingresos, al mimso que tiempo que fortalecerá la imágen de la cadena como una empresa moderna y enfocada en la satisfacción del cliente.
+
+La existencia de este proyecto no sólo resolverá los problemas actuales de descentralización y errores operativos, sino que tambiénn brindará a Blue Lotus una ventaja competitiva en el mercado hotelero.
+
 === Alcance y propósito del diseño
 
 
