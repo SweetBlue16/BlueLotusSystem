@@ -1,27 +1,27 @@
-= 2. Definición de Requerimientos
-:toc: left
-:sectnums:
+== Definición de Requerimientos
 
-== Planteamiento del problema
+=== Planteamiento del problema
+a
 
+=== Alcance y propósito del diseño
+a
 
-== Alcance y propósito del diseño
+=== Diagrama de casos de uso
+En esta sección se presentan los diagramas de casos de uso para los diferentes actores del sistema de reservas de hotel.
 
-
-== Diagrama de casos de uso
 .Diagrama de casos de uso del AC-01 Huésped
-image::images/GuestUseCaseDiagram.png[width=600, allign=center]
+image::images/GuestUseCaseDiagram.png[width=600, align=center]
 
 .Diagrama de casos de uso del AC-02 Recepcionista
-image::images/ReceptionistUseCaseDiagram.png[width=600, allign=center]
+image::images/ReceptionistUseCaseDiagram.png[width=600, align=center]
 
 .Diagrama de casos de uso del AC-03 Administrador
-image::images/AdministratorUseCaseDiagram.png[width=600, allign=center]
+image::images/AdministratorUseCaseDiagram.png[width=600, align=center]
 
 .Diagrama de casos de uso del AC-04 Auditor
-image::images/AuditorUseCaseDiagram.png[width=600, allign=center]
+image::images/AuditorUseCaseDiagram.png[width=600, align=center]
 
-== Descripciones de casos de uso
-
+=== Descripciones de casos de uso
+a
 
 
