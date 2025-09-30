@@ -45,4 +45,11 @@ pretende garantizar una alta disponibilidad, consistencia y escalabilidad.
 * Política de inventario: *overbooking* del 10% por tipo de habitación.
 * Base de datos: uso obligatorio de un RDBMS para transacciones críticas.
 * Latencia: se prioriza consistencia y trazabilidad sobre velocidad máxima.
+* Escalabilidad: Sistema diseñado para
+  - Soportar hasta 3 TPS (transacciones por segundo) de forma sostenida, con ráfagas de hasta 10 TPS.
+  - Manejar hasta 300 QPS (consultas por segundo) en disponibilidad.
+* Seguridad: cumplimiento con estándares de seguridad para manejo de datos sensibles.
+
+
+
 
