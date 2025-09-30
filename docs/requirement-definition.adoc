@@ -1,10 +1,25 @@
-# HOLA COMO ESTAS
-## Subtitulo 1
-### Subtitulo 2
-#### Subtitulo 3
+= 2. Definición de Requerimientos
 
--- List item 1
--- List item 2
--- List item 3
--- List item 4
+== 2.1 Planteamiento del problema
+
+
+== 2.2 Alcance y propósito del diseño
+
+
+== 2.3 Diagrama de casos de uso
+.Diagrama de casos de uso del AC-01 Huésped
+image::images/GuestUseCaseDiagram.png[]
+
+.Diagrama de casos de uso del AC-02 Recepcionista
+image::images/ReceptionistUseCaseDiagram.png[]
+
+.Diagrama de casos de uso del AC-03 Administrador
+image::images/AdministratorUseCaseDiagram.png[]
+
+.Diagrama de casos de uso del AC-04 Auditor
+image::images/AuditorUseCaseDiagram.png[]
+
+== 2.4 Descripciones de casos de uso
+
+
 
