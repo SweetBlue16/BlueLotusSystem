@@ -28,3 +28,21 @@ pretende garantizar una alta disponibilidad, consistencia y escalabilidad.
 * Registro de consumos y servicios.
 * Administración de precios diarios y políticas de *overbooking*.
 * Backoffice: hoteles, habitaciones, tipos de habitación y tarifas (altas, bajas y cambios).
+* Reportes y auditoría de transacciones.
+* Soporte para métodos de pago comunes como tarjetas de crédito, débito.
+
+=== Alcance de la primera versión
+* Flujo completo de reserva: disponibilidad → confirmación → pago.
+* Operaciones esenciales de recepción: check-in y check-out.
+
+=== Futuras versiones
+* Búsquedas avanzadas y recomendaciones.
+* Funciones adicionales como programación de tareas del personal y facturación.
+
+=== Restricciones
+* Canales de venta: solo web y aplicación móvil oficial.
+* Modelo de pago: pago completo al reservar.
+* Política de inventario: *overbooking* del 10% por tipo de habitación.
+* Base de datos: uso obligatorio de un RDBMS para transacciones críticas.
+* Latencia: se prioriza consistencia y trazabilidad sobre velocidad máxima.
+
