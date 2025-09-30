@@ -1,25 +1,27 @@
 = 2. Definición de Requerimientos
+:toc: left
+:sectnums:
 
-== 2.1 Planteamiento del problema
+== Planteamiento del problema
 
 
-== 2.2 Alcance y propósito del diseño
+== Alcance y propósito del diseño
 
 
-== 2.3 Diagrama de casos de uso
+== Diagrama de casos de uso
 .Diagrama de casos de uso del AC-01 Huésped
-image::images/GuestUseCaseDiagram.png[]
+image::images/GuestUseCaseDiagram.png[width=600, allign=center]
 
 .Diagrama de casos de uso del AC-02 Recepcionista
-image::images/ReceptionistUseCaseDiagram.png[]
+image::images/ReceptionistUseCaseDiagram.png[width=600, allign=center]
 
 .Diagrama de casos de uso del AC-03 Administrador
-image::images/AdministratorUseCaseDiagram.png[]
+image::images/AdministratorUseCaseDiagram.png[width=600, allign=center]
 
 .Diagrama de casos de uso del AC-04 Auditor
-image::images/AuditorUseCaseDiagram.png[]
+image::images/AuditorUseCaseDiagram.png[width=600, allign=center]
 
-== 2.4 Descripciones de casos de uso
+== Descripciones de casos de uso
 
 
 
