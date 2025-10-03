@@ -1,10 +1,10 @@
-= Contexto y Alcance del Sistema
+== Contexto y Alcance del Sistema
 
 El presente apartado establece el marco del problema de negocio y los límites del sistema de reservaciones.
 Se define qué se va a construir, para quién y con qué propósito, generando un lenguaje común entre los interesados.
 En este apartado vamos a explicar que queremos lograr con el sistema refiriendonos a la visión del sistema, que cosas podra realizar y que cosas no podra realizar, para quien esta escritro el documento y la lista de conceptos clave para que todos los interesados tengan el mismo entendimiento.
 
-== Visión del Sistema
+=== Visión del Sistema
 
 Este sistema de reservaciones estará dirigido a clientes, huéspedes, recepcionistas, administradores
 y equipos de auditoría de una cadena hotelera que opera con más de 5,000 hoteles y 1,000,000 de habitaciones.
@@ -19,9 +19,10 @@ La visión del sistema consiste en proporcionar una **plataforma centralizada, r
 En diferencia de los sistemas actuales, los cuales son propensos a errores, esta solución
 pretende garantizar una alta disponibilidad, consistencia y escalabilidad.
 
-== Alcance
+=== Alcance del sistema
 
-=== Funcionalidades principales
+==== Funcionalidades principales
+
 * Reservación con pago y cancelación.
 * Consulta de disponibilidad.
 * Gestión de reservaciones: check-in, check-out, cambio de habitación.
@@ -31,26 +32,17 @@ pretende garantizar una alta disponibilidad, consistencia y escalabilidad.
 * Reportes y auditoría de transacciones.
 * Soporte para métodos de pago comunes como tarjetas de crédito, débito.
 
-=== Alcance de la primera versión
-* Flujo completo de reserva: disponibilidad → confirmación → pago.
-* Operaciones esenciales de recepción: check-in y check-out.
+==== Alcance de la primera versión
 
-=== Futuras versiones
+* **Flujo completo de reserva:** disponibilidad → confirmación → pago.
+* **Operaciones esenciales de recepción:** check-in y check-out.
+
+==== Futuras versiones
+
 * Búsquedas avanzadas y recomendaciones.
 * Funciones adicionales como programación de tareas del personal y facturación.
 
-=== Restricciones
-* Canales de venta: solo web y aplicación móvil oficial.
-* Modelo de pago: pago completo al reservar.
-* Política de inventario: *overbooking* del 10% por tipo de habitación.
-* Base de datos: uso obligatorio de un RDBMS para transacciones críticas.
-* Latencia: se prioriza consistencia y trazabilidad sobre velocidad máxima.
-* Escalabilidad: Sistema diseñado para
-  - Soportar hasta 3 TPS (transacciones por segundo) de forma sostenida, con ráfagas de hasta 10 TPS.
-  - Manejar hasta 300 QPS (consultas por segundo) en disponibilidad.
-* Seguridad: cumplimiento con estándares de seguridad para manejo de datos sensibles.
-
-== Público objetivo del Documento
+=== Público objetivo del documento
 
 El documento está dirigido a:
 
@@ -60,7 +52,7 @@ El documento está dirigido a:
 * **Recepcionistas y personal operativo**: usuarios finales que interactuarán con el sistema.
 * **Auditores**: responsables de verificar la trazabilidad y confiabilidad de las operaciones.
 
-==  Glosario de Términos Clave
+=== Glosario de términos clave
 
 * **Overbooking**: Práctica de reservar más habitaciones de las disponibles para maximizar ingresos,
 con una política de hasta el 10% en este sistema.
@@ -75,5 +67,3 @@ obligatorio para garantizar consistencia de transacciones.
 * **Latencia**: Tiempo de espera entre que se realiza una acción en el sistema (ejemplo: confirmar una reserva) y se obtiene una respuesta.
 * **Escalabilidad**: Capacidad del sistema para mantener un buen rendimiento aunque aumente la cantidad de usuarios, transacciones o consultas.
 * **Privacidad de la información**: Protección de los datos personales y de pago de los clientes, cumpliendo regulaciones locales.
-
-

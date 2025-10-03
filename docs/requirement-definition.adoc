@@ -1,7 +1,6 @@
 == Definición de Requerimientos
+=== Planteamiento del problema
 
-
-== 2.1 Planteamiento del problema
 La distribución y nula centralización de los sistemas de la cadena hotelera Blue Lotus, han implicado que cada hotel maneje sus propios procesos y bases de datos sin una conexión unificada. Esta situación, genera una basta cantidad de errores e inconsistencias en todo el control administrativo, financiero y operativo de la organización, afectando calidad de servicio al cliente. La ausencia de coordinación tecnológica tamibén ocasiona que la información no pueda fluir de manera adecuada entre áreas claves, lo que retrasa operaciones críticas. Cuando la información no se encuentra consolidada, los procesos se vuelven más lentos, menos confiables y con mayores posibilidades de fallos.
 
 La falta de un sistema centralizado, provoca que tareas como administración de reservas, habitaciones, consumos y servicios se realicen de manera aislada en cada sucursal. Esto ocasiona que la generación de reportes globales sean prácticamente imposibles, dificultando la toma de decisiones estratégicas y la capacidad de dar seguimiento al desempeño de cada sucursal. Estas deficiencias no solo afectan el día a día de la operación, sino que también limitan el potencial de crecimiento de la cadena en un sector altamente competitivo como lo es el turismo y la hotelería. De esta manera, la organización se encuentra en desventaja frente a otras empresas que ya han incorporado soluciones tecnológicas integradas, capaces de responder a las exigencias del mercado actual.
@@ -13,17 +12,21 @@ El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo 
 La existencia de este proyecto no sólo resolverá los problemas actuales de descentralización y errores operativos, sino que también brindará a Blue Lotus una ventaja competitiva en el mercado hotelero. En este sentido, la propuesta representa una oportunidad estratégica para consolidar la información, optimizar procesos y garantizar un crecimiento sostenido dentro de la industria turística. Así, el proyecto no se limita únicamente a  resolver fallas técnicas, sino que constituye una inversión que permitirá asegurar la permanencia y expansión de la cadena en el largo plazo.
 
 === Alcance y propósito del diseño
+a
 
-
-=== Diagrama de casos de uso
+=== Diagramas de casos de uso
 En esta sección se presentan los diagramas de casos de uso para los diferentes actores del sistema de reservas de hotel.
 
+==== Casos de uso del AC-01 Huésped
 image::GuestUseCaseDiagram.png[Diagrama de casos de uso del AC-01 Huésped, width=600, align=center]
 
+==== Casos de uso del AC-02 Recepcionista
 image::ReceptionistUseCaseDiagram.png[Diagrama de casos de uso del AC-02 Recepcionista, width=600, align=center]
 
+==== Casos de uso del AC-03 Administrador
 image::AdministratorUseCaseDiagram.png[Diagrama de casos de uso del AC-03 Administrador, width=600, align=center]
 
+==== Casos de uso del AC-04 Auditor
 image::AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, width=600, align=center]
 
 === Descripciones de casos de uso

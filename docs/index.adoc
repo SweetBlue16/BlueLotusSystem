@@ -1,4 +1,4 @@
-= Descripción de la Arquitectura de Software
+= Descripción de la Arquitectura de Software (Blue Lotus System)
 :doctype: book
 :toc: left
 :sectnums:
@@ -22,8 +22,8 @@
 
 include::cover.adoc[]
 include::context-and-scope.adoc[]
-include::quality-attributes.adoc[]
 include::requirement-definition.adoc[]
+include::quality-attributes.adoc[]
 
 include::views/deployment-view.adoc[]
 include::views/development-view.adoc[]

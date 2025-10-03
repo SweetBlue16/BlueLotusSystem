@@ -1,4 +1,4 @@
-== BlueLotus System
+== Portada del documento
 :author: Equipo 01
 
 :revnumber: Hito 1
