@@ -18,17 +18,13 @@ La existencia de este proyecto no sólo resolverá los problemas actuales de des
 === Diagrama de casos de uso
 En esta sección se presentan los diagramas de casos de uso para los diferentes actores del sistema de reservas de hotel.
 
-.Diagrama de casos de uso del AC-01 Huésped
-image::GuestUseCaseDiagram.png[width=600, align=center]
+image::GuestUseCaseDiagram.png[Diagrama de casos de uso del AC-01 Huésped, width=600, align=center]
 
-.Diagrama de casos de uso del AC-02 Recepcionista
-image::ReceptionistUseCaseDiagram.png[width=600, align=center]
+image::ReceptionistUseCaseDiagram.png[Diagrama de casos de uso del AC-02 Recepcionista, width=600, align=center]
 
-.Diagrama de casos de uso del AC-03 Administrador
-image::AdministratorUseCaseDiagram.png[width=600, align=center]
+image::AdministratorUseCaseDiagram.png[Diagrama de casos de uso del AC-03 Administrador, width=600, align=center]
 
-.Diagrama de casos de uso del AC-04 Auditor
-image::AuditorUseCaseDiagram.png[width=600, align=center]
+image::AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, width=600, align=center]
 
 === Descripciones de casos de uso
 a
