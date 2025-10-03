@@ -21,12 +21,19 @@
 :warning-caption: Advertencia
 
 include::cover.adoc[]
+
 include::context-and-scope.adoc[]
+
 include::requirement-definition.adoc[]
+
 include::quality-attributes.adoc[]
 
 include::views/deployment-view.adoc[]
+
 include::views/development-view.adoc[]
+
 include::views/logical-view.adoc[]
+
 include::views/process-view.adoc[]
+
 include::views/scenarios.adoc[]

@@ -1,4 +1,5 @@
 == Definición de Requerimientos
+
 === Planteamiento del problema
 
 La distribución y nula centralización de los sistemas de la cadena hotelera Blue Lotus, han implicado que cada hotel maneje sus propios procesos y bases de datos sin una conexión unificada. Esta situación, genera una basta cantidad de errores e inconsistencias en todo el control administrativo, financiero y operativo de la organización, afectando calidad de servicio al cliente. La ausencia de coordinación tecnológica tamibén ocasiona que la información no pueda fluir de manera adecuada entre áreas claves, lo que retrasa operaciones críticas. Cuando la información no se encuentra consolidada, los procesos se vuelven más lentos, menos confiables y con mayores posibilidades de fallos.
