@@ -255,15 +255,35 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | Al finalizar la estancia del huésped, este puede calificar el servicio recibido. El sistema permite ingresar comentarios y asignar una puntuación visible a futuros clientes.
 | **Actor** | AC-01 Huésped
-| **Disparador** |
+| **Disparador** | El huésped da clic en "Dejar reseña".
 | **Precondiciones** |
+*PRE-01:* El huésped debe tener al menos una reservación finalizada. +
 | **Flujo normal** |
+1. El sistema muestra una lista de las reservaciones finalizadas del huésped. +
+2. El huésped selecciona una reservación y da clic en "Escribir reseña". **(Ver FA-01)** +
+3. El sistema muestra un formulario para ingresar calificación y comentarios. +
+4. El huésped completa el formulario y da clic en "Enviar reseña". **(Ver FA-01)** **(Ver FA-02)** +
+5. El sistema guarda la reseña y muestra un mensaje de confirmación. **(Ver EX-01)** +
+6. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El huésped da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso. +
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se añade una nueva reseña asociada a la reservación seleccionada.
+*POST-02:* La reseña queda visible en el perfil del hotel para futuros huéspedes.
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-10: Realizar check-in
