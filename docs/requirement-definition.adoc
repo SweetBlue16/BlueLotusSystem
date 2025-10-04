@@ -74,7 +74,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 6. El huésped añade servicios si lo desea y da clic en "Continuar". **(Ver FA-03)** **(Extiende CU-05)** +
 7. El sistema solicita los datos personales y método de pago del huésped. **(Extiende CU-08)** +
 8. El huésped ingresa los datos y da clic en "Reservar habitación". **(Ver FA-03)** **(Ver FA-01)** +
-9. El sistema procesa la reservación, genera un número de confirmación y muestra un resumen con los detalles. **(Ver EX-01)** **(Ver EX-02)** +
+9. El sistema procesa la reservación, genera un número de reservación y muestra un resumen con los detalles. **(Ver EX-01)** **(Ver EX-02)** +
 10. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Campos inválidos: +
@@ -363,15 +363,48 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | El recepcionista puede registrar manualmente una reservación para un huésped que llega sin haber reservado en línea. El sistema valida disponibilidad y genera la confirmación.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Registrar reservación".
 | **Precondiciones** |
+*PRE-01:* Debe existir al menos una habitación registrada en el sistema. +
 | **Flujo normal** |
+1. El sistema muestra un formulario con campos para ingresar fechas y tipo de habitación. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-03)** +
+3. El sistema ejecuta el CU-18 Consultar disponibilidad local y muestra la lista de habitaciones disponibles. **(Ver FA-02)** +
+4. El recepcionista selecciona una opción y da clic en "Continuar". **(Ver FA-03)** +
+5. El sistema muestra los datos de la opción seleccionada y opción para agregar servicios adicionales. +
+6. El recepcionista añade servicios si lo desea y da clic en "Continuar". **(Ver FA-03)** +
+7. El sistema solicita los datos personales y método de pago del huésped. +
+8. El recepcionista ingresa los datos y da clic en "Reservar habitación". **(Ver FA-03)** **(Ver FA-01)** +
+9. El sistema procesa la reservación, genera un número de reservación y muestra un resumen con los detalles. **(Ver EX-01)** **(Ver EX-02)** +
+10. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El huésped da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* No hay disponibilidad: +
+1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para los criterios seleccionados.
+2. El huésped da clic en "Modificar búsqueda" y regresa al paso 1 del flujo normal. +
+
+*FA-03:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error en el procesamiento del pago: +
+1. El sistema muestra un mensaje indicando que hubo un problema al procesar el pago. +
+2. El huésped da clic en "Intentar de nuevo" y regresa al paso 7 del flujo normal. +
+
+*EX-02:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se crea una nueva reservación en el sistema con estado "Pendiente de pago".
+*POST-02:* Se actualiza el historial de reservaciones del huésped. +
+*POST-03:* La habitación queda reservada para las fechas seleccionadas. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | CU-18 Consultar disponibilidad local
+| **Extiende** | Ninguno
 |===
 
 ==== CU-13: Cancelar reservación en recepción
@@ -483,15 +516,37 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | El recepcionista puede verificar en el sistema la ocupación de habitaciones de manera interna.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Consultar disponibilidad".
 | **Precondiciones** |
+*PRE-01:* Debe existir al menos una habitación registrada en el sistema. +
 | **Flujo normal** |
+1. El sistema muestra un formulario con campos para ingresar fechas y tipo de habitación. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema valida la disponibilidad y muestra las opciones filtradas según los criterios. **(Ver FA-03)** **(Ver EX-01)** +
+4. El recepcionista da clic en "Aceptar" para cerrar el resumen. +
+5. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso.
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El recepcionista da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
+*FA-03:* No hay disponibilidad: +
+1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para los criterios seleccionados.
+2. El recepcionista da clic en "Modificar búsqueda" y regresa al paso 1 del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se muestra la información actualizada de las habitaciones disponibles según los criterios ingresados. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-19: Reportar incidencia
