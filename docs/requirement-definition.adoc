@@ -31,6 +31,663 @@ image::AdministratorUseCaseDiagram.png[Diagrama de casos de uso del AC-03 Admini
 image::AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, width=600, align=center]
 
 === Descripciones de casos de uso
-a
 
+==== CU-01: Consultar disponibilidad
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-01
+| **Caso de uso** | Consultar disponibilidad
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | El huésped puede verificar en tiempo real si existen habitaciones disponibles en un hotel en la fecha deseada. El sistema muestra resultados filtrados por ubicación.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
 
+==== CU-02: Realizar reservación en línea
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-02
+| **Caso de uso** | Realizar reservación en línea
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite al huésped reservar una habitación desde la plataforma en línea. Incluye la selección de fechas, tipo de habitación y condiciones de la estancia, generando una confirmación automática.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-03: Cancelar reservación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-03
+| **Caso de uso** | Cancelar reservación
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El huésped puede cancelar una reservación previamente realizada. El sistema valida las políticas de cancelación y aplica penalizaciones según corresponda.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-04: Consultar estado de reservación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-04
+| **Caso de uso** | Consultar estado de reservación
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite al huésped verificar si su reservación está confirmada, pendiente o cancelada. También muestra detalles como número de reservación, fechas y servicios incluidos.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-05: Seleccionar servicios adicionales en reservación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-05
+| **Caso de uso** | Seleccionar servicios adicionales en reservación
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | El huésped puede añadir complementos a su reservación, como desayunos, transporte, tour o spa. Estos servicios quedan asociados a la reservación principal.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-06: Consultar historial de reservaciones
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-06
+| **Caso de uso** | Consultar historial de reservaciones
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El huésped puede acceder a un registro de todas sus reservaciones pasadas. Esto incluye fechas de estancia, hoteles visitados y consumos asociados.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-07: Gestionar cuenta de usuario
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-07
+| **Caso de uso** | Gestionar cuenta de usuario
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El huésped administra la información de su perfil, como datos personales, contraseñas, etc. También puede actualizar datos de contacto.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-08: Guardar métodos de pago
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-08
+| **Caso de uso** | Guardar métodos de pago
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El sistema permite al huésped registrar tarjetas u otros métodos de pago seguros para facilitar reservaciones.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-09: Dejar reseña
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-09
+| **Caso de uso** | Dejar reseña
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Al finalizar la estancia del huésped, este puede calificar el servicio recibido. El sistema permite ingresar comentarios y asignar una puntuación visible a futuros clientes.
+| **Actor** | AC-01 Huésped
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-10: Realizar check-in
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-10
+| **Caso de uso** | Realizar check-in
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite al recepcionista registrar la llegada del huésped, validar su reservación y asignarle una habitación disponible.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-11: Realizar check-out
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-11
+| **Caso de uso** | Realizar check-out
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | El recepcionista gestiona la salida del huésped, validando consumos y pagos pendientes. Una vez confirmados, el sistema libera la habitación para futuras reservaciones.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-12: Realizar reservación en recepción
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-12
+| **Caso de uso** | Realizar reservación en recepción
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | El recepcionista puede registrar manualmente una reservación para un huésped que llega sin haber reservado en línea. El sistema valida disponibilidad y genera la confirmación.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-13: Cancelar reservación en recepción
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-13
+| **Caso de uso** | Cancelar reservación en recepción
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite al recepcionista cancelar una reserva a nombre del huésped. El sistema aplica las mismas políticas de cancelación que en línea.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-14: Cambiar a huésped de habitación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-14
+| **Caso de uso** | Cambiar a huésped de habitación
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | En caso de solicitud del cliente o problemas con la habitación, el recepcionista puede reasignar otra. El sistema actualiza disponibilidad y costos según corresponda.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-15: Registrar consumos y servicios
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-15
+| **Caso de uso** | Registrar consumos
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | El recepcionista ingresa consumos adicionales del huésped, como restaurante, minibar o spa. Estos quedan vinculados a la cuenta de la habitación para su cobro en check-out.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-16: Consultar estado de reservación en recepción
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-16
+| **Caso de uso** | Consultar estado de reservación en recepción
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El recepcionista puede revisar los detalles de una reservación. Esto incluye fechas, habitación asignada y servicios asociados.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-17: Extender estancia del huésped
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-17
+| **Caso de uso** | Extender estancia del huésped
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite al recepcionista ampliar las fechas de la estancia. El sistema valida disponibilidad y recalcula el costo total de la reservación.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-18: Consultar disponibilidad local
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-18
+| **Caso de uso** | Consultar disponibilidad local
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | El recepcionista puede verificar en el sistema la ocupación de habitaciones de manera interna.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-19: Reportar incidencia
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-19
+| **Caso de uso** | Reportar incidencia
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El recepcionista registra problemas relacionados con las instalaciones, servicios o huéspedes. El sistema envía alertas al área correspondiente.
+| **Actor** | AC-02 Recepcionista
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-20: Añadir hotel al catálogo
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-20
+| **Caso de uso** | Añadir hotel al catálogo
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | El administrador ingresa los datos principales del hotel (nombre, ubicación, categoría, servicios, etc.) y el sistema guarda en nuevo registro en el catálogo
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-21: Editar hotel
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-21
+| **Caso de uso** | Editar hotel
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | El administrador selecciona un hotel del catálogo y actualiza su información y estado.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-22: Crear tipo de habitación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-22
+| **Caso de uso** | Crear tipo de habitación
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite registrar un nuevo tipo de habitación en el sistema, definiendo atributos como nombre de la categoría, capacidad, número de camas y comodidades.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-23: Actualizar tipo de habitación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-23
+| **Caso de uso** | Actualizar tipo de habitación
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite modificar los datos de un tipo de habitación existente, incluyendo cambios en nombre, capacidad, comodidades o su estado.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-24: Registrar habitación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-24
+| **Caso de uso** | Registrar habitación
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite añadir una habitación a un hotel específico, asignándole número, tipo de habitación y características iniciales.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-25: Modificar habitación
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-25
+| **Caso de uso** | Modificar habitación
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | Permite cambiar los datos de una habitación registrada, incluyendo su estado y atributos particulares.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-26: Administrar precios diarios
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-26
+| **Caso de uso** | Administrar precios diarios
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite configurar tarifas según temporadas, días específicos o promociones. El sistema ajusta automáticamente el costo mostrado al huésped.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-27: Agregar consumo o servicio al catálogo
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-27
+| **Caso de uso** | Agregar consumo o servicio al catálogo
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite registrar un nuevo servicio o consumo en el catálogo del hotel, añadiendo sus atributos específicos.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-28: Editar consumo o servicio
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-28
+| **Caso de uso** | Editar consumo o servicio
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | Permite modificar los datos de un servicio o consumo ya existente en el catálogo.
+| **Actor** | AC-03 Administrador
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-29: Generar reportes financieros
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-29
+| **Caso de uso** | Generar reportes financieros
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | El auditor obtiene reportes detallados de ingresos por reservaciones y consumos. Estos reportes permiten evaluar la rentabilidad del sistema.
+| **Actor** | AC-04 Auditor
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-30 Auditar cancelaciones y reembolsos
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-30
+| **Caso de uso** | Auditar cancelaciones y reembolsos
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El auditor revisa las cancelaciones y reembolsos procesados, verificando que se hayan aplicado correctamente las políticas establecidas.
+| **Actor** | AC-04 Auditor
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-31: Consultar historial de reservaciones
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-31
+| **Caso de uso** | Consultar historial de reservaciones
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | El auditor accede a un registro completo de todas las reservaciones realizadas, permitiendo analizar patrones y tendencias.
+| **Actor** | AC-04 Auditor
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-32: Ver logs de acceso al sistema
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-31
+| **Caso de uso** | Ver logs de acceso al sistema
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | El auditor puede revisar quién accedió al sistema, cuándo y qué acciones realizó.
+| **Actor** | AC-04 Auditor
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
+
+==== CU-33: Generar reportes de cumplimiento
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-33
+| **Caso de uso** | Generar reportes de cumplimiento
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | El sistema permite generar reportes para verificar que se cumplan políticas internas, normativas legales o estándares de calidad en el servicio.
+| **Actor** | AC-04 Auditor
+| **Disparador** |
+| **Precondiciones** |
+| **Flujo normal** |
+| **Flujos alternos** |
+| **Excepciones** |
+| **Postcondiciones** |
+| **Reglas de negocio** |
+| **Incluye** |
+| **Extiende** |
+|===
