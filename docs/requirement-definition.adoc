@@ -279,7 +279,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El huésped da clic en "Aceptar" y termina el caso de uso. +
 | **Postcondiciones** |
-*POST-01:* Se añade una nueva reseña asociada a la reservación seleccionada.
+*POST-01:* Se añade una nueva reseña asociada a la reservación seleccionada. +
 *POST-02:* La reseña queda visible en el perfil del hotel para futuros huéspedes.
 | **Reglas de negocio** | Ninguno
 | **Incluye** | Ninguno
@@ -315,15 +315,43 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | El recepcionista gestiona la salida del huésped, validando consumos y pagos pendientes. Una vez confirmados, el sistema libera la habitación para futuras reservaciones.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Realizar check-out".
 | **Precondiciones** |
+*PRE-01:* El huésped debe tener una reservación activa. +
+*PRE-02:* El huésped debe haber realizado el check-in previamente. +
+*PRE-03:* La habitación debe estar en estado "Ocupada". +
 | **Flujo normal** |
+1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
+3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
+4. El recepcionista revisa los consumos y pagos pendientes, y da clic en "Procesar check-out". **(Ver FA-01)** +
+5. El sistema procesa el pago, actualiza el estado de la reservación a "Finalizada" y libera la habitación. Después, el sistema muestra un mensaje de éxito y resumen de la operación. **(Ver EX-01)** **(Ver EX-02)** +
+6. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso. +
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Reservación no encontrada: +
+1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
+2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error en el procesamiento del pago: +
+1. El sistema muestra un mensaje indicando que hubo un problema al procesar el pago. +
+2. El recepcionista da clic en "Intentar de nuevo" y regresa al paso 4 del flujo normal. +
+
+*EX-02:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso. +
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se actualiza el estado de la reservación a "Finalizada". +
+*POST-02:* La habitación queda disponible para nuevas reservaciones. +
+*POST-03:* Se genera un registro de check-out en el sistema. +
+*POST-04:* Se actualiza el historial de reservaciones del huésped. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-12: Realizar reservación en recepción
