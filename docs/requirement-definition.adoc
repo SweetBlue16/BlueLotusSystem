@@ -1235,15 +1235,15 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El auditor revisa las cancelaciones y reembolsos procesados, verificando que se hayan aplicado correctamente las políticas establecidas.
 | **Actor** | AC-04 Auditor
-| **Disparador** |
+| **Disparador** | El auditor da clic en "Auditar cancelaciones y reembolsos"
 | **Precondiciones** |
 | **Flujo normal** |
 | **Flujos alternos** |
 | **Excepciones** |
 | **Postcondiciones** |
 | **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
 |===
 
 ==== CU-31: Consultar historial de reservaciones
@@ -1255,15 +1255,35 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El auditor accede a un registro completo de todas las reservaciones realizadas, permitiendo analizar patrones y tendencias.
 | **Actor** | AC-04 Auditor
-| **Disparador** |
+| **Disparador** | El auditor da cic en "Consultar historial de reservaciones"
 | **Precondiciones** |
+*PRE-01* Debe existir al menos una reservación en la base de datos.
 | **Flujo normal** |
+1. El sistema muestra un formulario de selección de estado y ciudad. **(Ver EX-01)** +
+2. El auditor selecciona un estado y ciudad. +
+3. El sistema muestra una tabla de los hoteles. **(Ver EX-01)** +
+4. El auditor selecciona un hotel. **(Ver FA-01)** **(Ver FA-02)** +
+5. El sistema carga y muestra en una tabla las reservaciones del hotel, ordenas por fecha. **(Ver EX-01)** +
+6. El auditor visualiza las reservaciones y da clic en "Salir". **(Ver FA-01)** +
+7. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El auditor da clic en "Sí" y termina el caso de uso. +
+3. El auditor da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02* Nula existencia reservaciones en el hotel. +
+1. El sistema muestra un mensaje indicando la nula existencia de reservaciones en el hotel seleccionado. +
+2. El auditor da clic en "Aceptar". +
+3. El sistema regresa al paso 1 del flujo normal.
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El auditor da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Historial de reservaciones consultada por el auditor.
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
 |===
 
 ==== CU-32: Ver logs de acceso al sistema
