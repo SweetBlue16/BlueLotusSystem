@@ -14,7 +14,7 @@ La existencia de este proyecto no sólo resolverá los problemas actuales de des
 
 ==== Alcance y proposito del diseño
 
-El presente apartado tiene como propósito definir los limtes, alcance y objetivos del diseño del sistema de Reservaciones para cadena hotelera (SRCH). Este sistema surge como una respuesta a la necesidad de modernizar la forma en que una cadena internacional de hoteles gestiona sus operaciones de reservación, check-in, check-out, facturación y auditoria, sustituyendo multiples soluciones locales por una plataforma que se espera sera escalable y confiable.
+El presente apartado tiene como propósito definir los limtes, alcance y objetivos del diseño del sistema de Reservaciones para cadena hotelera (BLS). Este sistema surge como una respuesta a la necesidad de modernizar la forma en que una cadena internacional de hoteles gestiona sus operaciones de reservación, check-in, check-out, facturación y auditoria, sustituyendo multiples soluciones locales por una plataforma que se espera sera escalable y confiable.
 
 El diseño del sistema busca establecer una arquitectura solida que permite soportar altos volumenes de transacciones, para un promedio estimado de 5000 hoteles y 1,000,000 de habitaciones. Se pretende que el sistema sea capaz de manejar picos de demanda, garantizando disponibilidad y consistencia en tiempo real. Además de contar con la capacidad de atender solicitudes silmultaneas en tiempo real sin perdida de información ni inconsistencias en las transacciones.Adicionalmente, se busca que el sistema sea modular y flexible, permitiendo futuras expansiones y adaptaciones a nuevas necesidades del negocio. En este documento se formalizan las fronteras del diseño, se identifican los principales interesadps, y se analizan sus preocupaciones, las cuales constituyen las entradas escenciales para definir los impulsores arquitectonicos del sistema.
 
@@ -26,11 +26,50 @@ El alcance del diseño abarca los modulos funcionales escenciales para el correc
 * **Gestión de Reservas:** Creación, modificación, cancelación y consulta de reservas en tiempo real con soporte para políticas de overbooking y tarifas dinámicas.
 * **Consulta de Disponibilidad:** Permite a los huéspedes verificar la disponibilidad de habitaciones según fechas, tipo de habitación y número de huéspedes.
 * **Gestión de Usuarios:** Registro, autenticación y administración de perfiles para huéspedes, recepcionistas y administradores.
-
+* **Facturación y servicios adicionales:** Registro y cobro de consumos extra, generación de facturas y recibos.
 * **Administración de Habitaciones:** Facilita el control de inventarios, tipos de habitaciones y tarifas.
 * **Check-in y Check-out:** Optimiza el proceso de registro y salida de huéspedes.
 * **Reportes y Auditoría:** Genera informes sobre el desempeño del hotel y audita las transacciones realizadas.
 * **Integración de Pagos:** Soporta múltiples métodos de pago, garantizando transacciones seguras y eficientes.
+* **Escalabilidad y Rendimiento:** Arquitectura diseñada para soportar un alto volumen de transacciones con baja latencia y alta disponibilidad.
+* **Seguridad:** Implementación de medidas robustas para proteger la información sensible de los usuarios y cumplir con normativas vigentes.
+* **Soporte Multiplataforma:** Acceso desde diferentes dispositivos y sistemas operativos para garantizar una experiencia de usuario consistente.
+
+En esta primera iteración del diseño, el enfoque se centra en el flujo principal de reservación (disponibilidad->confirmación->pago) y en las operaciones básicas de recepción (check-in y check-out).
+
+===== Fronteras del sistema
+El diseño establece una frontera clara entre el sistema y los actores externos que interactuan con el. Dentro del sistema se encuentran todos los modulos que gestionan la información del negocio como el inventario de habitaciones y tarifas, las reservaciones, los perfiles de usuarios, y los procesos de check-in/check-out. Estos modulos son responsables de procesar las solicitudes de los usuarios, aplicar las reglas de negocio, y mantener la integridad y consistencia de los datos.
+
+Fuera del sistema se encuentran los elementos externos que se necesitan para completar el proceso de tareas, tales como:
+* **Sistema de pagos:** Sistema externo que procesa transacciones bancarias de los huespedes.
+* **Correo electrónico y notificaciones:** Servicio externo utilizado para enviar confirmaciones y recordatorios a los usuarios.
+* **Entorno fisico del hotel:** Incluye el hardware y redes locales en cada sucursal que permiten la conexión al sistema centralizado.
+
+El sistema no se encargara directamente del procesamiento bancario ni del control operativo del personal del hotel, sin embargo debe integrarse con estos sistemas para garantizar una experiencia de usuario fluida y segura. Estas fronteras operativas aseguran que el diseño mantenga un enfoque modular y de responsabilidad limitada, facilitando futuras expansiones y adaptaciones a nuevas necesidades del negocio.
+
+===== Interesados del sistema (Stakeholders) y sus preocupaciones (Concerns)
+El sistema de reservaciones involucra a diversos interesados, cada uno con sus propias preocupaciones y necesidades que el diseño debe abordar para garantizar el éxito del proyecto. A continuación se describen los principales interesados y sus respectivas preocupaciones:
+* **Huéspedes:** Buscan una experiencia de usuario intuitiva y confiable al momento de realizar reservaciones, consultar disponibilidad y gestionar sus estancias. Preocupaciones incluyen la facilidad de uso, seguridad de sus datos personales y métodos de pago, así como la rapidez en la confirmación de reservas.
+* **Recepcionistas:** Necesitan herramientas eficientes para gestionar check-ins, check-outs, y modificaciones de reservas. Sus preocupaciones se centran en la usabilidad del sistema, la rapidez en la actualización de información y la capacidad de manejar múltiples tareas simultáneamente.
+* **Administradores:** Requieren funcionalidades avanzadas para controlar inventarios, tarifas, y mantener actualizado el catalogo de hoteles así como sus servicios, consumos, tipos de habitaciones y politicas operativas. Sus preocupaciones principales incluyen contar con herramientas flexibles y confiables para modificar información sin afectar la operación en curso así como controlar la integridad y consistencia de los datos.
+* **Auditores:** Necesitan acceso a reportes detallados y registros de transacciones para verificar la trazabilidad y cumplimiento de normativas. Sus preocupaciones se enfocan en la precisión de los datos, la capacidad de generar informes personalizados y la seguridad de la información.
+* **Equipo de desarrollo y mantenimiento:** Encargados del mantenimiento y soporte del sistema, buscan una arquitectura escalable y fácil de administrar. Sus preocupaciones incluyen la facilidad de implementación de actualizaciones, la monitorización del rendimiento y la capacidad de resolver problemas técnicos rápidamente.
+
+===== Preocupaciones principales del sistema
+Del analisis de los documentos y los actores involucrados, se identifican las siguientes preocupaciones principales que el diseño del sistema debe abordar:
+
+* **Integración con sistemas externos:** El sistema debe ser capaz de integrarse de manera efectiva con los sistemas de pagos, correo electrónico y el entorno físico del hotel.
+* **Seguridad de los datos:** Es fundamental garantizar la seguridad de la información personal y financiera de los usuarios, así como la protección contra accesos no autorizados.
+* **Escalabilidad:** El sistema debe ser capaz de escalar para manejar un gran volumen de reservas y usuarios, especialmente durante temporadas altas.
+* **Usabilidad:** La interfaz del usuario debe ser intuitiva y fácil de usar para todos los actores del sistema, minimizando la curva de aprendizaje.
+* **Mantenimiento y soporte:** Se debe considerar la facilidad de mantenimiento y actualización del sistema, así como la disponibilidad de soporte técnico.
+* **Auditabilidad:** El sistema debe registrar todas las transacciones y cambios de estado de manera que se pueda auditar su funcionamiento y cumplimiento de normativas.
+
+===== Proposito del diseño
+El proposito principal del diseño es establecer una arquitectura de software que alinee los objetivos del negocio con las necesidades de los usuarios y los atributos de calidad requeridos, garantizando así un sistema eficiente y efectivo.
+El diseño debe servir como una guia estructural y conceptual para las etapas posteriores de desarrolllo, asegurando que cada decisión técnica responde a las preocupaciones identificadas de los stakeholders. De esta forma el BLS no solo resuelve la problematica operativa de las reservas, sino que se convierte en una herramientra que impulsa la eficiencia, mejora la experiencia del usuario.
+
+image::ContextDiagram.png[Diagrama de contexto del sistema de reservas, width=600, align=center]
 
 ===== Proposito del proyecto
 Desarrollar un sistema de reservaciones centralizado y robust para una cadena hotelera con más de 5,0000 hoteles y 1,000,000 de habitaciones, sustituyendo las soluciones locales que actualmente generan inconsistencias. El sistema debe permitir gestionar tarifas y reservaciones en tiempo real, brindando una experiencia fluida al cliente final y optimizando procesos operativos. Además, debe garantizar alta disponibilidad, consistencia y escalabilidad para soportar el crecimiento futuro de la cadena.
@@ -1623,7 +1662,8 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 2. El RRHH selecciona un perfil y da clic en "Eliminar". **(Ver FA-01)** +
 3. El sistema muestra un mensaje de confirmación para eliminar el perfil. +
 4. El RRHH da clic en "Sí" para confirmar. +
-5. El sistema elimina el perfil de administrador de la base de datos y muestra un mensaje de éxito. **(Ver EX-01)** +
+5. El sistema elimina el perfil de administrador de la base de datos y muestra +
+un mensaje de éxito. **(Ver EX-01)** +
 6. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +

@@ -1,46 +1,39 @@
 == Contexto y Alcance del Sistema
 
-El presente apartado establece el marco del problema de negocio y los límites del sistema de reservaciones.
-Se define qué se va a construir, para quién y con qué propósito, generando un lenguaje común entre los interesados.
-En este apartado vamos a explicar que queremos lograr con el sistema refiriendonos a la visión del sistema, que cosas podra realizar y que cosas no podra realizar, para quien esta escritro el documento y la lista de conceptos clave para que todos los interesados tengan el mismo entendimiento.
+BlueLotus System surge como respuesta a la necesidad de modernizar y centralizar la gestión de reservaciones en una cadena hotelera. Actualmente, cada hotel opera con sistemas independientes, lo que dificulta la visibilidad global de la disponibilidad, la gestión eficiente de recursos y la aplicación uniforme de políticas de negocio. El nuevo sistema permitirá integrar operaciones, mejorar la experiencia del cliente, optimizar la ocupación y facilitar la toma de decisiones basada en datos en tiempo real. El proposito del sistema es ofrecer una plataforma digital, confiable y facil de usar que concentre la adminsitración de hoteles, habitaciones, tarifas, clientes y reservaciones dentro de un mismo entorno, garantizando la eficiencia operativa y una experiencia satisfactoria tanto para el huesped como para el personal del hotel.
 
 === Visión del Sistema
+La visión de BlueLotus System es convertirse en la plataforma centralizada líder para la gestión integral de reservaciones y operaciones hoteleras en la cadena, permitiendo una administración eficiente, segura y transparente de todos los procesos relacionados con la experiencia del huésped y la operación interna. El sistema busca ofrecer una interfaz intuitiva y unificada que facilite la interacción tanto para el personal como para los clientes, asegurando la disponibilidad de información en tiempo real, la automatización de tareas críticas y la adaptación a las necesidades cambiantes del negocio hotelero. BlueLotus System aspira a ser el motor tecnológico que impulse la modernización, la toma de decisiones basada en datos y la excelencia operativa en todos los hoteles de la cadena.
+La visión central de BlueLotus System es transformar la gestión de reservaciones en un proceso agil, seguro y transparente, eliminando las limitaciones de los sistemas tradicionales. De este modo, busca convertir un proceso operativo en una ventaja competitiva al optimizar los ingresos mediante politicas dinamicas de precios y una administración eficiente.
 
-Este sistema de reservaciones estará dirigido a clientes, huéspedes, recepcionistas, administradores
-y equipos de auditoría de una cadena hotelera que opera con más de 5,000 hoteles y 1,000,000 de habitaciones.
-
-La visión del sistema consiste en proporcionar una **plataforma centralizada, robusta y confiable** que permita:
-
-* Gestionar inventario, así como las tarifas de cada tipo de habitación, reservaciones en cada uno de los hoteles.
-* Brindar una experiencia fluida y confiable al cliente final, con reservas en tiempo real.
-* Reducir la curva de aprendizaje de recepcionistas, garantizando la trazabilidad de cada transacción.
-* Optimizar el proceso de reservación a través de precios dinámicos y políticas de *overbooking*.
-
-En diferencia de los sistemas actuales, los cuales son propensos a errores, esta solución
-pretende garantizar una alta disponibilidad, consistencia y escalabilidad.
 
 === Alcance del sistema
 
+El alcance del sistema BlueLotus abarca la gestión integral de las operaciones hoteleras, desde la administración centralizada de múltiples hoteles hasta la automatización de procesos clave como reservaciones, asignación de habitaciones, control de tarifas y registro de consumos. El sistema está diseñado para soportar tanto operaciones diarias como la toma de decisiones estratégicas, proporcionando herramientas de análisis y reportes en tiempo real. Incluye funcionalidades para la gestión de usuarios y roles, asegurando que cada perfil tenga acceso únicamente a las funciones necesarias según sus responsabilidades. Además, contempla la integración con sistemas de pago y la protección de datos sensibles conforme a normativas vigentes. El sistema es escalable y modular, permitiendo la incorporación de nuevos hoteles, servicios o funcionalidades sin afectar la operación existente. Su arquitectura garantiza alta disponibilidad y continuidad operativa, incluso ante incrementos de demanda o fallos parciales, asegurando una experiencia confiable para usuarios internos y huéspedes.
+A traves de su arquitectura modular el sistema permitira operar de forma continua y escalable, asegurando disponibilidad incluso durante picos de demanda, Esto no solo beneficiaria a los clientes finales, sino también al personal del hotel, que podra ofrecer un servicio rapido y preciso sin requerir un alto nivel de capacitación básica. BlueLotus System integrara en un mismo entorno la adminsitración de operaciones, control de servicios y consumos, asi como garantizar una agradable experiencia para el usuario.
+
 ==== Funcionalidades principales
+Las funcionalidades principales del sistema BlueLotus son:
 
-* Reservación con pago y cancelación.
-* Consulta de disponibilidad.
-* Gestión de reservaciones: check-in, check-out, cambio de habitación.
-* Registro de consumos y servicios.
-* Administración de precios diarios y políticas de *overbooking*.
-* Backoffice: hoteles, habitaciones, tipos de habitación y tarifas (altas, bajas y cambios).
-* Reportes y auditoría de transacciones.
-* Soporte para métodos de pago comunes como tarjetas de crédito, débito.
+* **Reservación de habitaciones**: Permite a los huéspedes seleccionar fechas, habitaciones y servicios, y completar el proceso de reserva de manera segura.
+* **Consulta de disponibilidad**: Proporciona información en tiempo real sobre la ocupación y disponibilidad de habitaciones en todos los hoteles de la cadena.
+* **Gestión de reservaciones**: Facilita la creación, modificación, cancelación, check-in y check-out de reservaciones por parte del personal autorizado.
+* **Administración de hoteles y habitaciones**: Permite gestionar la información de hoteles, habitaciones, tipos de habitación y tarifas, incluyendo altas, bajas y modificaciones.
+* **Gestión de precios y políticas de overbooking**: Ofrece herramientas para definir y ajustar tarifas diarias, así como establecer políticas de sobreventa controlada.
+* **Registro de consumos y servicios**: Permite registrar y asociar consumos adicionales (restaurante, spa, etc.) a la cuenta de cada huésped durante su estancia.
+* **Procesamiento de pagos**: Integra métodos de pago comunes, como tarjetas de crédito y débito, asegurando la protección de los datos financieros.
+* **Generación de reportes y auditoría**: Proporciona reportes operativos y de auditoría para el seguimiento de ocupación, ingresos y trazabilidad de transacciones.
+* **Gestión de usuarios y roles**: Administra el acceso y los permisos de los diferentes tipos de usuarios del sistema (personal, administradores, auditores).
 
-==== Alcance de la primera versión
-
-* **Flujo completo de reserva:** disponibilidad → confirmación → pago.
-* **Operaciones esenciales de recepción:** check-in y check-out.
 
 ==== Futuras versiones
 
-* Búsquedas avanzadas y recomendaciones.
-* Funciones adicionales como programación de tareas del personal y facturación.
+* **Integración con sistemas externos de agencias de viaje (OTA) o metabuscadores**: Permitir la conexión automática con plataformas de terceros para publicar disponibilidad y recibir reservaciones desde agencias en línea y motores de búsqueda de hoteles.
+* **Gestión de recursos humanos (nómina, contratación, desempeño del personal)**: Incorporar módulos para administrar procesos de reclutamiento, control de asistencia, cálculo de nómina y evaluación del desempeño del personal del hotel.
+* **Administración de inventarios de insumos no relacionados con habitaciones o servicios al huésped**: Gestionar el inventario de productos y materiales utilizados en operaciones internas, como suministros de limpieza, papelería o insumos de mantenimiento.
+* **Funcionalidades de marketing automatizado o campañas promocionales**: Implementar herramientas para crear, programar y medir campañas de marketing, promociones y comunicaciones personalizadas dirigidas a clientes actuales o potenciales.
+* **Integración directa con sistemas fiscales o de facturación electrónica de terceros**: Facilitar la emisión y validación de facturas electrónicas conforme a regulaciones fiscales locales, mediante la conexión con proveedores autorizados externos.
+* **Soporte para hoteles fuera de la cadena o franquicias externas**: Ampliar el sistema para permitir la gestión de hoteles independientes o franquiciados, manteniendo políticas y operaciones diferenciadas según el tipo de afiliación.
 
 === Público objetivo del documento
 
@@ -67,3 +60,4 @@ obligatorio para garantizar consistencia de transacciones.
 * **Latencia**: Tiempo de espera entre que se realiza una acción en el sistema (ejemplo: confirmar una reserva) y se obtiene una respuesta.
 * **Escalabilidad**: Capacidad del sistema para mantener un buen rendimiento aunque aumente la cantidad de usuarios, transacciones o consultas.
 * **Privacidad de la información**: Protección de los datos personales y de pago de los clientes, cumpliendo regulaciones locales.
+
