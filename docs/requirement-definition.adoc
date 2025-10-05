@@ -91,7 +91,6 @@ y politicas de cancelación. **(Ver FA-02)** **(Ver EX-01)**+
 | **Postcondiciones** |
 *POST-01:* Se muestra la lista actualizada de habitaciones disponibles según los criterios ingresados.
 | **Reglas de negocio** |
-| **Incluye** |
 **RN-01:** El sistema debe considerar las políticas de overbooking al calcular la disponibilidad. +
 | **Incluye** | Ninguno
 | **Extiende** | Ninguno
@@ -673,15 +672,44 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | Permite al recepcionista ampliar las fechas de la estancia. El sistema valida disponibilidad y recalcula el costo total de la reservación.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Extender estancia".
 | **Precondiciones** |
+*PRE-01:* El huésped debe tener una reservación activa. +
+*PRE-02:* La habitación debe estar en estado "Ocupada". +
+*PRE-03:* Debe existir disponibilidad para las nuevas fechas solicitadas. +
 | **Flujo normal** |
+1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
+3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
+4. El recepcionista ingresa las nuevas fechas de salida y da clic en "Verificar disponibilidad". **(Ver FA-01)** +
+5. El sistema valida la disponibilidad y muestra el nuevo costo total. **(Ver FA-03)** +
+6. El recepcionista da clic en "Confirmar extensión". **(Ver FA-01)** +
+7. El sistema actualiza la reservación con las nuevas fechas y muestra un mensaje de éxito. **(Ver EX-01)** +
+8. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso.
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Reservación no encontrada: +
+1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
+2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal.
+
+*FA-03:* No hay disponibilidad: +
+1. El sistema muestra un mensaje indicando que no hay disponibilidad para las nuevas fechas solicitadas.
+2. El recepcionista da clic en "Modificar fechas" y regresa al paso 4 del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se actualiza la reservación con las nuevas fechas de salida. +
+*POST-02:* Se recalcula el costo total de la reservación. +
+*POST-03:* Se genera un registro de extensión de estancia en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-18: Consultar disponibilidad local
