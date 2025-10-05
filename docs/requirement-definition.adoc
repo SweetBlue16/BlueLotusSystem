@@ -783,15 +783,33 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | El administrador ingresa los datos principales del hotel (nombre, ubicación, categoría, servicios, etc.) y el sistema guarda en nuevo registro en el catálogo
 | **Actor** | AC-03 Administrador
-| **Disparador** |
+| **Disparador** | El administrador da clic en "Agregar hotel".
 | **Precondiciones** |
+*PRE-01:* Debe existir al menos una ciudad registrada en el sistema. +
 | **Flujo normal** |
+1. El sistema muestra un formulario con campos para ingresar los datos del hotel. +
+2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema valida la información y guarda el nuevo hotel en el catálogo. Después, muestra un mensaje de éxito. **(Ver EX-01)** +
+4. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El administrador da clic en "Sí" y termina el caso de uso. +
+3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El administrador da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se crea un nuevo registro de hotel en el catálogo con estado "Activo". +
+*POST-02:* El nuevo hotel queda disponible para futuras reservaciones. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-21: Editar hotel
@@ -863,15 +881,33 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | Permite añadir una habitación a un hotel específico, asignándole número, tipo de habitación y características iniciales.
 | **Actor** | AC-03 Administrador
-| **Disparador** |
+| **Disparador** | El administrador da clic en "Agregar habitación".
 | **Precondiciones** |
+*PRE-01:* Debe existir al menos un hotel y un tipo de habitación registrados en el sistema. +
 | **Flujo normal** |
+1. El sistema muestra un formulario con campos para ingresar los datos de la habitación. +
+2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema valida la información y guarda la nueva habitación en el hotel seleccionado. Después, muestra un mensaje de éxito. **(Ver EX-01)** +
+4. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El administrador da clic en "Sí" y termina el caso de uso. +
+3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El administrador da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se crea un nuevo registro de habitación asociado al hotel seleccionado con estado "Disponible". +
+*POST-02:* La nueva habitación queda disponible para futuras reservaciones. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-25: Modificar habitación
