@@ -58,19 +58,18 @@ image::AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, wid
 | **ID** | CU-01
 | **Caso de uso** | Consultar disponibilidad
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | El huésped puede verificar en tiempo real si existen habitaciones disponibles en un hotel en la fecha deseada. El sistema muestra resultados filtrados por ubicación.
+| **Descripción** | El huésped puede verificar en tiempo real si existen habitaciones disponibles en un hotel en la fecha deseada.
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en "Consultar disponibilidad".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos una habitación registrada en el sistema.
-*PRE-02:* El huésped debe haber iniciado sesión en la plataforma.
+*PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar fechas, tipo de habitación y número de huéspedes. +
 2. El huésped completa el formulario y da clic en "Buscar". **(Ver FA-01)**  **(Ver FA-03)**+
 3. El sistema valida la disponibilidad considerando las politicas de overbooking y tarifas diarias y muestra +
-una lista de resultados con las habitaciones disponibles indicando hotel, tipo de habitación, precio +
-y politicas de cancelación. **(Ver FA-02)** **(Ver EX-01)**+
-4. El huésped selecciona una opción y da clic en "Realizar Reservación". **(Ver FA-03)** **(Ver EX-01)** +
+una lista de resultados con las habitaciones disponibles. **(Ver FA-02)** **(Ver EX-01)**+
+4. El huésped selecciona una opción y da clic en "Reservar Habitación". **(Ver FA-03)** **(Ver EX-01)** +
 **(Extiende CU-02)**
 5. Termina el caso de uso.
 | **Flujos alternos** |
@@ -89,9 +88,8 @@ y politicas de cancelación. **(Ver FA-02)** **(Ver EX-01)**+
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-*POST-01:* Se muestra la lista actualizada de habitaciones disponibles según los criterios ingresados.
-| **Reglas de negocio** |
-**RN-01:** El sistema debe considerar las políticas de overbooking al calcular la disponibilidad. +
+*POST-01:* Se muestra la lista de habitaciones disponibles según los criterios ingresados.
+| **Reglas de negocio** | RN-01
 | **Incluye** | Ninguno
 | **Extiende** | Ninguno
 |===
@@ -109,6 +107,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Disparador** | El huésped da clic en el botón "Reservar habitación".
 | **Precondiciones** |
 *PRE-01:* El sistema cuenta con habitaciones disponibles.
+*PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar fechas, tipo de habitación y número de huéspedes. +
 2. El huésped completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-03)** +
@@ -117,7 +116,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 5. El sistema muestra los datos de la opción seleccionada y opción para agregar servicios adicionales. +
 6. El huésped añade servicios si lo desea y da clic en "Continuar". **(Ver FA-03)** **(Extiende CU-05)** +
 7. El sistema solicita los datos personales y método de pago del huésped. **(Extiende CU-08)** +
-8. El huésped ingresa los datos y da clic en "Reservar habitación". **(Ver FA-03)** **(Ver FA-01)** +
+8. El huésped ingresa los datos y da clic en "Realizar resrvación". **(Ver FA-03)** **(Ver FA-01)** +
 9. El sistema procesa la reservación, genera un número de reservación y muestra un resumen con los detalles. **(Ver EX-01)** **(Ver EX-02)** +
 10. Termina el caso de uso.
 | **Flujos alternos** |
@@ -145,10 +144,10 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Postcondiciones** |
 *POST-01:* Se crea una nueva reservación en el sistema con estado "Pendiente de pago".
 | **Reglas de negocio** | Ninguno
-| **Incluye** | Ninguno
+| **Incluye** |
+*CU-08:* Guardar métodos de pago
 | **Extiende** |
 *CU-05:* Seleccionar servicios adicionales en reservación +
-*CU-08:* Guardar métodos de pago
 |===
 
 ==== CU-03: Cancelar reservación
@@ -163,6 +162,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Disparador** | El huésped da clic en "Cancelar reservación".
 | **Precondiciones** |
 *PRE-01* El huésped cuenta con una reservación previa en el sistema.
+*PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra una lista de las reservaciones con las que cuenta el huésped. **(Ver EX-01)** +
 2. El huésped selecciona la reservación que desea cancelar y da clic en "Cancelar reservación". **(Ver FA-01)** +
@@ -175,15 +175,17 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
-*FA-02:* Clic en "Cancelar proceso": +
-1. El sistema regresa al paso 1 del flujo normal.
+*FA-02:* Políticas de cancelación: +
+1. El sistema muestra un mensaje indicando las penalizaciones aplicables según las políticas de cancelación. +
+2. El huésped da clic en "Aceptar" y regresa al paso anterior del flujo normal. +
+3. El huésped da clic en "Cancelar" y termina el caso de uso. +
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
 *POST.01* Reservación de habitación eliminada de la base de datos.
-| **Reglas de negocio** | Ninguna
+| **Reglas de negocio** | RN-02
 | **Incluye** | Ninguna
 | **Extiende** | Ninguna
 |===
@@ -200,7 +202,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Disparador** | El huésped da clic en "Consultar estado de reservación".
 | **Precondiciones** |
 *PRE-01:* El huésped cuenta con una reservación previa en el sistema. +
-*PRE-02:* El huésped está autenticado en la plataforma.
+*PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra una lista de las reservaciones asociadas al huésped con su estado actual. **(Ver FA-01)** **(Ver EX-01)** +
 2. El huésped selecciona una reservación y da clic en "Ver detalles". **(Ver FA-02)** +
@@ -227,26 +229,24 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Extiende** | Ninguno
 |===
 
-==== CU-05: Seleccionar servicios adicionales en reservación
+==== CU-05: Seleccionar servicios y consumos adicionales en reservación
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
 | **ID** | CU-05
-| **Caso de uso** | Seleccionar servicios adicionales en reservación
+| **Caso de uso** | Seleccionar servicios y consumos adicionales en reservación
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | El huésped puede añadir complementos a su reservación, como desayunos, transporte, tour o spa. Estos servicios quedan asociados a la reservación principal.
+| **Descripción** | El huésped puede añadir servicios y consumos a su reservación.
 | **Actor** | AC-01 Huésped
-| **Disparador** |
-| **Disparador** | El huésped da clic en "Agregar servicios".
+| **Disparador** | El huésped da clic en "Agregar servicios/consumo".
 | **Precondiciones** |
-*PRE-01:* El huésped debe haber seleccionado una habitación previamente. +
-*PRE-02:* El huésped debe haber iniciado sesión en la plataforma. +
-*PRE-03:* Los servicios adicionales deben estar previamente configurados en el sistema. +
+*PRE-01:* El huésped debe estar autenticado en la plataforma.
+*PRE-02:* Los servicios y consumos adicionales deben estar previamente configurados en el sistema. +
 | **Flujo normal** |
-1. El sistema muestra una lista de servicios adicionales disponibles con descripción y costo. **(Ver FA-01)** +
-2. El huésped selecciona los servicios que desea agregar y da clic en "Agregar a reservación". **(Ver FA-02)**+
-3. El sistema actualiza la reservación con los nuevos servicios seleccionados. +
-4. El huésped da clic en "Aceptar" para confirmar los cambios. **(Ver FA-02)** **(Extiende CU-02)**+
+1. El sistema muestra una lista de servicios y consumos adicionales disponibles con descripción y costo. **(Ver FA-01)** +
+2. El huésped selecciona los servicios y consumos que desea agregar y da clic en "Agregar a reservación". **(Ver FA-02)**+
+3. El sistema actualiza la reservación con los nuevos servicios y consumos seleccionados. +
+4. El huésped da clic en "Aceptar" para confirmar los cambios. **(Ver FA-02)** +
 5. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* No hay servicios disponibles: +
@@ -264,7 +264,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *POST-01:* Se muestra la información actualizada de la reservación seleccionada.
 | **Reglas de negocio** | Ninguno
 | **Incluye** | Ninguno
-| **Extiende** | *CU-02:* Realizar reservación en línea
+| **Extiende** | Ninguno
 |===
 
 
@@ -275,13 +275,15 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-06
 | **Caso de uso** | Consultar historial de reservaciones
 | **Responsable** | Abraham Cano Ramírez
-| **Descripción** | El huésped puede acceder a un registro de todas sus reservaciones pasadas. Esto incluye fechas de estancia, hoteles visitados y consumos asociados.
+| **Descripción** | El huésped puede acceder a un registro de todas sus reservaciones pasadas.
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en "Consultar historial de reservaciones"
 | **Precondiciones** |
 *PRE-01:* El huésped debe contar con al menos una reservación pasada.
+*PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra una tabla con las reservaciones del huésped (fecha de inicio, fecha fin, hotel, consumos) ordenadas por fecha. **(Ver FA-01)** **(Ver EX-01)** +
+1. El sistema muestra una tabla con las reservaciones del huésped  ordenadas por fecha. +
+**(Ver FA-01)** **(Ver EX-01)** +
 2. El huésped da clic en “Salir” +
 3.	Termina el caso de uso
 | **Flujos alternos** |
@@ -293,7 +295,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-*POST-01:* Huésped obtiene datos de reservaciones anteriores.
+*POST-01:* Huésped realiza consulta de reservaciones anteriores.
 | **Reglas de negocio** | Ninguna
 | **Incluye** | Ninguna
 | **Extiende** | Nunguna
@@ -306,14 +308,17 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-07
 | **Caso de uso** | Gestionar cuenta de usuario
 | **Responsable** | Abraham Cano Ramírez
-| **Descripción** | El huésped administra la información de su perfil, como datos personales, contraseñas, etc. También puede actualizar datos de contacto.
+| **Descripción** | El huesped puede modificar y actualizar sus datos personales.
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped a clic en "Gestionar cuenta"
 | **Precondiciones** |
+*PRE-01:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra los datos del huésped (nombre, apellido paterno, apellido materno, número telefónico, correo electrónico, rfc) **(Ver EX-01)** +
-2. El huésped ingresa los datos en los campos que desea modificar y da clic en “Guardar” **(Ver FA-01)** **(Ver FA-02)** **(Ver FA-03)** +
-3.	El sistema guarda la modificación de los datos del huésped y muestra un mensaje de guardado exitoso **(Ver EX-01)** +
+1. El sistema muestra un formulario con los datos del huésped  **(Ver EX-01)** +
+2. El huésped ingresa los datos en los campos que desea modificar y da clic +
+en “Guardar” **(Ver FA-01)** **(Ver FA-02)** **(Ver FA-03)** +
+3.	El sistema guarda la modificación de los datos del huésped y muestra un +
+mensaje de guardado exitoso **(Ver EX-01)** +
 4. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
@@ -350,9 +355,13 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en "Agregar método de pago"
 | **Precondiciones** |
+*PRE-01:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra los métodos de pago registrados y  los campos para agregar un nuevo método de pago (Nombre, número de cuenta, CVV, fecha de expiración). **(Ver EX-01)** +
-2. El huésped agrega los campos y da clic en “Guardar”. **(Ver FA-01)** **(Ver FA-02)** **(Ver FA-03)** **(Ver FA-04)** **(Ver FA-05)** +
+1. El sistema muestra los métodos de pago registrados y  el formulario para agregar +
+un nuevo método de pago. **(Ver EX-01)**
+método de pago. **(Ver EX-01)** +
+2. El huésped completa el formulario y da clic en “Guardar”. +
+**(Ver FA-01)** **(Ver FA-02)** **(Ver FA-03)** **(Ver FA-04)** +
 3. El sistema guarda el nuevo método de pago y muestra un mensaje de guardado exitoso. **(Ver EX-01)** +
 4. Termina el caso de uso.
 | **Flujos alternos** |
@@ -368,11 +377,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1.	El sistema muestra un mensaje de existencia de método de pago en la cuenta del usuario +
 2.	El huésped da clic en “Aceptar” +
 3.	El sistema regresa al paso 1 del flujo normal +
-*FA-04:* Fecha de método de pago expirada +
-1.	El sistema muestra un mensaje de fecha de tarjeta invalida. +
-2.	El huésped da clic en “Aceptar”. +
-3.	El sistema regresa al paso del 1 del flujo normal. +
-*FA-05:* Método de pago inválido +
+*FA-04:* Método de pago inválido +
 1.	El sistema muestra un mensaje de método de pago inválido. +
 2.	El huésped da clic en “Aceptar”. +
 3.	El sistema regresa al paso 1 del flujo normal.
@@ -384,7 +389,8 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *POST-01:* Método de pago guardado en los registros del huésped.
 | **Reglas de negocio** |Ninguno
 | **Incluye** | Ninguno
-| **Extiende** | CU-02 Realizar reservación en línea
+| **Extiende** |
+*CU-02:* Realizar reservación en línea
 |===
 
 ==== CU-09: Dejar reseña
@@ -394,11 +400,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-09
 | **Caso de uso** | Dejar reseña
 | **Responsable** | Mauricio Noriega Delgado
-| **Descripción** | Al finalizar la estancia del huésped, este puede calificar el servicio recibido. El sistema permite ingresar comentarios y asignar una puntuación visible a futuros clientes.
+| **Descripción** | El huésped puede calificar el servicio recibido mediante comenrarios y una asignación de calificación.
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en "Dejar reseña".
 | **Precondiciones** |
 *PRE-01:* El huésped debe tener al menos una reservación finalizada. +
+*PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra una lista de las reservaciones finalizadas del huésped. +
 2. El huésped selecciona una reservación y da clic en "Escribir reseña". **(Ver FA-01)** +
@@ -434,18 +441,19 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-10
 | **Caso de uso** | Realizar check-in
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | Permite al recepcionista registrar la llegada del huésped, validar su reservación y asignarle una habitación disponible.
+| **Descripción** | Permite al recepcionista registrar la llegada del huésped y validar su reservación.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
 | **Disparador** | El recepcionista da clic en "Realizar check-in".
 | **Precondiciones** |
 *PRE-01:* El huésped debe tener una reservación activa. +
 *PRE-02:* La habitación debe estar en estado "Disponible". +
+*PRE-03:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+1. El sistema muestra un formulario para ingresar el número de reservación y nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
-3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
-4. El recepcionista revisa los datos y da clic en "Confirmar check-in". **(Ver FA-01)** **(Ver FA-03)** +
+3. El sistema ejecuta el CU-16 Consultar estado de reservación en recepción, +
+ valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
+4. El recepcionista revisa los datos y da clic en "Confirmar check-in". **(Ver FA-01)**  +
 5. El sistema actualiza el estado de la reservación a "Ocupada" y muestra un mensaje de éxito. **(Ver EX-01)** +
 6. Termina el caso de uso.
 | **Flujos alternos** |
@@ -453,28 +461,18 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El recepcionista da clic en "Sí" y termina el caso de uso. +
 3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
-
 *FA-02:* Reservación no encontrada: +
 1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
 2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
-
-*FA-03:* Error en la actualización de la reservación: +
-1. El sistema muestra un mensaje indicando que hubo un problema al actualizar la reservación. +
-2. El recepcionista da clic en "Intentar de nuevo" y regresa al paso 4 del flujo normal. +
-3. El recepcionista da clic en "Aceptar" y termina el caso de uso. +
-
 | **Excepciones** |
-
 *EX-02:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El recepcionista da clic en "Aceptar" y termina el caso de uso. +
-
 | **Postcondiciones** ||
 *POST-01:* Se actualiza el estado de la reservación a "Ocupada". +
-*POST-02:* La habitación queda asignada al huésped. +
-*POST-03:* Se genera un registro de check-in en el sistema. +
+*POST-02:* Se genera un registro de check-in en el sistema. +
 | **Reglas de negocio** | Ninguna
-| **Incluye** | Ninguno
+| **Incluye** | CU-16: Consultar estado de reservación en recepción
 | **Extiende** | Ninguno
 |===
 
@@ -492,6 +490,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *PRE-01:* El huésped debe tener una reservación activa. +
 *PRE-02:* El huésped debe haber realizado el check-in previamente. +
 *PRE-03:* La habitación debe estar en estado "Ocupada". +
+*PRE-04:* El recepcionista debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
@@ -504,7 +503,6 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El recepcionista da clic en "Sí" y termina el caso de uso. +
 3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
-
 *FA-02:* Reservación no encontrada: +
 1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
 2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
@@ -512,7 +510,6 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *EX-01:* Error en el procesamiento del pago: +
 1. El sistema muestra un mensaje indicando que hubo un problema al procesar el pago. +
 2. El recepcionista da clic en "Intentar de nuevo" y regresa al paso 4 del flujo normal. +
-
 *EX-02:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El recepcionista da clic en "Aceptar" y termina el caso de uso. +
@@ -538,6 +535,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Disparador** | El recepcionista da clic en "Registrar reservación".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos una habitación registrada en el sistema. +
+*PRE-02:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar fechas y tipo de habitación. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-03)** +
@@ -575,7 +573,8 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *POST-02:* Se actualiza el historial de reservaciones del huésped. +
 *POST-03:* La habitación queda reservada para las fechas seleccionadas. +
 | **Reglas de negocio** | Ninguno
-| **Incluye** | CU-18 Consultar disponibilidad local
+| **Incluye** |
+*CU-18:* Consultar disponibilidad local
 | **Extiende** | Ninguno
 |===
 
@@ -592,6 +591,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Precondiciones** |
 *PRE-01:* El huésped debe tener una reservación previa en el sistema. +
 *PRE-02:* La reservación debe estar en estado "Pendiente" o "Confirmada". +
+*PRE-03:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-03)** +
@@ -619,7 +619,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Postcondiciones** |
 *POST-01:* Se actualiza el estado de la reservación a "Cancelada". +
 *POST-02:* Se genera un registro de cancelación en el sistema. +
-| **Reglas de negocio** | Ninguno
+| **Reglas de negocio** | RN-02
 | **Incluye** | Ninguno
 | **Extiende** | Ninguno
 |===
@@ -631,32 +631,32 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-14
 | **Caso de uso** | Cambiar a huésped de habitación
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | En caso de solicitud del cliente o problemas con la habitación, el recepcionista puede reasignar otra. El sistema actualiza disponibilidad y costos según corresponda.
+| **Descripción** | En caso de solicitud del cliente, el recepcionista puede reasignar otra habitación. El sistema actualiza disponibilidad y costos según corresponda.
 | **Actor** | AC-02 Recepcionista
 | **Disparador** | El recepcionista da clic en "Cambiar habitación".
 | **Precondiciones** |
 *PRE-01:* El huésped debe tener una reservación activa. +
 *PRE-02:* La habitación actual debe estar en estado "Ocupada". +
 *PRE-03:* Debe existir al menos una habitación disponible en el sistema. +
+*PRE-04:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+1. El sistema muestra un formulario para ingresar el número de reservación y nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
 3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
 4. El recepcionista da clic en "Buscar nueva habitación". +
 5. El sistema ejecuta el CU-18 Consultar disponibilidad local y muestra la lista de habitaciones disponibles. **(Ver FA-03)** +
 6. El recepcionista selecciona una opción y da clic en "Cambiar habitación". **(Ver FA-03)** +
-7. El sistema actualiza la reservación con la nueva habitación, ajusta costos si es necesario y muestra un mensaje de éxito. **(Ver EX-01)** +
+7. El sistema actualiza la reservación con la nueva habitación, ajusta costos +
+si es necesario y muestra un mensaje de éxito. **(Ver EX-01)** +
 8. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El recepcionista da clic en "Sí" y termina el caso de uso. +
 3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
-
 *FA-02:* Reservación no encontrada: +
 1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
 2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
-
 *FA-03:* No hay disponibilidad: +
 1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para los criterios seleccionados.
 2. El recepcionista da clic en "Modificar búsqueda" y regresa al paso 4 del flujo normal. +
@@ -680,15 +680,16 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-15
 | **Caso de uso** | Registrar consumos
 | **Responsable** | Mauricio Noriega Delgado
-| **Descripción** | El recepcionista ingresa consumos adicionales del huésped, como restaurante, minibar o spa. Estos quedan vinculados a la cuenta de la habitación para su cobro en check-out.
+| **Descripción** | El recepcionista ingresa consumos adicionales del huésped. Estos quedan vinculados a la cuenta de la habitación para su cobro en check-out.
 | **Actor** | AC-02 Recepcionista
 | **Disparador** | El recepcionista da clic en "Registrar consumo".
 | **Precondiciones** |
 *PRE-01:* El huésped debe tener una reservación activa. +
 *PRE-02:* La habitación debe estar en estado "Ocupada". +
 *PRE-03:* El sistema debe contar con un catálogo actualizado de servicios y precios. +
+*PRE-04:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+1. El sistema muestra un formulario para ingresar el número de reservación y nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
 3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
 4. El recepcionista selecciona el servicio consumuido del catálogo, ingresa cantidad y da clic en "Agregar consumo". **(Ver FA-03)** +
@@ -731,8 +732,9 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Disparador** | El recepcionista da clic en "Consultar estado de reservación".
 | **Precondiciones** |
 *PRE-01:* El cliente debe contar con una reservación.
+*PRE-02:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra los datos de la reservación (fechas, tipo de habitación, estado). **(Ver EX-01)**
+1. El sistema muestra los datos de la reservación. **(Ver EX-01)**
 2. El recepecionista visualiza los datos de reservación y da clic en "Regresar".
 3. Termina el caso de uso
 | **Flujos alternos** |
@@ -761,12 +763,14 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *PRE-01:* El huésped debe tener una reservación activa. +
 *PRE-02:* La habitación debe estar en estado "Ocupada". +
 *PRE-03:* Debe existir disponibilidad para las nuevas fechas solicitadas. +
+*PRE-04:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
 3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
 4. El recepcionista ingresa las nuevas fechas de salida y da clic en "Verificar disponibilidad". **(Ver FA-01)** +
-5. El sistema valida la disponibilidad y muestra el nuevo costo total. **(Ver FA-03)** +
+5. El sistema ejecuta el CU-18 Consultar disponibilidad local,valida la disponibilidad +
+y muestra el nuevo costo total. **(Ver FA-03)** + **(Ver EX-01)** +
 6. El recepcionista da clic en "Confirmar extensión". **(Ver FA-01)** +
 7. El sistema actualiza la reservación con las nuevas fechas y muestra un mensaje de éxito. **(Ver EX-01)** +
 8. Termina el caso de uso.
@@ -792,7 +796,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *POST-02:* Se recalcula el costo total de la reservación. +
 *POST-03:* Se genera un registro de extensión de estancia en el sistema. +
 | **Reglas de negocio** | Ninguno
-| **Incluye** | Ninguno
+| **Incluye** | CU-18: Consultar disponibilidad local
 | **Extiende** | Ninguno
 |===
 
@@ -808,10 +812,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Disparador** | El recepcionista da clic en "Consultar disponibilidad".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos una habitación registrada en el sistema. +
+*PRE-02:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar fechas y tipo de habitación. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-02)** +
-3. El sistema valida la disponibilidad y muestra las opciones filtradas según los criterios. **(Ver FA-03)** **(Ver EX-01)** +
+3. El sistema valida la disponibilidad y muestra las opciones filtradas según los criterios. +
+ **(Ver FA-03)** **(Ver EX-01)**
 4. El recepcionista da clic en "Aceptar" para cerrar el resumen. +
 5. Termina el caso de uso.
 | **Flujos alternos** |
@@ -845,14 +851,20 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-19
 | **Caso de uso** | Reportar incidencia
 | **Responsable** | Abraham Cano Ramírez
-| **Descripción** | El recepcionista registra problemas relacionados con las instalaciones, servicios o huéspedes. El sistema envía alertas al área correspondiente.
+| **Descripción** | El recepcionista registra problemas relacionados con las instalaciones, +
+servicios o huéspedes. El sistema envía alertas al área correspondiente.
 | **Actor** | AC-02 Recepcionista
 | **Disparador** | El recepcionista da clic en "Reportar incidencia".
 | **Precondiciones** |
+*PRE-01:* El recepcionista debe estar autenticado en la plataforma. +
+*PRE-02:* Debe existir al menos un hotel registrado en el sistema. +
 | **Flujo normal** |
-1. El sistema carga y muestra los datos del hotel local (numero de hotel) y muestra un formulario de quejas (titulo de incidente, fecha, descripción, área de incidente). **(Ver EX-01)**
-2. El recepcionista ingresa los datos de incidente y da clic en "Reportar". **(Ver FA-01)** **(Ver FA-02)**
-3. El sistema valida los datos y guarda el registro de incidente en la base de datos.
+1. El sistema carga y muestra los datos del hotel y muestra un formulario de quejas. **(Ver EX-01)**
+2. El recepcionista ingresa los datos de incidente y da clic en "Reportar". **(Ver FA-01)** **(Ver FA-02)** +
+**(Ver FA-03)**
+3. El sistema valida los datos y guarda el registro de incidente en la base de datos y +
+después, muestra un mensaje de éxito. **(Ver EX-01)**
+4. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
@@ -862,13 +874,16 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje de fecha inválida. +
 2. El recepcionista da clic en "Aceptar". +
 3. El sistema regresa al paso 1 del flujo normal.
+*FA-03:* Datos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El recepcionista da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
 *POST-01* Incidencia registrada en la base de datos.
-| **Reglas de negocio** | RN-01 Fecha de reporte de incidente no puede ser reportada un mes después del incidente.
+| **Reglas de negocio** | RN-03
 | **Incluye** | Ninguna
 | **Extiende** | Ninguna
 |===
@@ -880,11 +895,13 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-20
 | **Caso de uso** | Añadir hotel al catálogo
 | **Responsable** | Mauricio Noriega Delgado
-| **Descripción** | El administrador ingresa los datos principales del hotel (nombre, ubicación, categoría, servicios, etc.) y el sistema guarda en nuevo registro en el catálogo
+| **Descripción** | El administrador ingresa los datos principales del hotel y el sistema guarda +
+ en nuevo registro en el catálogo +
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Agregar hotel".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos una ciudad registrada en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar los datos del hotel. +
 2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
@@ -894,7 +911,6 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
-
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
@@ -918,11 +934,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-21
 | **Caso de uso** | Editar hotel
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | El administrador selecciona un hotel del catálogo y actualiza su información y estado.
+| **Descripción** | El administrador selecciona un hotel del catálogo y actualiza su información.
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Editar información de Hotel".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra una lista de hoteles registrados. +
 2. El administrador selecciona un hotel y da clic en "Editar Información". **(Ver FA-01)** +
@@ -958,11 +975,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-22
 | **Caso de uso** | Agregar tipo de habitación
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | Permite registrar un nuevo tipo de habitación en el sistema, definiendo atributos como nombre de la categoría, capacidad, número de camas y comodidades.
+| **Descripción** | Permite registrar un nuevo tipo de habitación en el sistema.
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Agregar tipo de habitación".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra un formulario para ingresar los datos del nuevo tipo de habitación. +
 2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
@@ -981,7 +999,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El administrador da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-*POST-01:* Se crea un nuevo registro de tipo de habitación en el sistema con estado "Activo". +
+*POST-01:* Se crea un nuevo registro de tipo de habitación en el sistema. +
 | **Reglas de negocio** | Ninguno
 | **Incluye** | Ninguno
 | **Extiende** |  Ninguno
@@ -994,11 +1012,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **ID** | CU-23
 | **Caso de uso** | Actualizar tipo de habitación
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | Permite modificar los datos de un tipo de habitación existente, incluyendo cambios en nombre, capacidad, comodidades o su estado.
+| **Descripción** | Permite modificar los datos de un tipo de habitación existente.
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Editar tipo de habitación".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un tipo de habitación registrado en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra un formulario con los datos actuales del tipo de habitación. +
 2. El administrador realiza los cambios necesarios y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
@@ -1036,6 +1055,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Disparador** | El administrador da clic en "Agregar habitación".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un hotel y un tipo de habitación registrados en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar los datos de la habitación. +
 2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
@@ -1068,17 +1088,18 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **ID** | CU-25
 | **Caso de uso** | Modificar habitación
 | **Responsable** | Abraham Cano Ramírez
-| **Descripción** | Permite cambiar los datos de una habitación registrada, incluyendo su estado y atributos particulares.
+| **Descripción** | Permite modificar los datos de una habitación registrada.
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Modificar habitación"
 | **Precondiciones** |
 *PRE-01* Debe existir al menos un hotel y una habitación en el hotel.
+*PRE-02* El administrador debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un filtro de búsqueda de todos los hoteles. **(Ver EX-01)**
 2. El administrador selecciona un hotel. **(Ver FA-01)**
 3. El sistema muestra las habitaciones registradas en el hotel **(Ver EX-01)**
 4. El administrador selecciona una habitación **(Ver FA-01)**
-5. El sistema muestra los campos a cambiar de la habitación (número de habitación, tipo de habitación, características iniciales y estado). **(Ver EX-01)**
+5. El sistema muestra un formulario con los campos a completar. **(Ver EX-01)**
 6. El administrador ingresa los nuevos datos. **(Ver FA-01)** **(Ver FA-02)**
 7. El sistema valida los datos y guarda la modificación de habitación en la base de datos. **(Ver EX-01)**
 8. Termina el caso de uso.
@@ -1108,35 +1129,57 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **ID** | CU-26
 | **Caso de uso** | Administrar precios diarios
 | **Responsable** | Mauricio Noriega Delgado
-| **Descripción** | Permite configurar tarifas según temporadas, días específicos o promociones. El sistema ajusta automáticamente el costo mostrado al huésped.
+| **Descripción** | Permite configurar tarifas según temporadas, días específicos o promociones.
 | **Actor** | AC-03 Administrador
-| **Disparador** |
+| **Disparador** | El administrador da clic en "Configurar precios".
 | **Precondiciones** |
+*PRE-01:* Debe existir al menos un hotel y un tipo de habitación registrados en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
+1. El sistema muestra un formulario para seleccionar hotel y tipo de habitación. +
+2. El administrador completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
+3. El sistema muestra las tarifas actuales y un campo para ingresar la nueva tarifa. +
+4. El administrador ingresa la nueva tarifa y da clic en "Guardar". **(Ver FA-01)** +
+5. El sistema valida y guarda la nueva tarifa. Después, muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El administrador da clic en "Sí" y termina el caso de uso. +
+3. El administrador da clic en "No" y regresa al paso anterior del flujo normal
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El administrador da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
+*POST-01:* Se actualiza la tarifa del tipo de habitación para el hotel seleccionado. +
+*POST-02:* La nueva tarifa queda vigente para futuras reservaciones. +
 | **Reglas de negocio** |
 | **Incluye** |
 | **Extiende** |
 |===
 
-==== CU-27: Agregar consumo o servicio al catálogo
+==== CU-27: Agregar consumo al catálogo
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
 | **ID** | CU-27
-| **Caso de uso** | Agregar consumo o servicio al catálogo
+| **Caso de uso** | Agregar consumo al catálogo
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | Permite registrar un nuevo servicio o consumo en el catálogo del hotel, añadiendo sus atributos específicos.
+| **Descripción** | Permite registrar un nuevo consumo en el catálogo del hotel.
 | **Actor** | AC-03 Administrador
-| **Disparador** | El administrador da clic en "Agregar consumo o servicio".
+| **Disparador** | El administrador da clic en "Agregar consumo".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
-1. El sistema muestra un formulario con campos para ingresar los datos del consumo o servicio. +
+1. El sistema muestra un formulario con campos para agregar el consumo. +
 2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
-3. El sistema valida la información y guarda el nuevo consumo o servicio en el catálogo. Después, muestra un mensaje de éxito. **(Ver EX-01)** +
+3. El sistema valida la información y guarda el nuevo consumo en el catálogo. +
+ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 4. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Campos inválidos: +
@@ -1146,6 +1189,51 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
 3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-03:* Consumo ya existente en el sistema +
+1. El sistema muestra un mensaje de existencia de consumo. +
+2. El administrador da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El administrador da clic en "Aceptar" y termina el caso de uso. +
+| **Postcondiciones** |
+*POST-01:* Se crea un nuevo registro de consumo en el catálogo. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-28: Agregar servicio al catálogo
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-27
+| **Caso de uso** | Agregar servicio al catálogo
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite registrar un nuevo servicio en el catálogo del hotel.
+| **Actor** | AC-03 Administrador
+| **Disparador** | El administrador da clic en "Agregar servicio".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
+*PRE-02:* El administrador debe estar autenticado en la plataforma. +
+| **Flujo normal** |
+1. El sistema muestra un formulario con campos para agregar el servicio. +
+2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema valida la información y guarda el nuevo servicio en el catálogo. +
+ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
+4. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+*FA-02:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El administrador da clic en "Sí" y termina el caso de uso. +
+3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-03:* Servicio ya existente en el sistema +
+1. El sistema muestra un mensaje de existencia de servicio. +
+2. El administrador da clic en "Aceptar" +
+3. El sistema regresa al paso 1 del flujo normal.
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -1157,31 +1245,34 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Extiende** | Ninguno
 |===
 
-==== CU-28: Editar consumo o servicio
+==== CU-29: Editar consumo
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
 | **ID** | CU-28
-| **Caso de uso** | Editar consumo o servicio
+| **Caso de uso** | Editar consumo
 | **Responsable** | Abraham Cano Ramírez
-| **Descripción** | Permite modificar los datos de un servicio o consumo ya existente en el catálogo.
+| **Descripción** | Permite modificar los datos de un consumo ya existente en el catálogo.
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Editar consumo".
 | **Precondiciones** |
 *PRE-01* Consumo no existe en la base de datos
+*PRE-02* El administrador debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1.	El sistema carga en una tabla los consumos registrados en el catálogo de la cadena y los campos para agregar un consumo (nombre, descripción, precio). *(Ver EX-01)*  +
-2.	El administrador ingresa los datos del nuevo consumo y da clic en “Aceptar”. *(Ver FA-01)* *(Ver FA-02)* +
-3.	El sistema guarda el consumo en la base de datos y muestra el mensaje de registro exitoso. *(Ver EX-01)*
+1.	El sistema muestra en una tabla los consumos registrados en el catálogo *(Ver EX-01)*  +
+2.	El administrador selecciona un consumo y da clic en "Editar". + *(Ver FA-01)* *(Ver FA-02)* +
+3.	El sistema muestra los datos actuales del consumo en un formulario. +
+4.	El administrador ingresa los nuevos datos del consumo y da clic en “Aceptar”. *(Ver FA-01)* *(Ver FA-02)* +
+5.	El sistema guarda el consumo en la base de datos y muestra el mensaje de registro exitoso. *(Ver EX-01)*
+6. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar" +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
-*FA-02:* Consumo ya existente en el sistema +
-1. El sistema muestra un mensaje de existencia de consumo. +
-2. El administrador da clic en "Aceptar" +
-3. El sistema regresa al paso 1 del flujo normal.
+*FA-02:* Datos inválidos +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -1193,7 +1284,46 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Extiende** | Ninguna
 |===
 
-==== CU-29: Generar reportes financieros
+==== CU-30: Editar servicio
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-28
+| **Caso de uso** | Editar servicio
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | Permite modificar los datos de un servicio ya existente en el catálogo.
+| **Actor** | AC-03 Administrador
+| **Disparador** | El administrador da clic en "Editar servicio".
+| **Precondiciones** |
+*PRE-01* Consumo no existe en la base de datos
+*PRE-02* El administrador debe estar autenticado en la plataforma.
+| **Flujo normal** |
+1.	El sistema muestra en una tabla los servicios registrados en el catálogo *(Ver EX-01)*  +
+2.	El administrador selecciona un servicio y da clic en "Editar". + *(Ver FA-01)* *(Ver FA-02)* +
+3.	El sistema muestra los datos actuales del servicio en un formulario. +
+4.	El administrador ingresa los nuevos datos del servicio y da clic en “Aceptar”. *(Ver FA-01)* *(Ver FA-02)* +
+5.	El sistema guarda el servicio en la base de datos y muestra el mensaje de registro exitoso. *(Ver EX-01)*
+6. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar" +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Datos inválidos +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01* Consumo registrado en la base de datos
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
+|===
+
+==== CU-31: Generar reportes financieros
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
@@ -1210,11 +1340,19 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 da clic en "Generar reporte". **(Ver FA-01)** **(Ver FA-02)** +
 2. El sistema valida la información y genera el reporte financiero. +
 Después, muestra un mensaje de éxito. **(Ver EX-01)** +
-3. El auditor da clic en "Ver reporte" y visualiza el documento generado. +
+3. El auditor da clic en "Ver reporte" y visualiza el documento generado. **(Ver FA-03)** +
 4. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Sin datos disponibles: +
 1. El sistema muestra un mensaje indicando que no hay datos para el reporte. +
+2. El auditor da clic en "Aceptar" y termina el caso de uso. +
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El auditor da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+*FA-03:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El auditor da clic en "Sí" y termina el caso de uso. +
+3. El auditor da clic en "No" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
 *EX-01:* Error al generar el reporte: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -1226,7 +1364,7 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Extiende** | Ninguno
 |===
 
-==== CU-30 Auditar cancelaciones y reembolsos
+==== CU-32: Auditar cancelaciones y reembolsos
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
@@ -1239,7 +1377,8 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Precondiciones** |
 *PRE-01* Debe existir al menos una cancelación o reembolso en la base de datos.
 | **Flujo normal** |
-1. El sistema muestra en una tabla los datos de cancelaciones y en otra los datos de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
+1. El sistema muestra en una tabla los datos de cancelaciones y en otra los datos +
+de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 2. El auditor visualiza las cancelaciones y reembolsos y da clic en "Salir". +
 3. Termina el caso de uso.
 | **Flujos alternos** |
@@ -1258,22 +1397,22 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Extiende** | Ninguna
 |===
 
-==== CU-31: Consultar historial de reservaciones
+==== CU-33: Consultar historial de reservaciones
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
 | **ID** | CU-31
 | **Caso de uso** | Consultar historial de reservaciones
 | **Responsable** | Abraham Cano Ramírez
-| **Descripción** | El auditor accede a un registro completo de todas las reservaciones realizadas, permitiendo analizar patrones y tendencias.
+| **Descripción** | Permite al auditor acceder a un registro completo de todas las reservaciones realizadas,
 | **Actor** | AC-04 Auditor
 | **Disparador** | El auditor da cic en "Consultar historial de reservaciones"
 | **Precondiciones** |
 *PRE-01* Debe existir al menos una reservación en la base de datos.
 | **Flujo normal** |
-1. El sistema muestra un formulario de selección de estado y municipio. **(Ver EX-01)** +
-2. El auditor selecciona un estado y municipio. +
-3. El sistema muestra una tabla de los hoteles. **(Ver EX-01)** +
+1. El sistema muestra un formulario con los campos a completar. **(Ver EX-01)** +
+2. El auditor ingresa los datos y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema muestra una tabla de los hoteles. **(Ver EX-01)** **(Ver FA-03)** +
 4. El auditor selecciona un hotel. **(Ver FA-01)** **(Ver FA-02)** +
 5. El sistema carga y muestra en una tabla las reservaciones del hotel, ordenas por fecha. **(Ver EX-01)** +
 6. El auditor visualiza las reservaciones y da clic en "Salir". **(Ver FA-01)** +
@@ -1287,6 +1426,9 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 1. El sistema muestra un mensaje indicando la nula existencia de reservaciones en el hotel seleccionado. +
 2. El auditor da clic en "Aceptar". +
 3. El sistema regresa al paso 1 del flujo normal.
+*FA-03* Campos inválidos +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El auditor da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -1298,22 +1440,22 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Extiende** | Ninguna
 |===
 
-==== CU-32: Ver logs de acceso al sistema
+==== CU-34: Ver logs de acceso al sistema
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
 | **ID** | CU-31
 | **Caso de uso** | Ver logs de acceso al sistema
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | El auditor puede revisar quién accedió al sistema, cuándo y qué acciones realizó.
+| **Descripción** | Permite al auditor revisar quién accedió al sistema, cuándo y qué acciones realizó.
 | **Actor** | AC-04 Auditor
 | **Disparador** | El auditor da clic en "Ver logs de acceso".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un usuario registrado en el sistema. +
 | **Flujo normal** |
-1. El sistema muestra un formulario con campos para ingresar (usuario, fecha, acción). +
+1. El sistema muestra un formulario con los campos a completar. +
 2. El auditor completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-02)** +
-3. El sistema valida la información y muestra los logs según los criterios. **(Ver EX-01)** +
+3. El sistema valida la información y muestra los logs según los criterios. **(Ver EX-01)** **(Ver FA-03)**+
 4. El auditor da clic en "Aceptar" para cerrar el resumen. +
 5. Termina el caso de uso.
 | **Flujos alternos** |
@@ -1324,6 +1466,9 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 *FA-02:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El auditor da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
+*FA-03:* Sin datos disponibles: +
+1. El sistema muestra un mensaje indicando que no hay datos disponibles para los criterios ingresados. +
+2. El auditor da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -1335,20 +1480,20 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Extiende** | Ninguno
 |===
 
-==== CU-33: Generar reportes de cumplimiento
+==== CU-35: Generar reportes de cumplimiento
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
 | **ID** | CU-33
 | **Caso de uso** | Generar reportes de cumplimiento
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
-| **Descripción** | El sistema permite generar reportes para verificar que se cumplan políticas internas, normativas legales o estándares de calidad en el servicio.
+| **Descripción** | Permite al auditor generar reportes para verificar que se cumplan políticas internas
 | **Actor** | AC-04 Auditor
 | **Disparador** | El auditor da clic en "Generar reportes de cumplimiento".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
 | **Flujo normal** |
-1. El sistema muestra un formulario con campos para ingresar (hotel, rango de fechas, tipo de reporte). +
+1. El sistema muestra un formulario con los campos a completar. +
 2. El auditor completa el formulario y da clic en "Generar reporte". **(Ver FA-01)** +
 **(Ver FA-02)** **(Ver FA-03)** +
 3. El sistema valida la información y genera el reporte de cumplimiento. +
