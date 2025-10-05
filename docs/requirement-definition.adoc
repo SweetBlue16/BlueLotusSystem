@@ -12,23 +12,25 @@ El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo 
 
 La existencia de este proyecto no sólo resolverá los problemas actuales de descentralización y errores operativos, sino que también brindará a Blue Lotus una ventaja competitiva en el mercado hotelero. En este sentido, la propuesta representa una oportunidad estratégica para consolidar la información, optimizar procesos y garantizar un crecimiento sostenido dentro de la industria turística. Así, el proyecto no se limita únicamente a  resolver fallas técnicas, sino que constituye una inversión que permitirá asegurar la permanencia y expansión de la cadena en el largo plazo.
 
-==== Alcance del sistema
+==== Alcance y proposito del diseño
 
-===== Funcionalidades principales
+El presente apartado tiene como propósito definir los limtes, alcance y objetivos del diseño del sistema de Reservaciones para cadena hotelera (SRCH). Este sistema surge como una respuesta a la necesidad de modernizar la forma en que una cadena internacional de hoteles gestiona sus operaciones de reservación, check-in, check-out, facturación y auditoria, sustituyendo multiples soluciones locales por una plataforma que se espera sera escalable y confiable.
 
-* Reservación con pago y cancelación.
-* Consulta de disponibilidad.
-* Gestión de reservaciones: check-in, check-out, cambio de habitación.
-* Registro de consumos y servicios.
-* Administración de precios diarios y políticas de *overbooking*.
-* Backoffice: hoteles, habitaciones, tipos de habitación y tarifas (altas, bajas y cambios).
-* Reportes y auditoría de transacciones.
-* Soporte para métodos de pago comunes como tarjetas de crédito, débito.
+El diseño del sistema busca establecer una arquitectura solida que permite soportar altos volumenes de transacciones, para un promedio estimado de 5000 hoteles y 1,000,000 de habitaciones. Se pretende que el sistema sea capaz de manejar picos de demanda, garantizando disponibilidad y consistencia en tiempo real. Además de contar con la capacidad de atender solicitudes silmultaneas en tiempo real sin perdida de información ni inconsistencias en las transacciones.Adicionalmente, se busca que el sistema sea modular y flexible, permitiendo futuras expansiones y adaptaciones a nuevas necesidades del negocio. En este documento se formalizan las fronteras del diseño, se identifican los principales interesadps, y se analizan sus preocupaciones, las cuales constituyen las entradas escenciales para definir los impulsores arquitectonicos del sistema.
 
-===== Alcance de la primera versión
+===== Alcance general del diseño
+El sistema de reservaciones sera una plataforma centralizada de gestión hotelera, accesible desde la web  y dispositivos moviles, cuyo proposito es ofrecer a los huespedes una experiencia fluida y confiable al momento de consultar disponibilidad, realizar reservaciones, gestionar pagos y consultar su historial de estancias. Al mismo tiempo, brindara a los recepcionistas y administradores las herramientras necesarias para controlar inventarios, precios, check-ins, y reportes financieros de manera eficiente.
 
-* **Flujo completo de reserva:** disponibilidad → confirmación → pago.
-* **Operaciones esenciales de recepción:** check-in y check-out.
+El alcance del diseño abarca los modulos funcionales escenciales para el correcto funcionamiento del sistema dentro del contexto de operaciones establecido de la cadena hotelera Blue Lotus. Estos modulos incluyen:
+
+* **Gestión de Reservas:** Creación, modificación, cancelación y consulta de reservas en tiempo real con soporte para políticas de overbooking y tarifas dinámicas.
+* **Consulta de Disponibilidad:** Permite a los huéspedes verificar la disponibilidad de habitaciones según fechas, tipo de habitación y número de huéspedes.
+* **Gestión de Usuarios:** Registro, autenticación y administración de perfiles para huéspedes, recepcionistas y administradores.
+
+* **Administración de Habitaciones:** Facilita el control de inventarios, tipos de habitaciones y tarifas.
+* **Check-in y Check-out:** Optimiza el proceso de registro y salida de huéspedes.
+* **Reportes y Auditoría:** Genera informes sobre el desempeño del hotel y audita las transacciones realizadas.
+* **Integración de Pagos:** Soporta múltiples métodos de pago, garantizando transacciones seguras y eficientes.
 
 ===== Proposito del proyecto
 Desarrollar un sistema de reservaciones centralizado y robust para una cadena hotelera con más de 5,0000 hoteles y 1,000,000 de habitaciones, sustituyendo las soluciones locales que actualmente generan inconsistencias. El sistema debe permitir gestionar tarifas y reservaciones en tiempo real, brindando una experiencia fluida al cliente final y optimizando procesos operativos. Además, debe garantizar alta disponibilidad, consistencia y escalabilidad para soportar el crecimiento futuro de la cadena.
@@ -1207,7 +1209,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-27
+| **ID** | CU-28
 | **Caso de uso** | Agregar servicio al catálogo
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | Permite registrar un nuevo servicio en el catálogo del hotel.
@@ -1249,7 +1251,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-28
+| **ID** | CU-29
 | **Caso de uso** | Editar consumo
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite modificar los datos de un consumo ya existente en el catálogo.
@@ -1288,7 +1290,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-28
+| **ID** | CU-30
 | **Caso de uso** | Editar servicio
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite modificar los datos de un servicio ya existente en el catálogo.
@@ -1327,7 +1329,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-29
+| **ID** | CU-31
 | **Caso de uso** | Generar reportes financieros
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | El auditor obtiene reportes detallados de ingresos por reservaciones y consumos. Estos reportes permiten evaluar la rentabilidad del sistema.
@@ -1368,7 +1370,7 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-30
+| **ID** | CU-32
 | **Caso de uso** | Auditar cancelaciones y reembolsos
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El auditor revisa las cancelaciones y reembolsos procesados, verificando que se hayan aplicado correctamente las políticas establecidas.
@@ -1401,7 +1403,7 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-31
+| **ID** | CU-33
 | **Caso de uso** | Consultar historial de reservaciones
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite al auditor acceder a un registro completo de todas las reservaciones realizadas,
@@ -1444,7 +1446,7 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-31
+| **ID** | CU-34
 | **Caso de uso** | Ver logs de acceso al sistema
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | Permite al auditor revisar quién accedió al sistema, cuándo y qué acciones realizó.
@@ -1484,7 +1486,7 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-33
+| **ID** | CU-35
 | **Caso de uso** | Generar reportes de cumplimiento
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | Permite al auditor generar reportes para verificar que se cumplan políticas internas
@@ -1517,6 +1519,241 @@ Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
 2. El auditor da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
 *POST-01:* Se genera un reporte de cumplimiento con los datos solicitados. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-36: Crear perfil de administrador
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-36
+| **Caso de uso** | Crear perfil de administrador
+| **Responsable** | Muaricio Noriega Delgado
+| **Descripción** | Permite al RRHH crear un perfil de administrador en el sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Crear perfil de administrador".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra un formulario con los campos a completar. +
+2. El RRHH completa el formulario y da clic en "Generar perfil". **(Ver FA-01)** +
+**(Ver FA-02)** **(Ver FA-03)** +
+3. El sistema valida la información y crea el perfil de administrador. +
+Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
+4. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso.
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
+*FA-03:* Usuario ya existente: +
+1. El sistema muestra un mensaje indicando que el usuario ya existe. +
+2. El RRHH da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El auditor da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se crea un nuevo perfil de administrador en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-37: Editar perfil de administrador
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-37
+| **Caso de uso** | Editar perfil de administrador
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite al RRHH modificar los datos de un perfil de administrador existente
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Editar perfil de administrador".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de administrador en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de administradores registrados. **(Ver EX
+-01)** +
+2. El RRHH selecciona un perfil y da clic en "Editar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema muestra un formulario con los datos actuales del perfil. +
+4. El RRHH realiza los cambios necesarios y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
+5. El sistema valida y guarda los cambios en el perfil de administrador. Después, +
+muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso.
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH corrige los campos y vuelve a enviar el formulario. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se actualizan los datos del perfil de administrador en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-38: Eliminar perfil de administrador
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-38
+| **Caso de uso** | Eliminar perfil de administrador
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | Permite al RRHH eliminar un perfil de administrador del sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Eliminar perfil de administrador".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de administrador en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de administradores registrados. **(Ver EX
+-01)** +
+2. El RRHH selecciona un perfil y da clic en "Eliminar". **(Ver FA-01)** +
+3. El sistema muestra un mensaje de confirmación para eliminar el perfil. +
+4. El RRHH da clic en "Sí" para confirmar. +
+5. El sistema elimina el perfil de administrador de la base de datos y muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso.
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se elimina el perfil de administrador del sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-39: Crear perfil de recepcionista
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-39
+| **Caso de uso** | Crear perfil de recepcionista
+| **Responsable** | Muaricio Noriega Delgado
+| **Descripción** | Permite al RRHH crear un perfil de recepcionista en el sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Crear perfil de recepcionista".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de administrador en el sistema.
+| **Flujo normal** |
+1. El sistema muestra un formulario con los campos a completar. +
+2. El RRHH completa el formulario y da clic en "Generar perfil". **(Ver FA-01)** +
+**(Ver FA-02)** **(Ver FA-03)** +
+3. El sistema valida la información y crea el perfil de recepcionista. +
+Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
+4. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso.
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
+*FA-03:* Usuario ya existente: +
+1. El sistema muestra un mensaje indicando que el usuario ya existe. +
+2. El RRHH da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El auditor da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se crea un nuevo perfil de recepcionista en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-40: Editar perfil de recepcionista
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-40
+| **Caso de uso** | Editar perfil de recepcionista
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite al RRHH modificar los datos de un perfil de recepcionista existente
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Editar perfil de recepcionista".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de recepcionista en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de recepcionistas registrados. **(Ver EX-01)** +
+2. El RRHH selecciona un perfil y da clic en "Editar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema muestra un formulario con los datos actuales del perfil. +
+4. El RRHH realiza los cambios necesarios y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
+5. El sistema valida y guarda los cambios en el perfil de recepcionista. Después, +
+muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso.
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH corrige los campos y vuelve a enviar el formulario. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se actualizan los datos del perfil de recepcionista en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-41: Eliminar perfil de recepcionista
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-41
+| **Caso de uso** | Eliminar perfil de recepcionista
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | Permite al RRHH eliminar un perfil de recepcionista del sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Eliminar perfil de recepcionista".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de recepcionista en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de recepcionistas registrados. **(Ver EX-01)** +
+2. El RRHH selecciona un perfil y da clic en "Eliminar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema muestra un mensaje de confirmación para eliminar el perfil. +
+4. El RRHH da clic en "Sí" y el sistema elimina el perfil de recepcionista. Después, +
+muestra un mensaje de éxito. **(Ver EX-01)** +
+5. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso.
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Perfil no encontrado: +
+1. El sistema muestra un mensaje indicando que el perfil no fue encontrado. +
+2. El RRHH da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se elimina el perfil de recepcionista en el sistema. +
 | **Reglas de negocio** | Ninguno
 | **Incluye** | Ninguno
 | **Extiende** | Ninguno
