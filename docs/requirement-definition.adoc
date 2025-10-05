@@ -1248,7 +1248,7 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 
 ==== CU-31: Consultar historial de reservaciones
 [cols="^20, <80", options="header"]
-|===
+|===s
 | Campo | Descripción
 | **ID** | CU-31
 | **Caso de uso** | Consultar historial de reservaciones
@@ -1259,8 +1259,8 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Precondiciones** |
 *PRE-01* Debe existir al menos una reservación en la base de datos.
 | **Flujo normal** |
-1. El sistema muestra un formulario de selección de estado y ciudad. **(Ver EX-01)** +
-2. El auditor selecciona un estado y ciudad. +
+1. El sistema muestra un formulario de selección de estado y municipio. **(Ver EX-01)** +
+2. El auditor selecciona un estado y municipio. +
 3. El sistema muestra una tabla de los hoteles. **(Ver EX-01)** +
 4. El auditor selecciona un hotel. **(Ver FA-01)** **(Ver FA-02)** +
 5. El sistema carga y muestra en una tabla las reservaciones del hotel, ordenas por fecha. **(Ver EX-01)** +
