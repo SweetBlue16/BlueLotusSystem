@@ -116,15 +116,32 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El huésped puede cancelar una reservación previamente realizada. El sistema valida las políticas de cancelación y aplica penalizaciones según corresponda.
 | **Actor** | AC-01 Huésped
-| **Disparador** |
+| **Disparador** | El huésped da clic en "Cancelar reservación".
 | **Precondiciones** |
+*PRE-01* El huésped cuenta con una reservación previa en el sistema.
 | **Flujo normal** |
+1. El sistema muestra una lista de las reservaciones con las que cuenta el huésped. **(Ver EX-01)** +
+2. El huésped selecciona la reservación que desea cancelar y da clic en "Cancelar reservación". **(Ver FA-01)** +
+3. El sistema muestra un mensaje de confirmación de cancelación. +
+4. El huésped da clic en "Aceptar". **(Ver FA-02)** +
+5. El sistema borra la reservación de la habitación de la base de datos y muestra un mensaje de operación exitosa. **(Ver EX-01)** +
+6. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Clic en "Cancelar proceso": +
+1. El sistema regresa al paso 1 del flujo normal.
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST.01* Reservación de habitación eliminada de la base de datos.
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
 |===
 
 ==== CU-04: Consultar estado de reservación
@@ -195,15 +212,26 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El huésped puede acceder a un registro de todas sus reservaciones pasadas. Esto incluye fechas de estancia, hoteles visitados y consumos asociados.
 | **Actor** | AC-01 Huésped
-| **Disparador** |
+| **Disparador** | El huésped da clic en "Consultar historial de reservaciones"
 | **Precondiciones** |
+*PRE-01:* El huésped debe contar con al menos una reservación pasada.
 | **Flujo normal** |
+1. El sistema muestra una tabla con las reservaciones del huésped (fecha de inicio, fecha fin, hotel, consumos) ordenadas por fecha. **(Ver FA-01)** **(Ver EX-01)** +
+2. El huésped da clic en “Salir” +
+3.	Termina el caso de uso
 | **Flujos alternos** |
+*FA-01:* Huésped sin reservaciones anteriores: +
+1. El sistema muestra un mensaje de nula existencia de reservaciones anteriores. +
+2. Termina el caso de uso
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Huésped obtiene datos de reservaciones anteriores.
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | Nunguna
 |===
 
 ==== CU-07: Gestionar cuenta de usuario
@@ -215,15 +243,35 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El huésped administra la información de su perfil, como datos personales, contraseñas, etc. También puede actualizar datos de contacto.
 | **Actor** | AC-01 Huésped
-| **Disparador** |
+| **Disparador** | El huésped a clic en "Gestionar cuenta"
 | **Precondiciones** |
 | **Flujo normal** |
+1. El sistema muestra los datos del huésped (nombre, apellido paterno, apellido materno, número telefónico, correo electrónico, rfc) **(Ver EX-01)** +
+2. El huésped ingresa los datos en los campos que desea modificar y da clic en “Guardar” **(Ver FA-01)** **(Ver FA-02)** **(Ver FA-03)** +
+3.	El sistema guarda la modificación de los datos del huésped y muestra un mensaje de guardado exitoso **(Ver EX-01)** +
+4. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Campos vacíos: +
+1.	El sistema muestra un mensaje indicando la falta de campos llenos. +
+2.	El huésped da clic en “Aceptar”. +
+3.	El sistema regresa al paso 1 del flujo normal. +
+*FA-03:* Datos inválidos: +
+1.	El sistema muestra un mensaje de datos inválidos. +
+2.	El huésped da clic en “Aceptar”. +
+3.	El sistema regresa al paso 1 del flujo normal.
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Datos del usuario actualizados.
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
 |===
 
 ==== CU-08: Guardar métodos de pago
@@ -235,15 +283,43 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El sistema permite al huésped registrar tarjetas u otros métodos de pago seguros para facilitar reservaciones.
 | **Actor** | AC-01 Huésped
-| **Disparador** |
+| **Disparador** | El huésped da clic en "Agregar método de pago"
 | **Precondiciones** |
 | **Flujo normal** |
+1. El sistema muestra los métodos de pago registrados y  los campos para agregar un nuevo método de pago (Nombre, número de cuenta, CVV, fecha de expiración). **(Ver EX-01)** +
+2. El huésped agrega los campos y da clic en “Guardar”. **(Ver FA-01)** **(Ver FA-02)** **(Ver FA-03)** **(Ver FA-04)** **(Ver FA-05)** +
+3. El sistema guarda el nuevo método de pago y muestra un mensaje de guardado exitoso. **(Ver EX-01)** +
+4. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar" +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Campos vacíos +
+1.	El sistema muestra un mensaje indicando la falta de campos llenos. +
+2.	El huésped da clic en “Aceptar”. +
+3.	El sistema regresa al paso 1 del flujo normal. +
+*FA-03:* Datos de métodos de pago ya registrados en la cuenta del usuario +
+1.	El sistema muestra un mensaje de existencia de método de pago en la cuenta del usuario +
+2.	El huésped da clic en “Aceptar” +
+3.	El sistema regresa al paso 1 del flujo normal +
+*FA-04:* Fecha de método de pago expirada +
+1.	El sistema muestra un mensaje de fecha de tarjeta invalida. +
+2.	El huésped da clic en “Aceptar”. +
+3.	El sistema regresa al paso del 1 del flujo normal. +
+*FA-05:* Método de pago inválido +
+1.	El sistema muestra un mensaje de método de pago inválido. +
+2.	El huésped da clic en “Aceptar”. +
+3.	El sistema regresa al paso 1 del flujo normal.
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Método de pago guardado en los registros del huésped.
+| **Reglas de negocio** |Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | CU-02 Realizar reservación en línea
 |===
 
 ==== CU-09: Dejar reseña
@@ -818,15 +894,31 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite modificar los datos de un servicio o consumo ya existente en el catálogo.
 | **Actor** | AC-03 Administrador
-| **Disparador** |
+| **Disparador** | El administrador da clic en "Editar consumo".
 | **Precondiciones** |
+*PRE-01* Consumo no existe en la base de datos
 | **Flujo normal** |
+1.	El sistema carga en una tabla los consumos registrados en el catálogo de la cadena y los campos para agregar un consumo (nombre, descripción, precio). *(Ver EX-01)*  +
+2.	El administrador ingresa los datos del nuevo consumo y da clic en “Aceptar”. *(Ver FA-01)* *(Ver FA-02)* +
+3.	El sistema guarda el consumo en la base de datos y muestra el mensaje de registro exitoso. *(Ver EX-01)*
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar" +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Consumo ya existente en el sistema +
+1. El sistema muestra un mensaje de existencia de consumo. +
+2. El administrador da clic en "Aceptar" +
+3. El sistema regresa al paso 1 del flujo normal.
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01* Consumo registrado en la base de datos
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
 |===
 
 ==== CU-29: Generar reportes financieros
