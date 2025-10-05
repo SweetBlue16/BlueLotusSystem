@@ -1235,13 +1235,25 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El auditor revisa las cancelaciones y reembolsos procesados, verificando que se hayan aplicado correctamente las políticas establecidas.
 | **Actor** | AC-04 Auditor
-| **Disparador** | El auditor da clic en "Auditar cancelaciones y reembolsos"
+| **Disparador** | El auditor da clic en "Visualizar cancelaciones y reembolsos"
 | **Precondiciones** |
+*PRE-01* Debe existir al menos una cancelación o reembolso en la base de datos.
 | **Flujo normal** |
+1. El sistema muestra en una tabla los datos de cancelaciones y en otra los datos de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
+2. El auditor visualiza las cancelaciones y reembolsos y da clic en "Salir". +
+3. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01* No hay existencia de cancelaciones y reembolsos. +
+1. El sistema muestra un mensaje de la nula existencia de cancelaciones y reembolsos. +
+2. El auditor da clic en "Aceptar". +
+3. Termina el caso de uso.
 | **Excepciones** |
+*EX-01:* Error al generar el reporte: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El auditor da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
+*POST-01:* Datos de cancelaciones y reembolsos visualizados por el auditor.
+| **Reglas de negocio** | Ninguna
 | **Incluye** | Ninguna
 | **Extiende** | Ninguna
 |===
