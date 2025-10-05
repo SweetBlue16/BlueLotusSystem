@@ -416,15 +416,40 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | Permite al recepcionista cancelar una reserva a nombre del huésped. El sistema aplica las mismas políticas de cancelación que en línea.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Cancelar reservación".
 | **Precondiciones** |
+*PRE-01:* El huésped debe tener una reservación previa en el sistema. +
+*PRE-02:* La reservación debe estar en estado "Pendiente" o "Confirmada". +
 | **Flujo normal** |
+1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-03)** +
+3. El sistema valida la información y muestra los detalles de la reservación. **(EX-01)** **(Ver FA-02)** +
+4. El recepcionista revisa los detalles y da clic en "Confirmar cancelación". **(Ver FA-01)** +
+5. El sistema aplica las políticas de cancelación, actualiza el estado de la reservación a "Cancelada" y muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso. +
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Reservación no encontrada: +
+1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
+2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+
+*FA-03:* Datos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El recepcionista da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se actualiza el estado de la reservación a "Cancelada". +
+*POST-02:* Se genera un registro de cancelación en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-14: Cambiar a huésped de habitación
@@ -436,15 +461,44 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | En caso de solicitud del cliente o problemas con la habitación, el recepcionista puede reasignar otra. El sistema actualiza disponibilidad y costos según corresponda.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Cambiar habitación".
 | **Precondiciones** |
+*PRE-01:* El huésped debe tener una reservación activa. +
+*PRE-02:* La habitación actual debe estar en estado "Ocupada". +
+*PRE-03:* Debe existir al menos una habitación disponible en el sistema. +
 | **Flujo normal** |
+1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
+3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
+4. El recepcionista da clic en "Buscar nueva habitación". +
+5. El sistema ejecuta el CU-18 Consultar disponibilidad local y muestra la lista de habitaciones disponibles. **(Ver FA-03)** +
+6. El recepcionista selecciona una opción y da clic en "Cambiar habitación". **(Ver FA-03)** +
+7. El sistema actualiza la reservación con la nueva habitación, ajusta costos si es necesario y muestra un mensaje de éxito. **(Ver EX-01)** +
+8. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso. +
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Reservación no encontrada: +
+1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
+2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+
+*FA-03:* No hay disponibilidad: +
+1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para los criterios seleccionados.
+2. El recepcionista da clic en "Modificar búsqueda" y regresa al paso 4 del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se actualiza la reservación con la nueva habitación asignada. +
+*POST-02:* La habitación anterior queda disponible para nuevas reservaciones. +
+*POST-03:* Se genera un registro de cambio de habitación en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | CU-18 Consultar disponibilidad local
+| **Extiende** | Ninguno
 |===
 
 ==== CU-15: Registrar consumos y servicios
@@ -456,15 +510,41 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | El recepcionista ingresa consumos adicionales del huésped, como restaurante, minibar o spa. Estos quedan vinculados a la cuenta de la habitación para su cobro en check-out.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Registrar consumo".
 | **Precondiciones** |
+*PRE-01:* El huésped debe tener una reservación activa. +
+*PRE-02:* La habitación debe estar en estado "Ocupada". +
+*PRE-03:* El sistema debe contar con un catálogo actualizado de servicios y precios. +
 | **Flujo normal** |
+1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
+3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
+4. El recepcionista selecciona el servicio consumuido del catálogo, ingresa cantidad y da clic en "Agregar consumo". **(Ver FA-03)** +
+5. El sistema añade el consumo a la cuenta del huésped y muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso.
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Reservación no encontrada: +
+1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
+2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+
+*FA-03:* Datos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El recepcionista da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se añade un nuevo consumo asociado a la reservación del huésped. +
+*POST-02:* Se actualiza el total pendiente de pago en la cuenta del huésped. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-16: Consultar estado de reservación en recepción
