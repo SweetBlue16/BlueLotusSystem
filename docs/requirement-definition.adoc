@@ -821,15 +821,35 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | El administrador selecciona un hotel del catálogo y actualiza su información y estado.
 | **Actor** | AC-03 Administrador
-| **Disparador** |
+| **Disparador** | El administrador da clic en "Editar información de Hotel".
 | **Precondiciones** |
+*PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
 | **Flujo normal** |
+1. El sistema muestra una lista de hoteles registrados. +
+2. El administrador selecciona un hotel y da clic en "Editar Información". **(Ver FA-01)** +
+3. El sistema muestra un formulario con los datos actuales del hotel. +
+4. El administrador modifica los campos necesarios y da clic en "Guardar cambios". **(Ver FA-01)** +
+5. El sistema valida la información y muestra un mensaje de exito. **(Ver FA-02)** **(Ver EX-01)** +
+6. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El administrador da clic en "Sí" y termina el caso de uso. +
+3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El administrador da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se actualiza la información del hotel en el catálogo. +
+*POST-02:* Se genera un registro de modificación en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-22: Crear tipo de habitación
