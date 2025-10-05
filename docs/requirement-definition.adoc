@@ -728,15 +728,23 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El recepcionista puede revisar los detalles de una reservación. Esto incluye fechas, habitación asignada y servicios asociados.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Consultar estado de reservación".
 | **Precondiciones** |
+*PRE-01:* El cliente debe contar con una reservación.
 | **Flujo normal** |
+1. El sistema muestra los datos de la reservación (fechas, tipo de habitación, estado). **(Ver EX-01)**
+2. El recepecionista visualiza los datos de reservación y da clic en "Regresar".
+3. Termina el caso de uso
 | **Flujos alternos** |
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01* Recepcionista visualiza datos de reservación.
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | CU-10 Realizar check-in
 |===
 
 ==== CU-17: Extender estancia del huésped
@@ -839,15 +847,30 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El recepcionista registra problemas relacionados con las instalaciones, servicios o huéspedes. El sistema envía alertas al área correspondiente.
 | **Actor** | AC-02 Recepcionista
-| **Disparador** |
+| **Disparador** | El recepcionista da clic en "Reportar incidencia".
 | **Precondiciones** |
 | **Flujo normal** |
+1. El sistema carga y muestra los datos del hotel local (numero de hotel) y muestra un formulario de quejas (titulo de incidente, fecha, descripción, área de incidente). **(Ver EX-01)**
+2. El recepcionista ingresa los datos de incidente y da clic en "Reportar". **(Ver FA-01)** **(Ver FA-02)**
+3. El sistema valida los datos y guarda el registro de incidente en la base de datos.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso.
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-02* Fecha de reporte de incidente mayor a un mes +
+1. El sistema muestra un mensaje de fecha inválida. +
+2. El recepcionista da clic en "Aceptar". +
+3. El sistema regresa al paso 1 del flujo normal.
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01* Incidencia registrada en la base de datos.
+| **Reglas de negocio** | RN-01 Fecha de reporte de incidente no puede ser reportada un mes después del incidente.
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
 |===
 
 ==== CU-20: Añadir hotel al catálogo
@@ -1047,15 +1070,35 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite cambiar los datos de una habitación registrada, incluyendo su estado y atributos particulares.
 | **Actor** | AC-03 Administrador
-| **Disparador** |
+| **Disparador** | El administrador da clic en "Modificar habitación"
 | **Precondiciones** |
+*PRE-01* Debe existir al menos un hotel y una habitación en el hotel.
 | **Flujo normal** |
+1. El sistema muestra un filtro de búsqueda de todos los hoteles. **(Ver EX-01)**
+2. El administrador selecciona un hotel. **(Ver FA-01)**
+3. El sistema muestra las habitaciones registradas en el hotel **(Ver EX-01)**
+4. El administrador selecciona una habitación **(Ver FA-01)**
+5. El sistema muestra los campos a cambiar de la habitación (número de habitación, tipo de habitación, características iniciales y estado). **(Ver EX-01)**
+6. El administrador ingresa los nuevos datos. **(Ver FA-01)** **(Ver FA-02)**
+7. El sistema valida los datos y guarda la modificación de habitación en la base de datos. **(Ver EX-01)**
+8. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+*FA-01:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal.
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Registro de habitación modificada en la base de datos
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguna
+| **Extiende** | Ninguna
 |===
 
 ==== CU-26: Administrar precios diarios
