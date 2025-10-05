@@ -1260,7 +1260,7 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 
 ==== CU-31: Consultar historial de reservaciones
 [cols="^20, <80", options="header"]
-|===s
+|===
 | Campo | Descripción
 | **ID** | CU-31
 | **Caso de uso** | Consultar historial de reservaciones
