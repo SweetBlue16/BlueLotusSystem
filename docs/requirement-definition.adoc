@@ -12,8 +12,27 @@ El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo 
 
 La existencia de este proyecto no sólo resolverá los problemas actuales de descentralización y errores operativos, sino que también brindará a Blue Lotus una ventaja competitiva en el mercado hotelero. En este sentido, la propuesta representa una oportunidad estratégica para consolidar la información, optimizar procesos y garantizar un crecimiento sostenido dentro de la industria turística. Así, el proyecto no se limita únicamente a  resolver fallas técnicas, sino que constituye una inversión que permitirá asegurar la permanencia y expansión de la cadena en el largo plazo.
 
-=== Alcance y propósito del diseño
-a
+==== Alcance del sistema
+
+===== Funcionalidades principales
+
+* Reservación con pago y cancelación.
+* Consulta de disponibilidad.
+* Gestión de reservaciones: check-in, check-out, cambio de habitación.
+* Registro de consumos y servicios.
+* Administración de precios diarios y políticas de *overbooking*.
+* Backoffice: hoteles, habitaciones, tipos de habitación y tarifas (altas, bajas y cambios).
+* Reportes y auditoría de transacciones.
+* Soporte para métodos de pago comunes como tarjetas de crédito, débito.
+
+===== Alcance de la primera versión
+
+* **Flujo completo de reserva:** disponibilidad → confirmación → pago.
+* **Operaciones esenciales de recepción:** check-in y check-out.
+
+===== Proposito del proyecto
+Desarrollar un sistema de reservaciones centralizado y robust para una cadena hotelera con más de 5,0000 hoteles y 1,000,000 de habitaciones, sustituyendo las soluciones locales que actualmente generan inconsistencias. El sistema debe permitir gestionar tarifas y reservaciones en tiempo real, brindando una experiencia fluida al cliente final y optimizando procesos operativos. Además, debe garantizar alta disponibilidad, consistencia y escalabilidad para soportar el crecimiento futuro de la cadena.
+
 
 === Diagramas de casos de uso
 En esta sección se presentan los diagramas de casos de uso para los diferentes actores del sistema de reservas de hotel.
@@ -202,15 +221,36 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Descripción** | El huésped puede añadir complementos a su reservación, como desayunos, transporte, tour o spa. Estos servicios quedan asociados a la reservación principal.
 | **Actor** | AC-01 Huésped
 | **Disparador** |
+| **Disparador** | El huésped da clic en "Agregar servicios".
 | **Precondiciones** |
+*PRE-01:* El huésped debe haber seleccionado una habitación previamente. +
+*PRE-02:* El huésped debe haber iniciado sesión en la plataforma. +
+*PRE-03:* Los servicios adicionales deben estar previamente configurados en el sistema. +
 | **Flujo normal** |
+1. El sistema muestra una lista de servicios adicionales disponibles con descripción y costo. **(Ver FA-01)** +
+2. El huésped selecciona los servicios que desea agregar y da clic en "Agregar a reservación". **(Ver FA-02)**+
+3. El sistema actualiza la reservación con los nuevos servicios seleccionados. +
+4. El huésped da clic en "Aceptar" para confirmar los cambios. **(Ver FA-02)** **(Extiende CU-02)**+
+5. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* No hay servicios disponibles: +
+1. El sistema muestra un mensaje indicando que no hay servicios adicionales disponibles para agregar. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso. +
+*FA-02:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El huésped da clic en "Sí" y termina el caso de uso. +
+3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El huésped da clic en "Aceptar" y termina el caso de uso. +
 | **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+*POST-01:* Se muestra la información actualizada de la reservación seleccionada.
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | *CU-02:* Realizar reservación en línea
 |===
+
 
 ==== CU-06: Consultar historial de reservaciones
 [cols="^20, <80", options="header"]
@@ -322,14 +362,45 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Descripción** | Permite al recepcionista registrar la llegada del huésped, validar su reservación y asignarle una habitación disponible.
 | **Actor** | AC-02 Recepcionista
 | **Disparador** |
+| **Disparador** | El recepcionista da clic en "Realizar check-in".
 | **Precondiciones** |
+*PRE-01:* El huésped debe tener una reservación activa. +
+*PRE-02:* La habitación debe estar en estado "Disponible". +
 | **Flujo normal** |
+1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
+2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
+3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
+4. El recepcionista revisa los datos y da clic en "Confirmar check-in". **(Ver FA-01)** **(Ver FA-03)** +
+5. El sistema actualiza el estado de la reservación a "Ocupada" y muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
 | **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El recepcionista da clic en "Sí" y termina el caso de uso. +
+3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Reservación no encontrada: +
+1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
+2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+
+*FA-03:* Error en la actualización de la reservación: +
+1. El sistema muestra un mensaje indicando que hubo un problema al actualizar la reservación. +
+2. El recepcionista da clic en "Intentar de nuevo" y regresa al paso 4 del flujo normal. +
+3. El recepcionista da clic en "Aceptar" y termina el caso de uso. +
+
 | **Excepciones** |
-| **Postcondiciones** |
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+
+*EX-02:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El recepcionista da clic en "Aceptar" y termina el caso de uso. +
+
+| **Postcondiciones** ||
+*POST-01:* Se actualiza el estado de la reservación a "Ocupada". +
+*POST-02:* La habitación queda asignada al huésped. +
+*POST-03:* Se genera un registro de check-in en el sistema. +
+| **Reglas de negocio** | Ninguna
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-11: Realizar check-out
