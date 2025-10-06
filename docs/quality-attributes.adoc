@@ -1,6 +1,7 @@
 == Impulsores Arquitectónicos (ASRs) y Priorización
 
 === Árbol de Utilidad
+
 ==== Utility Tree
 [cols="^20, <20, <40, ^10, ^10", options="header"]
 |===
@@ -29,6 +30,8 @@
 
 === Escenarios de atributos de calidad
 ==== Disponibilidad
+Según el estándar ISO/IEC 25010:2023, la disponibilidad es la capacidad de un producto para estar operativo y accesible cuando se requiere para su uso. Este atributo es crucial, ya que el sistema de reservaciones debe estar disponible en todo momento, ya que los huéspedes pueden realizar reservaciones o cancelaciones desde cualquier parte del mundo y en cualquier horario. Una caída del sistema impactaría directamente en la operación del hotel y la experiencia de usuario. Garantizar alta disponibilidad asegura la continuidad del servicio y confianza de los clientes.
+
 ===== QAS-01: Detección de fallos en servicio de pagos
 [cols="^25, <75", options="header"]
 |===
@@ -81,6 +84,8 @@ Medida de la respuesta: MTTR ≤ 60 s; sesiones activas preservadas ≥ 95%
 |===
 
 ==== Usabilidad
+Según el estándar ISO/IEC 25010:2023, la usabilidad es el grado en el que un sistema, producto o servicio puede ser utilizado por usuarios específicos para lograr objetivos específicos con eficacia, eficiencia y satisfacción en un contexto de uso específico. En el contexto del sistema de reservaciones de un hotel, la usabilidad es fundamental debido a que el público objetivo incluye huéspedes con distintos niveles de experiencia tecnológica, recepcionistas que requieren rapidez en su trabajo y administradores que necesitan gestión clara de datos. Un sistema usable reduce la curva de aprendizaje, disminuye errores humanos y mejora la satisfacción tanto del cliente como del personal interno.
+
 ===== QAS-04: Eficiencia de uso del recepcionista
 [cols="^25, <75", options="header"]
 |===
@@ -133,6 +138,8 @@ Medida de la respuesta: Tiempo ≤ 1 s; tasa de comprensión ≥ 95%
 |===
 
 ==== Rendimiento
+De acuerdo con el estándar ISO/IEC/IEEE 24765:2017, el rendimiento se define como el grado en el que un sistema o componente cumple sus funciones designadas dentro de restricciones dadas, como velocidad, precisión o uso de memoria. En este contexto, el sistema debe responder de manera rápida y eficiente, especialmente durante la consulta de disponibilidad, generación de facturas o reportes. Un bajo rendimiento puede provocar que el huésped abandone la plataforma y busque alternativas en la competencia. Además, para el personal del hotel, la velocidad en check-in y check-out es crítica para evitar filas y retrasos en la atención.
+
 ===== QAS-07: Latencia de respuesta
 [cols="^25, <75", options="header"]
 |===
@@ -183,7 +190,10 @@ Artefacto: Motor de reservaciones +
 Respuesta: Mantiene tiempos consistentes entre peticiones equivalentes +
 Medida de la respuesta: Variación ≤ ±10%
 |===
+
 ==== Escalabilidad
+Siguiendo el estándar ISO/IEC 25010:2023, la escalabilidad es definida como la capacidad de un producto para manejar cargas de trabajo crecientes o decrecientes o para adaptar su capacidad para manejar variabilidad. Para el sistema de reservaciones de un hotel, la plataforma debe poder crecer en función del aumento de hoteles, usuarios y transacciones sin degradar su desempeño. Esto es esencial si se expande a nivel regional o internacional, ya que debe adaptarse a mayor carga de consultas y operaciones sin necesidades de rediseños completos.
+
 ===== QAS-10: Escalabilidad horizontal
 [cols="^25, <75", options="header"]
 |===
@@ -236,6 +246,8 @@ Medida de la respuesta: Tiempo de ajuste ≤ 120 s; uso de CPU ≤ 70%
 |===
 
 ==== Seguridad
+Basándose en el estándar ISO/IEC/IEEE 15288:2023, la seguridad se refiere a la protección contra subversión intencional o fallo forzado. Este atributo es crítico porque el sistema maneja datos sensibles como información de huéspedes, métodos de pago y reportes financieros. Una vulnerabilidad podría comprometer la privacidad de los clientes y la reputación del hotel. Implementar autenticación robusta, cifrado y control de accesos es clave para proteger la integridad de la información y evitar fraudes.
+
 ===== QAS-13: Cifrado de datos en tránsito
 [cols="^25, <75", options="header"]
 |===
