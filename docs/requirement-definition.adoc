@@ -1569,7 +1569,7 @@ Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
 | Campo | Descripción
 | **ID** | CU-36
 | **Caso de uso** | Crear perfil de administrador
-| **Responsable** | Muaricio Noriega Delgado
+| **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | Permite al RRHH crear un perfil de administrador en el sistema
 | **Actor** | AC-05 RRHH
 | **Disparador** | El RRHH da clic en "Crear perfil de administrador".
@@ -1687,7 +1687,7 @@ un mensaje de éxito. **(Ver EX-01)** +
 | Campo | Descripción
 | **ID** | CU-39
 | **Caso de uso** | Crear perfil de recepcionista
-| **Responsable** | Muaricio Noriega Delgado
+| **Responsable** | Mauricio Noriega Delgado
 | **Descripción** | Permite al RRHH crear un perfil de recepcionista en el sistema
 | **Actor** | AC-05 RRHH
 | **Disparador** | El RRHH da clic en "Crear perfil de recepcionista".
