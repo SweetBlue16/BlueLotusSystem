@@ -195,7 +195,6 @@ Medida de la respuesta: Variación ≤ ±10%
 Siguiendo el estándar ISO/IEC 25010:2023, la escalabilidad es definida como la capacidad de un producto para manejar cargas de trabajo crecientes o decrecientes o para adaptar su capacidad para manejar variabilidad. Para el sistema de reservaciones de un hotel, la plataforma debe poder crecer en función del aumento de hoteles, usuarios y transacciones sin degradar su desempeño. Esto es esencial si se expande a nivel regional o internacional, ya que debe adaptarse a mayor carga de consultas y operaciones sin necesidades de rediseños completos.
 
 ===== QAS-10: Escalabilidad horizontal
-===== QAS-10: Escalabilidad horizontal
 [cols="^25, <75", options="header"]
 |===
 | Campo | Descripción
