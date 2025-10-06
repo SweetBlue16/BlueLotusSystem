@@ -1,7 +1,7 @@
 == Impulsores Arquitectónicos (ASRs) y Priorización
 
 === Árbol de Utilidad
-==== Utility Tree — Sistema de Reservaciones
+==== Utility Tree
 [cols="^20, <20, <40, ^10, ^10", options="header"]
 |===
 | Atributo de Calidad | Refinamiento | Escenario (resumen breve) | Impacto (Negocio) | Dificultad (Técnica)
