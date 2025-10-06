@@ -5,4 +5,18 @@
 
 === Escenarios de atributos de calidad
 
+==== Disponibilidad
+
+
+==== Usabilidad
+
+
+==== Rendimiento
+
+
+==== Escalabilidad
+
+
+==== Seguridad
+
 
