@@ -1,0 +1,300 @@
+== Impulsores Arquitectónicos (ASRs) y Priorización
+
+=== Árbol de Utilidad
+
+==== Utility Tree
+[cols="^20, <20, <40, ^10, ^10", options="header"]
+|===
+| Atributo de Calidad | Refinamiento | Escenario (resumen breve) | Impacto (Negocio) | Dificultad (Técnica)
+
+| Disponibilidad | Tiempo de detección de fallos | Ante la caída del servicio de pagos, el sistema detecta la falla y redirige automáticamente a una página de espera en ≤10 s, manteniendo disponibles las funciones de consulta. | H | M
+| | Manejo de picos de tráfico | Durante eventos con picos de 10 TPS sostenidos, el sistema mantiene al menos un 95% de disponibilidad sin rechazar transacciones válidas. | H | H
+| | Recuperación automática | Tras un fallo en el nodo de reservaciones, el sistema se recupera automáticamente y vuelve a estado operativo en ≤60 s (MTTR). | H | H
+
+| Usabilidad | Eficiencia de uso | Recepcionistas novatos completan procesos de check-in y check-out en ≤3 min tras 10 min de instrucción; tasa de éxito ≥90%. | H | M
+| | Aprendizaje del sistema | Nuevos usuarios completan su primera reservación sin ayuda en ≤5 pasos, alcanzando una tasa de éxito ≥90%. | H | M
+| | Retroalimentación inmediata | Ante errores en la reserva o pago, el sistema muestra retroalimentación contextual y sugerencias de corrección en ≤1 s. | H | M
+
+| Rendimiento | Latencia de respuesta | Bajo carga normal (3 TPS sostenidos), la confirmación de reserva se completa en ≤2.5 s P95 y ≤4.0 s P99. | H | H
+| | Capacidad de procesamiento | El sistema soporta ≥300 consultas de disponibilidad por segundo (QPS) con latencia ≤500 ms P95. | H | H
+| | Consistencia temporal | Las variaciones de tiempo de respuesta entre peticiones equivalentes no superan ±10% bajo carga nominal. | M | M
+
+| Escalabilidad | Escalabilidad horizontal | Al añadir instancias del servicio de reservas, el throughput aumenta proporcionalmente hasta 8 nodos sin degradación (>95% de eficiencia). | H | H
+| | Escalabilidad vertical | En hardware con el doble de CPU y memoria, el tiempo de respuesta mejora al menos un 40%. | M | M
+| | Elasticidad | En entorno cloud, el sistema ajusta automáticamente sus recursos para mantener latencia P95 ≤2.5 s durante ráfagas de tráfico. | H | H
+
+| Seguridad | Cifrado de datos en tráfico | Toda comunicación con clientes y pasarela de pagos utiliza TLS 1.3 y HSTS, garantizando cifrado de extremo a extremo. | H | M
+| | Autenticación multifactor | Los administradores inician sesión mediante MFA (token + contraseña), completando el proceso en ≤5 s; bloqueo tras 5 intentos fallidos por 5 min. | H | M
+| | Detección de intentos de intrusión | El sistema detecta ≥95% de intentos de acceso no autorizado mediante monitoreo de logs y generación de alertas en ≤30 s. | H | H
+|===
+
+=== Escenarios de atributos de calidad
+==== Disponibilidad
+Según el estándar ISO/IEC 25010:2023, la disponibilidad es la capacidad de un producto para estar operativo y accesible cuando se requiere para su uso. Este atributo es crucial, ya que el sistema de reservaciones debe estar disponible en todo momento, ya que los huéspedes pueden realizar reservaciones o cancelaciones desde cualquier parte del mundo y en cualquier horario. Una caída del sistema impactaría directamente en la operación del hotel y la experiencia de usuario. Garantizar alta disponibilidad asegura la continuidad del servicio y confianza de los clientes.
+
+===== QAS-01: Detección de fallos en servicio de pagos
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-01 — Detección de fallos en servicio de pagos
+| Escenario | Garantizar la detección oportuna de fallos en el servicio de pagos para mantener la disponibilidad del sistema.
+| Atributo | Disponibilidad
+| Preocupación del atributo | Tiempo de detección de fallos
+| Refinamiento del escenario |
+Fuente del estímulo: Sistema de monitoreo +
+Estímulo: Caída del microservicio de pagos +
+Ambiente: Operación normal con tráfico sostenido de 3 TPS +
+Artefacto: Servicio de pagos +
+Respuesta: El sistema detecta la falla y redirige automáticamente a una página de espera +
+Medida de la respuesta: Tiempo de detección ≤ 10 s; falsos positivos < 2%
+|===
+
+===== QAS-02: Manejo de picos de tráfico
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-02 — Manejo de picos de tráfico
+| Escenario | Mantener la disponibilidad y respuesta del sistema durante picos de tráfico imprevistos.
+| Atributo | Disponibilidad
+| Preocupación del atributo | Manejo de picos de tráfico
+| Refinamiento del escenario |
+Fuente del estímulo: Usuarios realizando múltiples reservas simultáneas +
+Estímulo: Aumento de carga hasta 10 TPS sostenidos +
+Ambiente: Alta concurrencia en entorno productivo +
+Artefacto: API de confirmación de reservas +
+Respuesta: El sistema balancea la carga y mantiene disponibilidad ≥ 95% +
+Medida de la respuesta: Error rate ≤ 0.5% durante 5 min de carga
+|===
+
+===== QAS-03: Recuperación automática del servicio
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-03 — Recuperación automática del servicio
+| Escenario | Recuperar el servicio de reservaciones tras una falla sin intervención manual.
+| Atributo | Disponibilidad
+| Preocupación del atributo | Recuperación automática
+| Refinamiento del escenario |
+Fuente del estímulo: Reinicio inesperado del nodo de reservaciones +
+Estímulo: Falla de instancia o contenedor +
+Ambiente: Entorno de operación normal +
+Artefacto: Servicio central de reservaciones +
+Respuesta: El sistema reinicia y se restablece automáticamente +
+Medida de la respuesta: MTTR ≤ 60 s; sesiones activas preservadas ≥ 95%
+|===
+
+==== Usabilidad
+Según el estándar ISO/IEC 25010:2023, la usabilidad es el grado en el que un sistema, producto o servicio puede ser utilizado por usuarios específicos para lograr objetivos específicos con eficacia, eficiencia y satisfacción en un contexto de uso específico. En el contexto del sistema de reservaciones de un hotel, la usabilidad es fundamental debido a que el público objetivo incluye huéspedes con distintos niveles de experiencia tecnológica, recepcionistas que requieren rapidez en su trabajo y administradores que necesitan gestión clara de datos. Un sistema usable reduce la curva de aprendizaje, disminuye errores humanos y mejora la satisfacción tanto del cliente como del personal interno.
+
+===== QAS-04: Eficiencia de uso del recepcionista
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-04 — Eficiencia de uso del recepcionista
+| Escenario | Evaluar la rapidez con que un recepcionista novato realiza operaciones básicas.
+| Atributo | Usabilidad
+| Preocupación del atributo | Eficiencia de uso
+| Refinamiento del escenario |
+Fuente del estímulo: Recepcionista nuevo +
+Estímulo: Ejecución de tareas de check-in y check-out +
+Ambiente: Operación normal con interfaz estándar +
+Artefacto: Módulo de recepción +
+Respuesta: Completa ambas tareas sin errores +
+Medida de la respuesta: Tiempo ≤ 3 min; tasa de éxito ≥ 90%
+|===
+
+===== QAS-05: Aprendizaje del sistema
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-05 — Aprendizaje del sistema
+| Escenario | Verificar el tiempo de aprendizaje requerido para completar una reserva sin ayuda.
+| Atributo | Usabilidad
+| Preocupación del atributo | Aprendizaje del sistema
+| Refinamiento del escenario |
+Fuente del estímulo: Nuevo usuario o huésped +
+Estímulo: Primer intento de realizar una reserva +
+Ambiente: Modo de operación normal con acceso web o móvil +
+Artefacto: Interfaz de flujo de reserva +
+Respuesta: El usuario completa el proceso en ≤5 pasos sin asistencia +
+Medida de la respuesta: Tasa de éxito ≥ 90%
+|===
+
+===== QAS-06: Retroalimentación inmediata
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-06 — Retroalimentación inmediata
+| Escenario | Ofrecer mensajes de error claros y en tiempo real para guiar al usuario.
+| Atributo | Usabilidad
+| Preocupación del atributo | Retroalimentación inmediata
+| Refinamiento del escenario |
+Fuente del estímulo: Usuario final (huésped o recepcionista) +
+Estímulo: Error al confirmar pago o reserva +
+Ambiente: Navegador o app móvil +
+Artefacto: Interfaz de usuario y módulo de validación +
+Respuesta: Se muestra mensaje contextual y sugerencia de corrección +
+Medida de la respuesta: Tiempo ≤ 1 s; tasa de comprensión ≥ 95%
+|===
+
+==== Rendimiento
+De acuerdo con el estándar ISO/IEC/IEEE 24765:2017, el rendimiento se define como el grado en el que un sistema o componente cumple sus funciones designadas dentro de restricciones dadas, como velocidad, precisión o uso de memoria. En este contexto, el sistema debe responder de manera rápida y eficiente, especialmente durante la consulta de disponibilidad, generación de facturas o reportes. Un bajo rendimiento puede provocar que el huésped abandone la plataforma y busque alternativas en la competencia. Además, para el personal del hotel, la velocidad en check-in y check-out es crítica para evitar filas y retrasos en la atención.
+
+===== QAS-07: Latencia de respuesta
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-07 — Latencia de respuesta
+| Escenario | Mantener tiempos de confirmación aceptables durante operaciones normales.
+| Atributo | Rendimiento
+| Preocupación del atributo | Latencia de respuesta
+| Refinamiento del escenario |
+Fuente del estímulo: Huésped +
+Estímulo: Solicitud de confirmación de reserva +
+Ambiente: Carga promedio de 3 TPS sostenidos +
+Artefacto: Servicio de reservas +
+Respuesta: La confirmación se completa sin errores +
+Medida de la respuesta: ≤2.5 s P95 y ≤4.0 s P99
+|===
+
+===== QAS-08: Capacidad de procesamiento
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-08 — Capacidad de procesamiento
+| Escenario | Garantizar respuesta eficiente durante múltiples consultas concurrentes.
+| Atributo | Rendimiento
+| Preocupación del atributo | Capacidad de procesamiento
+| Refinamiento del escenario |
+Fuente del estímulo: Usuarios concurrentes +
+Estímulo: Solicitudes de consulta de disponibilidad +
+Ambiente: 300 QPS en entorno productivo +
+Artefacto: API de disponibilidad +
+Respuesta: Atiende todas las solicitudes sin saturarse +
+Medida de la respuesta: Latencia ≤ 500 ms P95; tasa de éxito ≥ 99%
+|===
+
+===== QAS-09: Consistencia temporal
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-09 — Consistencia temporal
+| Escenario | Asegurar uniformidad en los tiempos de respuesta bajo carga nominal.
+| Atributo | Rendimiento
+| Preocupación del atributo | Consistencia temporal
+| Refinamiento del escenario |
+Fuente del estímulo: Huéspedes simultáneos +
+Estímulo: Peticiones paralelas de confirmación +
+Ambiente: Carga nominal +
+Artefacto: Motor de reservaciones +
+Respuesta: Mantiene tiempos consistentes entre peticiones equivalentes +
+Medida de la respuesta: Variación ≤ ±10%
+|===
+
+==== Escalabilidad
+Siguiendo el estándar ISO/IEC 25010:2023, la escalabilidad es definida como la capacidad de un producto para manejar cargas de trabajo crecientes o decrecientes o para adaptar su capacidad para manejar variabilidad. Para el sistema de reservaciones de un hotel, la plataforma debe poder crecer en función del aumento de hoteles, usuarios y transacciones sin degradar su desempeño. Esto es esencial si se expande a nivel regional o internacional, ya que debe adaptarse a mayor carga de consultas y operaciones sin necesidades de rediseños completos.
+
+===== QAS-10: Escalabilidad horizontal
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-10 — Escalabilidad horizontal
+| Escenario | Validar el crecimiento del sistema al añadir nuevas instancias.
+| Atributo | Escalabilidad
+| Preocupación del atributo | Escalabilidad horizontal
+| Refinamiento del escenario |
+Fuente del estímulo: Administrador del sistema +
+Estímulo: Adición de nuevos nodos de servicio +
+Ambiente: Sistema guardando datos en la nube +
+Artefacto: Conjunto de servicios del sistema +
+Respuesta: El rendimiento mejora al repartir el trabajo entre servidores +
+Medida de la respuesta: Eficiencia ≥ 95% hasta 8 servidores
+|===
+
+===== QAS-11: Escalabilidad vertical
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-11 — Escalabilidad vertical
+| Escenario | Verificar el aprovechamiento de hardware más potente.
+| Atributo | Escalabilidad
+| Preocupación del atributo | Escalabilidad vertical
+| Refinamiento del escenario |
+Fuente del estímulo: Equipo de infraestructura +
+Estímulo: Subida o baja de solicitudes en el sistema +
+Ambiente: Sistema en funcionaiento normal +
+Artefacto: Servidor principal de base de datos +
+Respuesta: Reduce el tiempo de respuesta +
+Medida de la respuesta: Mejora ≥ 40% en latencia promedio
+|===
+
+===== QAS-12: Elasticidad
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-12 — Elasticidad
+| Escenario | Ajustar recursos de manera dinámica ante cambios de demanda.
+| Atributo | Escalabilidad
+| Preocupación del atributo | Elasticidad
+| Refinamiento del escenario |
+Fuente del estímulo: Fluctuación de usuarios concurrentes +
+Estímulo: Aumento o disminución de tráfico +
+Ambiente: Plataforma en la nbe +
+Artefacto: Servicios principales del sistema +
+Respuesta: Aumenta o reduce recursos segun sea necesatio sin interrumpir el servicio +
+Medida de la respuesta: Tiempo de ajuste ≤ 120 s; uso de CPU ≤ 70%
+|===
+
+==== Seguridad
+Basándose en el estándar ISO/IEC/IEEE 15288:2023, la seguridad se refiere a la protección contra subversión intencional o fallo forzado. Este atributo es crítico porque el sistema maneja datos sensibles como información de huéspedes, métodos de pago y reportes financieros. Una vulnerabilidad podría comprometer la privacidad de los clientes y la reputación del hotel. Implementar autenticación robusta, cifrado y control de accesos es clave para proteger la integridad de la información y evitar fraudes.
+
+===== QAS-13: Cifrado de datos en tránsito
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-13 — Cifrado de datos en tránsito
+| Escenario | Asegurar la confidencialidad de la información entre cliente y servidor.
+| Atributo | Seguridad
+| Preocupación del atributo | Cifrado de datos en tráfico
+| Refinamiento del escenario |
+Fuente del estímulo: Cliente (huésped o administrador) +
+Estímulo: Envío de datos personales y de pago +
+Ambiente: Canal HTTPS con TLS 1.3 +
+Artefacto: API Gateway y servicios internos +
+Respuesta: Todos los datos se transmiten cifrados con HSTS activo +
+Medida de la respuesta: 100% de conexiones seguras; vulnerabilidades = 0
+|===
+
+===== QAS-14: Autenticación multifactor
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-14 — Autenticación multifactor
+| Escenario | Fortalecer la autenticación de administradores y usuarios sensibles.
+| Atributo | Seguridad
+| Preocupación del atributo | Autenticación multifactor
+| Refinamiento del escenario |
+Fuente del estímulo: Administrador o usuario privilegiado +
+Estímulo: Inicio de sesión +
+Ambiente: Entorno web o app móvil +
+Artefacto: Servicio de autenticación +
+Respuesta: Solicita código temporal MFA y bloquea tras 5 intentos fallidos +
+Medida de la respuesta: Proceso ≤ 5 s para 95% de usuarios; bloqueo 5 min
+|===
+
+===== QAS-15: Detección de intentos de intrusión
+[cols="^25, <75", options="header"]
+|===
+| Campo | Descripción
+| ID y descripción corta | QAS-15 — Detección de intentos de intrusión
+| Escenario | Detectar y bloquear intentos de acceso no autorizado al sistema.
+| Atributo | Seguridad
+| Preocupación del atributo | Detección de intentos de intrusión
+| Refinamiento del escenario |
+Fuente del estímulo: Atacante externo +
+Estímulo: Solicitudes maliciosas o de fuerza bruta +
+Ambiente: Red pública con tráfico mixto +
+Artefacto: Módulo IDS/IPS y logs del firewall +
+Respuesta: Bloquea la IP atacante y genera alerta al administrador +
+Medida de la respuesta: Tiempo ≤ 30 s; tasa de detección ≥ 95%; falsos positivos ≤ 2%
+|===

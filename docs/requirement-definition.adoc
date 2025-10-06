@@ -12,23 +12,66 @@ El sistema permitiría a Blue Lotus optimizar sus costos operativos, reduciendo 
 
 La existencia de este proyecto no sólo resolverá los problemas actuales de descentralización y errores operativos, sino que también brindará a Blue Lotus una ventaja competitiva en el mercado hotelero. En este sentido, la propuesta representa una oportunidad estratégica para consolidar la información, optimizar procesos y garantizar un crecimiento sostenido dentro de la industria turística. Así, el proyecto no se limita únicamente a  resolver fallas técnicas, sino que constituye una inversión que permitirá asegurar la permanencia y expansión de la cadena en el largo plazo.
 
-==== Alcance del sistema
+==== Alcance y proposito del diseño
 
-===== Funcionalidades principales
+El presente apartado tiene como propósito definir los limtes, alcance y objetivos del diseño del sistema de Reservaciones para cadena hotelera (BLS). Este sistema surge como una respuesta a la necesidad de modernizar la forma en que una cadena internacional de hoteles gestiona sus operaciones de reservación, check-in, check-out, facturación y auditoria, sustituyendo multiples soluciones locales por una plataforma que se espera sera escalable y confiable.
 
-* Reservación con pago y cancelación.
-* Consulta de disponibilidad.
-* Gestión de reservaciones: check-in, check-out, cambio de habitación.
-* Registro de consumos y servicios.
-* Administración de precios diarios y políticas de *overbooking*.
-* Backoffice: hoteles, habitaciones, tipos de habitación y tarifas (altas, bajas y cambios).
-* Reportes y auditoría de transacciones.
-* Soporte para métodos de pago comunes como tarjetas de crédito, débito.
+El diseño del sistema busca establecer una arquitectura solida que permite soportar altos volumenes de transacciones, para un promedio estimado de 5000 hoteles y 1,000,000 de habitaciones. Se pretende que el sistema sea capaz de manejar picos de demanda, garantizando disponibilidad y consistencia en tiempo real. Además de contar con la capacidad de atender solicitudes silmultaneas en tiempo real sin perdida de información ni inconsistencias en las transacciones.Adicionalmente, se busca que el sistema sea modular y flexible, permitiendo futuras expansiones y adaptaciones a nuevas necesidades del negocio. En este documento se formalizan las fronteras del diseño, se identifican los principales interesadps, y se analizan sus preocupaciones, las cuales constituyen las entradas escenciales para definir los impulsores arquitectonicos del sistema.
 
-===== Alcance de la primera versión
+===== Alcance general del diseño
+El sistema de reservaciones sera una plataforma centralizada de gestión hotelera, accesible desde la web  y dispositivos moviles, cuyo proposito es ofrecer a los huespedes una experiencia fluida y confiable al momento de consultar disponibilidad, realizar reservaciones, gestionar pagos y consultar su historial de estancias. Al mismo tiempo, brindara a los recepcionistas y administradores las herramientras necesarias para controlar inventarios, precios, check-ins, y reportes financieros de manera eficiente.
 
-* **Flujo completo de reserva:** disponibilidad → confirmación → pago.
-* **Operaciones esenciales de recepción:** check-in y check-out.
+El alcance del diseño abarca los modulos funcionales escenciales para el correcto funcionamiento del sistema dentro del contexto de operaciones establecido de la cadena hotelera Blue Lotus. Estos modulos incluyen: +
+
+* **Gestión de Reservas:** Creación, modificación, cancelación y consulta de reservas en tiempo real con soporte para políticas de overbooking y tarifas dinámicas.
+* **Consulta de Disponibilidad:** Permite a los huéspedes verificar la disponibilidad de habitaciones según fechas, tipo de habitación y número de huéspedes.
+* **Gestión de Usuarios:** Registro, autenticación y administración de perfiles para huéspedes, recepcionistas y administradores.
+* **Facturación y servicios adicionales:** Registro y cobro de consumos extra, generación de facturas y recibos.
+* **Administración de Habitaciones:** Facilita el control de inventarios, tipos de habitaciones y tarifas.
+* **Check-in y Check-out:** Optimiza el proceso de registro y salida de huéspedes.
+* **Reportes y Auditoría:** Genera informes sobre el desempeño del hotel y audita las transacciones realizadas.
+* **Integración de Pagos:** Soporta múltiples métodos de pago, garantizando transacciones seguras y eficientes.
+* **Escalabilidad y Rendimiento:** Arquitectura diseñada para soportar un alto volumen de transacciones con baja latencia y alta disponibilidad.
+* **Seguridad:** Implementación de medidas robustas para proteger la información sensible de los usuarios y cumplir con normativas vigentes.
+* **Soporte Multiplataforma:** Acceso desde diferentes dispositivos y sistemas operativos para garantizar una experiencia de usuario consistente.
+
+En esta primera iteración del diseño, el enfoque se centra en el flujo principal de reservación (disponibilidad->confirmación->pago) y en las operaciones básicas de recepción (check-in y check-out).
+
+===== Fronteras del sistema
+El diseño establece una frontera clara entre el sistema y los actores externos que interactuan con el. Dentro del sistema se encuentran todos los modulos que gestionan la información del negocio como el inventario de habitaciones y tarifas, las reservaciones, los perfiles de usuarios, y los procesos de check-in/check-out. Estos modulos son responsables de procesar las solicitudes de los usuarios, aplicar las reglas de negocio, y mantener la integridad y consistencia de los datos.
+
+Fuera del sistema se encuentran los elementos externos que se necesitan para completar el proceso de tareas, tales como: +
+
+* **Sistema de pagos:** Sistema externo que procesa transacciones bancarias de los huespedes.
+* **Correo electrónico y notificaciones:** Servicio externo utilizado para enviar confirmaciones y recordatorios a los usuarios.
+* **Entorno fisico del hotel:** Incluye el hardware y redes locales en cada sucursal que permiten la conexión al sistema centralizado.
+
+El sistema no se encargara directamente del procesamiento bancario ni del control operativo del personal del hotel, sin embargo debe integrarse con estos sistemas para garantizar una experiencia de usuario fluida y segura. Estas fronteras operativas aseguran que el diseño mantenga un enfoque modular y de responsabilidad limitada, facilitando futuras expansiones y adaptaciones a nuevas necesidades del negocio.
+
+===== Interesados del sistema (Stakeholders) y sus preocupaciones (Concerns)
+El sistema de reservaciones involucra a diversos interesados, cada uno con sus propias preocupaciones y necesidades que el diseño debe abordar para garantizar el éxito del proyecto. A continuación se describen los principales interesados y sus respectivas preocupaciones: +
+
+* **Huéspedes:** Buscan una experiencia de usuario intuitiva y confiable al momento de realizar reservaciones, consultar disponibilidad y gestionar sus estancias. Preocupaciones incluyen la facilidad de uso, seguridad de sus datos personales y métodos de pago, así como la rapidez en la confirmación de reservas.
+* **Recepcionistas:** Necesitan herramientas eficientes para gestionar check-ins, check-outs, y modificaciones de reservas. Sus preocupaciones se centran en la usabilidad del sistema, la rapidez en la actualización de información y la capacidad de manejar múltiples tareas simultáneamente.
+* **Administradores:** Requieren funcionalidades avanzadas para controlar inventarios, tarifas, y mantener actualizado el catalogo de hoteles así como sus servicios, consumos, tipos de habitaciones y politicas operativas. Sus preocupaciones principales incluyen contar con herramientas flexibles y confiables para modificar información sin afectar la operación en curso así como controlar la integridad y consistencia de los datos.
+* **Auditores:** Necesitan acceso a reportes detallados y registros de transacciones para verificar la trazabilidad y cumplimiento de normativas. Sus preocupaciones se enfocan en la precisión de los datos, la capacidad de generar informes personalizados y la seguridad de la información.
+* **Equipo de desarrollo y mantenimiento:** Encargados del mantenimiento y soporte del sistema, buscan una arquitectura escalable y fácil de administrar. Sus preocupaciones incluyen la facilidad de implementación de actualizaciones, la monitorización del rendimiento y la capacidad de resolver problemas técnicos rápidamente.
+
+===== Preocupaciones principales del sistema
+Del analisis de los documentos y los actores involucrados, se identifican las siguientes preocupaciones principales que el diseño del sistema debe abordar: +
+
+* **Integración con sistemas externos:** El sistema debe ser capaz de integrarse de manera efectiva con los sistemas de pagos, correo electrónico y el entorno físico del hotel.
+* **Seguridad de los datos:** Es fundamental garantizar la seguridad de la información personal y financiera de los usuarios, así como la protección contra accesos no autorizados.
+* **Escalabilidad:** El sistema debe ser capaz de escalar para manejar un gran volumen de reservas y usuarios, especialmente durante temporadas altas.
+* **Usabilidad:** La interfaz del usuario debe ser intuitiva y fácil de usar para todos los actores del sistema, minimizando la curva de aprendizaje.
+* **Mantenimiento y soporte:** Se debe considerar la facilidad de mantenimiento y actualización del sistema, así como la disponibilidad de soporte técnico.
+* **Auditabilidad:** El sistema debe registrar todas las transacciones y cambios de estado de manera que se pueda auditar su funcionamiento y cumplimiento de normativas.
+
+===== Proposito del diseño
+El proposito principal del diseño es establecer una arquitectura de software que alinee los objetivos del negocio con las necesidades de los usuarios y los atributos de calidad requeridos, garantizando así un sistema eficiente y efectivo.
+El diseño debe servir como una guia estructural y conceptual para las etapas posteriores de desarrolllo, asegurando que cada decisión técnica responde a las preocupaciones identificadas de los stakeholders. De esta forma el BLS no solo resuelve la problematica operativa de las reservas, sino que se convierte en una herramientra que impulsa la eficiencia, mejora la experiencia del usuario.
+
+image::ContextDiagram.png[Diagrama de contexto del sistema de reservas, width=600, align=center]
 
 ===== Proposito del proyecto
 Desarrollar un sistema de reservaciones centralizado y robust para una cadena hotelera con más de 5,0000 hoteles y 1,000,000 de habitaciones, sustituyendo las soluciones locales que actualmente generan inconsistencias. El sistema debe permitir gestionar tarifas y reservaciones en tiempo real, brindando una experiencia fluida al cliente final y optimizando procesos operativos. Además, debe garantizar alta disponibilidad, consistencia y escalabilidad para soportar el crecimiento futuro de la cadena.
@@ -49,6 +92,9 @@ image::AdministratorUseCaseDiagram.png[Diagrama de casos de uso del AC-03 Admini
 ==== Casos de uso del AC-04 Auditor
 image::AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, width=600, align=center]
 
+==== Casos de uso del AC-05 RRHH
+image::HumanResourcesUseCaseDiagram.png[Diagrama de casos de uso del AC-05 RRHH, width=600, align=center]
+
 === Descripciones de casos de uso
 
 ==== CU-01: Consultar disponibilidad
@@ -66,19 +112,21 @@ image::AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, wid
 *PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar fechas, tipo de habitación y número de huéspedes. +
-2. El huésped completa el formulario y da clic en "Buscar". **(Ver FA-01)**  **(Ver FA-03)**+
+2. El huésped completa el formulario y da clic en "Buscar". **(Ver FA-01)**  **(Ver FA-03)** +
 3. El sistema valida la disponibilidad considerando las politicas de overbooking y tarifas diarias y muestra +
-una lista de resultados con las habitaciones disponibles. **(Ver FA-02)** **(Ver EX-01)**+
+una lista de resultados con las habitaciones disponibles. **(Ver FA-02)** **(Ver EX-01)** +
 4. El huésped selecciona una opción y da clic en "Reservar Habitación". **(Ver FA-03)** **(Ver EX-01)** +
-**(Extiende CU-02)**
+**(Extiende CU-02)** +
 5. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El huésped da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* No hay disponibilidad: +
 1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para los criterios seleccionados. +
 2. El huésped da clic en "Modificar búsqueda" y regresa al paso 1 del flujo normal. +
+
 *FA-03:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
@@ -106,8 +154,8 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en el botón "Reservar habitación".
 | **Precondiciones** |
-*PRE-01:* El sistema cuenta con habitaciones disponibles.
-*PRE-02:* El huésped debe estar autenticado en la plataforma.
+*PRE-01:* El sistema cuenta con habitaciones disponibles. +
+*PRE-02:* El huésped debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra un formulario con campos para ingresar fechas, tipo de habitación y número de huéspedes. +
 2. El huésped completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-03)** +
@@ -161,11 +209,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en "Cancelar reservación".
 | **Precondiciones** |
-*PRE-01* El huésped cuenta con una reservación previa en el sistema.
-*PRE-02:* El huésped debe estar autenticado en la plataforma.
+*PRE-01* El huésped cuenta con una reservación previa en el sistema. +
+*PRE-02:* El huésped debe estar autenticado en la plataforma. +
 | **Flujo normal** |
 1. El sistema muestra una lista de las reservaciones con las que cuenta el huésped. **(Ver EX-01)** +
-2. El huésped selecciona la reservación que desea cancelar y da clic en "Cancelar reservación". **(Ver FA-01)** +
+2. El huésped selecciona la reservación que desea cancelar y da clic en "Cancelar reservación". +
+**(Ver FA-01)** +
 3. El sistema muestra un mensaje de confirmación de cancelación. +
 4. El huésped da clic en "Aceptar". **(Ver FA-02)** +
 5. El sistema borra la reservación de la habitación de la base de datos y muestra un mensaje de operación exitosa. **(Ver EX-01)** +
@@ -175,10 +224,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Políticas de cancelación: +
 1. El sistema muestra un mensaje indicando las penalizaciones aplicables según las políticas de cancelación. +
 2. El huésped da clic en "Aceptar" y regresa al paso anterior del flujo normal. +
 3. El huésped da clic en "Cancelar" y termina el caso de uso. +
+
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -204,9 +255,11 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *PRE-01:* El huésped cuenta con una reservación previa en el sistema. +
 *PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra una lista de las reservaciones asociadas al huésped con su estado actual. **(Ver FA-01)** **(Ver EX-01)** +
+1. El sistema muestra una lista de las reservaciones asociadas al huésped con su estado actual. +
+**(Ver FA-01)** **(Ver EX-01)** +
 2. El huésped selecciona una reservación y da clic en "Ver detalles". **(Ver FA-02)** +
-3. El sistema muestra un resumen con los detalles completos de la reservación seleccionada. **(Ver EX-01)** +
+3. El sistema muestra un resumen con los detalles completos de la reservación seleccionada. +
+ **(Ver EX-01)** +
 4. El huésped da clic en "Aceptar" para cerrar el resumen. +
 5. Termina el caso de uso.
 | **Flujos alternos** |
@@ -240,11 +293,11 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en "Agregar servicios/consumo".
 | **Precondiciones** |
-*PRE-01:* El huésped debe estar autenticado en la plataforma.
+*PRE-01:* El huésped debe estar autenticado en la plataforma. +
 *PRE-02:* Los servicios y consumos adicionales deben estar previamente configurados en el sistema. +
 | **Flujo normal** |
 1. El sistema muestra una lista de servicios y consumos adicionales disponibles con descripción y costo. **(Ver FA-01)** +
-2. El huésped selecciona los servicios y consumos que desea agregar y da clic en "Agregar a reservación". **(Ver FA-02)**+
+2. El huésped selecciona los servicios y consumos que desea agregar y da clic en "Agregar a reservación". **(Ver FA-02)** +
 3. El sistema actualiza la reservación con los nuevos servicios y consumos seleccionados. +
 4. El huésped da clic en "Aceptar" para confirmar los cambios. **(Ver FA-02)** +
 5. Termina el caso de uso.
@@ -252,10 +305,12 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 *FA-01:* No hay servicios disponibles: +
 1. El sistema muestra un mensaje indicando que no hay servicios adicionales disponibles para agregar. +
 2. El huésped da clic en "Aceptar" y termina el caso de uso. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -279,7 +334,7 @@ Permite al huésped reservar una habitación desde la plataforma en línea. Incl
 | **Actor** | AC-01 Huésped
 | **Disparador** | El huésped da clic en "Consultar historial de reservaciones"
 | **Precondiciones** |
-*PRE-01:* El huésped debe contar con al menos una reservación pasada.
+*PRE-01:* El huésped debe contar con al menos una reservación pasada. +
 *PRE-02:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra una tabla con las reservaciones del huésped  ordenadas por fecha. +
@@ -325,10 +380,12 @@ mensaje de guardado exitoso **(Ver EX-01)** +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Campos vacíos: +
 1.	El sistema muestra un mensaje indicando la falta de campos llenos. +
 2.	El huésped da clic en “Aceptar”. +
 3.	El sistema regresa al paso 1 del flujo normal. +
+
 *FA-03:* Datos inválidos: +
 1.	El sistema muestra un mensaje de datos inválidos. +
 2.	El huésped da clic en “Aceptar”. +
@@ -358,25 +415,28 @@ mensaje de guardado exitoso **(Ver EX-01)** +
 *PRE-01:* El huésped debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1. El sistema muestra los métodos de pago registrados y  el formulario para agregar +
-un nuevo método de pago. **(Ver EX-01)**
-método de pago. **(Ver EX-01)** +
+un nuevo método de pago. **(Ver EX-01)** +
 2. El huésped completa el formulario y da clic en “Guardar”. +
 **(Ver FA-01)** **(Ver FA-02)** **(Ver FA-03)** **(Ver FA-04)** +
-3. El sistema guarda el nuevo método de pago y muestra un mensaje de guardado exitoso. **(Ver EX-01)** +
+3. El sistema guarda el nuevo método de pago y muestra un mensaje de guardado +
+ exitoso. **(Ver EX-01)** +
 4. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar" +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Campos vacíos +
 1.	El sistema muestra un mensaje indicando la falta de campos llenos. +
 2.	El huésped da clic en “Aceptar”. +
 3.	El sistema regresa al paso 1 del flujo normal. +
+
 *FA-03:* Datos de métodos de pago ya registrados en la cuenta del usuario +
 1.	El sistema muestra un mensaje de existencia de método de pago en la cuenta del usuario +
 2.	El huésped da clic en “Aceptar” +
 3.	El sistema regresa al paso 1 del flujo normal +
+
 *FA-04:* Método de pago inválido +
 1.	El sistema muestra un mensaje de método de pago inválido. +
 2.	El huésped da clic en “Aceptar”. +
@@ -454,13 +514,15 @@ método de pago. **(Ver EX-01)** +
 3. El sistema ejecuta el CU-16 Consultar estado de reservación en recepción, +
  valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
 4. El recepcionista revisa los datos y da clic en "Confirmar check-in". **(Ver FA-01)**  +
-5. El sistema actualiza el estado de la reservación a "Ocupada" y muestra un mensaje de éxito. **(Ver EX-01)** +
+5. El sistema actualiza el estado de la reservación a "Ocupada" y muestra un mensaje +
+de éxito. **(Ver EX-01)** +
 6. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El recepcionista da clic en "Sí" y termina el caso de uso. +
 3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Reservación no encontrada: +
 1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
 2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
@@ -495,7 +557,8 @@ método de pago. **(Ver EX-01)** +
 1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
 3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
-4. El recepcionista revisa los consumos y pagos pendientes, y da clic en "Procesar check-out". **(Ver FA-01)** +
+4. El recepcionista revisa los consumos y pagos pendientes, y da clic en +
+"Procesar check-out". **(Ver FA-01)** +
 5. El sistema procesa el pago, actualiza el estado de la reservación a "Finalizada" y libera la habitación. Después, el sistema muestra un mensaje de éxito y resumen de la operación. **(Ver EX-01)** **(Ver EX-02)** +
 6. Termina el caso de uso.
 | **Flujos alternos** |
@@ -503,14 +566,16 @@ método de pago. **(Ver EX-01)** +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El recepcionista da clic en "Sí" y termina el caso de uso. +
 3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Reservación no encontrada: +
 1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
 2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
-| **Excepciones** |
-*EX-01:* Error en el procesamiento del pago: +
+
+*FA-03* Error en el procesamiento del pago: +
 1. El sistema muestra un mensaje indicando que hubo un problema al procesar el pago. +
 2. El recepcionista da clic en "Intentar de nuevo" y regresa al paso 4 del flujo normal. +
-*EX-02:* Error de base de datos: +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El recepcionista da clic en "Aceptar" y termina el caso de uso. +
 | **Postcondiciones** |
@@ -654,9 +719,11 @@ si es necesario y muestra un mensaje de éxito. **(Ver EX-01)** +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El recepcionista da clic en "Sí" y termina el caso de uso. +
 3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Reservación no encontrada: +
 1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
 2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+
 *FA-03:* No hay disponibilidad: +
 1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para los criterios seleccionados.
 2. El recepcionista da clic en "Modificar búsqueda" y regresa al paso 4 del flujo normal. +
@@ -731,13 +798,16 @@ si es necesario y muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Actor** | AC-02 Recepcionista
 | **Disparador** | El recepcionista da clic en "Consultar estado de reservación".
 | **Precondiciones** |
-*PRE-01:* El cliente debe contar con una reservación.
+*PRE-01:* El cliente debe contar con una reservación. +
 *PRE-02:* El recepcionista debe estar autenticado en la plataforma.
 | **Flujo normal** |
-1. El sistema muestra los datos de la reservación. **(Ver EX-01)**
-2. El recepecionista visualiza los datos de reservación y da clic en "Regresar".
+1. El sistema muestra los datos de la reservación. **(Ver EX-01)** **(Ver FA-01)** +
+2. El recepecionista visualiza los datos de reservación y da clic en "Regresar". +
 3. Termina el caso de uso
 | **Flujos alternos** |
+*FA-01:* Reservación no encontrada: +
+1. El sistema muestra un mensaje indicando que no se encontró la reservación. +
+2. El recepcionista da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
@@ -768,11 +838,13 @@ si es necesario y muestra un mensaje de éxito. **(Ver EX-01)** +
 1. El sistema muestra un formulario para ingresar el número de reservación o nombre del huésped. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** +
 3. El sistema valida la información y muestra los detalles de la reservación. **(Ver FA-02)** +
-4. El recepcionista ingresa las nuevas fechas de salida y da clic en "Verificar disponibilidad". **(Ver FA-01)** +
+4. El recepcionista ingresa las nuevas fechas de salida y da clic en +
+"Verificar disponibilidad". **(Ver FA-01)** +
 5. El sistema ejecuta el CU-18 Consultar disponibilidad local,valida la disponibilidad +
 y muestra el nuevo costo total. **(Ver FA-03)** + **(Ver EX-01)** +
 6. El recepcionista da clic en "Confirmar extensión". **(Ver FA-01)** +
-7. El sistema actualiza la reservación con las nuevas fechas y muestra un mensaje de éxito. **(Ver EX-01)** +
+7. El sistema actualiza la reservación con las nuevas fechas y muestra un +
+mensaje de éxito. **(Ver EX-01)** +
 8. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
@@ -817,7 +889,7 @@ y muestra el nuevo costo total. **(Ver FA-03)** + **(Ver EX-01)** +
 1. El sistema muestra un formulario con campos para ingresar fechas y tipo de habitación. +
 2. El recepcionista completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-02)** +
 3. El sistema valida la disponibilidad y muestra las opciones filtradas según los criterios. +
- **(Ver FA-03)** **(Ver EX-01)**
+ **(Ver FA-03)** **(Ver EX-01)** +
 4. El recepcionista da clic en "Aceptar" para cerrar el resumen. +
 5. Termina el caso de uso.
 | **Flujos alternos** |
@@ -831,7 +903,8 @@ y muestra el nuevo costo total. **(Ver FA-03)** + **(Ver EX-01)** +
 2. El recepcionista da clic en "Corregir" y regresa al paso anterior del flujo normal. +
 
 *FA-03:* No hay disponibilidad: +
-1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para los criterios seleccionados.
+1. El sistema muestra un mensaje indicando que no hay habitaciones disponibles para +
+los criterios seleccionados. +
 2. El recepcionista da clic en "Modificar búsqueda" y regresa al paso 1 del flujo normal. +
 | **Excepciones** |
 *EX-01:* Error de base de datos: +
@@ -859,21 +932,22 @@ servicios o huéspedes. El sistema envía alertas al área correspondiente.
 *PRE-01:* El recepcionista debe estar autenticado en la plataforma. +
 *PRE-02:* Debe existir al menos un hotel registrado en el sistema. +
 | **Flujo normal** |
-1. El sistema carga y muestra los datos del hotel y muestra un formulario de quejas. **(Ver EX-01)**
+1. El sistema carga y muestra los datos del hotel y muestra un formulario de quejas. **(Ver EX-01)** +
 2. El recepcionista ingresa los datos de incidente y da clic en "Reportar". **(Ver FA-01)** **(Ver FA-02)** +
-**(Ver FA-03)**
+**(Ver FA-03)** +
 3. El sistema valida los datos y guarda el registro de incidente en la base de datos y +
-después, muestra un mensaje de éxito. **(Ver EX-01)**
+después, muestra un mensaje de éxito. **(Ver EX-01)** +
 4. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
-2. El recepcionista da clic en "Sí" y termina el caso de uso.
+2. El recepcionista da clic en "Sí" y termina el caso de uso. +
 3. El recepcionista da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02* Fecha de reporte de incidente mayor a un mes +
 1. El sistema muestra un mensaje de fecha inválida. +
 2. El recepcionista da clic en "Aceptar". +
-3. El sistema regresa al paso 1 del flujo normal.
+3. El sistema regresa al paso 1 del flujo normal. +
 *FA-03:* Datos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El recepcionista da clic en "Corregir" y regresa al paso anterior del flujo normal. +
@@ -911,6 +985,7 @@ después, muestra un mensaje de éxito. **(Ver EX-01)**
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
@@ -952,11 +1027,11 @@ después, muestra un mensaje de éxito. **(Ver EX-01)**
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
 3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
 | **Excepciones** |
-*EX-01:* Error de base de datos: +
 *EX-01:* Error de base de datos: +
 1. El sistema muestra un mensaje indicando que hubo un error técnico. +
 2. El administrador da clic en "Aceptar" y termina el caso de uso.
@@ -984,12 +1059,14 @@ después, muestra un mensaje de éxito. **(Ver EX-01)**
 | **Flujo normal** |
 1. El sistema muestra un formulario para ingresar los datos del nuevo tipo de habitación. +
 2. El administrador completa el formulario y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
-3. El sistema valida y guarda el nuevo tipo de habitación. Después, muestra un mensaje de éxito. **(Ver EX-01)** +
+3. El sistema valida y guarda el nuevo tipo de habitación. Después, +
+muestra un mensaje de éxito. **(Ver EX-01)** +
 4. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador corrige los campos y vuelve a enviar el formulario. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
@@ -1028,6 +1105,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador corrige los campos y vuelve a enviar el formulario. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
@@ -1065,6 +1143,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
@@ -1092,23 +1171,24 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Modificar habitación"
 | **Precondiciones** |
-*PRE-01* Debe existir al menos un hotel y una habitación en el hotel.
-*PRE-02* El administrador debe estar autenticado en la plataforma.
+*PRE-01* Debe existir al menos un hotel y una habitación en el hotel. +
+*PRE-02* El administrador debe estar autenticado en la plataforma. +
 | **Flujo normal** |
-1. El sistema muestra un filtro de búsqueda de todos los hoteles. **(Ver EX-01)**
-2. El administrador selecciona un hotel. **(Ver FA-01)**
-3. El sistema muestra las habitaciones registradas en el hotel **(Ver EX-01)**
-4. El administrador selecciona una habitación **(Ver FA-01)**
-5. El sistema muestra un formulario con los campos a completar. **(Ver EX-01)**
-6. El administrador ingresa los nuevos datos. **(Ver FA-01)** **(Ver FA-02)**
-7. El sistema valida los datos y guarda la modificación de habitación en la base de datos. **(Ver EX-01)**
-8. Termina el caso de uso.
+1. El sistema muestra un filtro de búsqueda de todos los hoteles. **(Ver EX-01)** +
+2. El administrador selecciona un hotel. **(Ver FA-01)** +
+3. El sistema muestra las habitaciones registradas en el hotel **(Ver EX-01)** +
+4. El administrador selecciona una habitación **(Ver FA-01)** +
+5. El sistema muestra un formulario con los campos a completar. **(Ver EX-01)** +
+6. El administrador ingresa los nuevos datos. **(Ver FA-01)** **(Ver FA-02)** +
+7. El sistema valida los datos y guarda la modificación de habitación en la base de datos. **(Ver EX-01)** +
+8. Termina el caso de uso. +
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
-*FA-01:* Campos inválidos: +
+
+*FA-02:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal.
 | **Excepciones** |
@@ -1117,9 +1197,9 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
 *POST-01:* Registro de habitación modificada en la base de datos
-| **Reglas de negocio** | Ninguna
-| **Incluye** | Ninguna
-| **Extiende** | Ninguna
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-26: Administrar precios diarios
@@ -1146,7 +1226,8 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 *FA-01:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
-3. El administrador da clic en "No" y regresa al paso anterior del flujo normal
+3. El administrador da clic en "No" y regresa al paso anterior del flujo normal +
+
 *FA-02:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
@@ -1157,9 +1238,9 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 | **Postcondiciones** |
 *POST-01:* Se actualiza la tarifa del tipo de habitación para el hotel seleccionado. +
 *POST-02:* La nueva tarifa queda vigente para futuras reservaciones. +
-| **Reglas de negocio** |
-| **Incluye** |
-| **Extiende** |
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-27: Agregar consumo al catálogo
@@ -1185,10 +1266,12 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
 3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-03:* Consumo ya existente en el sistema +
 1. El sistema muestra un mensaje de existencia de consumo. +
 2. El administrador da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
@@ -1207,7 +1290,7 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-27
+| **ID** | CU-28
 | **Caso de uso** | Agregar servicio al catálogo
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | Permite registrar un nuevo servicio en el catálogo del hotel.
@@ -1226,10 +1309,12 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 *FA-01:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El administrador da clic en "Sí" y termina el caso de uso. +
 3. El administrador da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-03:* Servicio ya existente en el sistema +
 1. El sistema muestra un mensaje de existencia de servicio. +
 2. El administrador da clic en "Aceptar" +
@@ -1249,27 +1334,31 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-28
+| **ID** | CU-29
 | **Caso de uso** | Editar consumo
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite modificar los datos de un consumo ya existente en el catálogo.
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Editar consumo".
 | **Precondiciones** |
-*PRE-01* Consumo no existe en la base de datos
+*PRE-01* Consumo no existe en la base de datos +
 *PRE-02* El administrador debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1.	El sistema muestra en una tabla los consumos registrados en el catálogo *(Ver EX-01)*  +
-2.	El administrador selecciona un consumo y da clic en "Editar". + *(Ver FA-01)* *(Ver FA-02)* +
+2.	El administrador selecciona un consumo y da clic en "Editar". +
+*(Ver FA-01)* *(Ver FA-02)* +
 3.	El sistema muestra los datos actuales del consumo en un formulario. +
-4.	El administrador ingresa los nuevos datos del consumo y da clic en “Aceptar”. *(Ver FA-01)* *(Ver FA-02)* +
-5.	El sistema guarda el consumo en la base de datos y muestra el mensaje de registro exitoso. *(Ver EX-01)*
+4.	El administrador ingresa los nuevos datos del consumo y da clic en “Aceptar”. +
+*(Ver FA-01)* *(Ver FA-02)* +
+5.	El sistema guarda el consumo en la base de datos y muestra el mensaje de registro exitoso. +
+*(Ver EX-01)* +
 6. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar" +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Datos inválidos +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
@@ -1279,36 +1368,39 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
 *POST-01* Consumo registrado en la base de datos
-| **Reglas de negocio** | Ninguna
-| **Incluye** | Ninguna
-| **Extiende** | Ninguna
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-30: Editar servicio
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-28
+| **ID** | CU-30
 | **Caso de uso** | Editar servicio
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite modificar los datos de un servicio ya existente en el catálogo.
 | **Actor** | AC-03 Administrador
 | **Disparador** | El administrador da clic en "Editar servicio".
 | **Precondiciones** |
-*PRE-01* Consumo no existe en la base de datos
+*PRE-01* Consumo no existe en la base de datos +
 *PRE-02* El administrador debe estar autenticado en la plataforma.
 | **Flujo normal** |
 1.	El sistema muestra en una tabla los servicios registrados en el catálogo *(Ver EX-01)*  +
 2.	El administrador selecciona un servicio y da clic en "Editar". + *(Ver FA-01)* *(Ver FA-02)* +
 3.	El sistema muestra los datos actuales del servicio en un formulario. +
-4.	El administrador ingresa los nuevos datos del servicio y da clic en “Aceptar”. *(Ver FA-01)* *(Ver FA-02)* +
-5.	El sistema guarda el servicio en la base de datos y muestra el mensaje de registro exitoso. *(Ver EX-01)*
+4.	El administrador ingresa los nuevos datos del servicio y da clic en “Aceptar”. +
+*(Ver FA-01)* *(Ver FA-02)* +
+5.	El sistema guarda el servicio en la base de datos y muestra el mensaje de +
+registro exitoso. *(Ver EX-01)* +
 6. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar" +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El huésped da clic en "Sí" y termina el caso de uso. +
 3. El huésped da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Datos inválidos +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El administrador da clic en "Corregir" y regresa al paso anterior del flujo normal. +
@@ -1318,21 +1410,21 @@ muestra un mensaje de éxito. **(Ver EX-01)** +
 2. El huésped da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
 *POST-01* Consumo registrado en la base de datos
-| **Reglas de negocio** | Ninguna
-| **Incluye** | Ninguna
-| **Extiende** | Ninguna
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
 |===
 
 ==== CU-31: Generar reportes financieros
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-29
+| **ID** | CU-31
 | **Caso de uso** | Generar reportes financieros
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | El auditor obtiene reportes detallados de ingresos por reservaciones y consumos. Estos reportes permiten evaluar la rentabilidad del sistema.
 | **Actor** | AC-04 Auditor
-| **Disparador** | El auditor da clic en "Generar reportes.
+| **Disparador** | El auditor da clic en "Generar reportes".
 | **Precondiciones** |
 *PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
 | **Flujo normal** |
@@ -1346,9 +1438,11 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 *FA-01:* Sin datos disponibles: +
 1. El sistema muestra un mensaje indicando que no hay datos para el reporte. +
 2. El auditor da clic en "Aceptar" y termina el caso de uso. +
+
 *FA-02:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El auditor da clic en "Corregir" y regresa al paso anterior del flujo normal. +
+
 *FA-03:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El auditor da clic en "Sí" y termina el caso de uso. +
@@ -1368,7 +1462,7 @@ Después, muestra un mensaje de éxito. **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-30
+| **ID** | CU-32
 | **Caso de uso** | Auditar cancelaciones y reembolsos
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | El auditor revisa las cancelaciones y reembolsos procesados, verificando que se hayan aplicado correctamente las políticas establecidas.
@@ -1401,7 +1495,7 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-31
+| **ID** | CU-33
 | **Caso de uso** | Consultar historial de reservaciones
 | **Responsable** | Abraham Cano Ramírez
 | **Descripción** | Permite al auditor acceder a un registro completo de todas las reservaciones realizadas,
@@ -1414,7 +1508,8 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 2. El auditor ingresa los datos y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-02)** +
 3. El sistema muestra una tabla de los hoteles. **(Ver EX-01)** **(Ver FA-03)** +
 4. El auditor selecciona un hotel. **(Ver FA-01)** **(Ver FA-02)** +
-5. El sistema carga y muestra en una tabla las reservaciones del hotel, ordenas por fecha. **(Ver EX-01)** +
+5. El sistema carga y muestra en una tabla las reservaciones del hotel, +
+ordenas por fecha. **(Ver EX-01)** +
 6. El auditor visualiza las reservaciones y da clic en "Salir". **(Ver FA-01)** +
 7. Termina el caso de uso.
 | **Flujos alternos** |
@@ -1422,10 +1517,12 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
 2. El auditor da clic en "Sí" y termina el caso de uso. +
 3. El auditor da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02* Nula existencia reservaciones en el hotel. +
 1. El sistema muestra un mensaje indicando la nula existencia de reservaciones en el hotel seleccionado. +
 2. El auditor da clic en "Aceptar". +
-3. El sistema regresa al paso 1 del flujo normal.
+3. El sistema regresa al paso 1 del flujo normal. +
+
 *FA-03* Campos inválidos +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El auditor da clic en "Corregir" y regresa al paso anterior del flujo normal. +
@@ -1444,7 +1541,7 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-31
+| **ID** | CU-34
 | **Caso de uso** | Ver logs de acceso al sistema
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | Permite al auditor revisar quién accedió al sistema, cuándo y qué acciones realizó.
@@ -1455,17 +1552,20 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 | **Flujo normal** |
 1. El sistema muestra un formulario con los campos a completar. +
 2. El auditor completa el formulario y da clic en "Buscar". **(Ver FA-01)** **(Ver FA-02)** +
-3. El sistema valida la información y muestra los logs según los criterios. **(Ver EX-01)** **(Ver FA-03)**+
+3. El sistema valida la información y muestra los logs según los criterios. +
+**(Ver EX-01)** **(Ver FA-03)** +
 4. El auditor da clic en "Aceptar" para cerrar el resumen. +
 5. Termina el caso de uso.
 | **Flujos alternos** |
 *FA-01:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
-2. El auditor da clic en "Sí" y termina el caso de uso.
+2. El auditor da clic en "Sí" y termina el caso de uso. +
 3. El auditor da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-02:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El auditor da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
+
 *FA-03:* Sin datos disponibles: +
 1. El sistema muestra un mensaje indicando que no hay datos disponibles para los criterios ingresados. +
 2. El auditor da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
@@ -1484,7 +1584,7 @@ de reembolsos ordenados por fecha.  **(Ver FA-01)** **(Ver EX-01)** +
 [cols="^20, <80", options="header"]
 |===
 | Campo | Descripción
-| **ID** | CU-33
+| **ID** | CU-35
 | **Caso de uso** | Generar reportes de cumplimiento
 | **Responsable** | Rodrigo Ivan Ahumada Rodríguez
 | **Descripción** | Permite al auditor generar reportes para verificar que se cumplan políticas internas
@@ -1504,10 +1604,12 @@ Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
 *FA-01:* Sin datos disponibles: +
 1. El sistema muestra un mensaje indicando que no hay datos para el reporte. +
 2. El auditor da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+
 *FA-02:* Clic en "Cancelar": +
 1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
-2. El auditor da clic en "Sí" y termina el caso de uso.
+2. El auditor da clic en "Sí" y termina el caso de uso. +
 3. El auditor da clic en "No" y regresa al paso anterior del flujo normal. +
+
 *FA-03:* Campos inválidos: +
 1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
 2. El auditor da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
@@ -1517,6 +1619,249 @@ Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
 2. El auditor da clic en "Aceptar" y termina el caso de uso.
 | **Postcondiciones** |
 *POST-01:* Se genera un reporte de cumplimiento con los datos solicitados. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-36: Crear perfil de administrador
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-36
+| **Caso de uso** | Crear perfil de administrador
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite al RRHH crear un perfil de administrador en el sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Crear perfil de administrador".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un hotel registrado en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra un formulario con los campos a completar. +
+2. El RRHH completa el formulario y da clic en "Generar perfil". **(Ver FA-01)** +
+**(Ver FA-02)** **(Ver FA-03)** +
+3. El sistema valida la información y crea el perfil de administrador. +
+Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
+4. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso. +
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
+
+*FA-03:* Usuario ya existente: +
+1. El sistema muestra un mensaje indicando que el usuario ya existe. +
+2. El RRHH da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El auditor da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se crea un nuevo perfil de administrador en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-37: Editar perfil de administrador
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-37
+| **Caso de uso** | Editar perfil de administrador
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite al RRHH modificar los datos de un perfil de administrador existente
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Editar perfil de administrador".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de administrador en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de administradores registrados. **(Ver EX
+-01)** +
+2. El RRHH selecciona un perfil y da clic en "Editar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema muestra un formulario con los datos actuales del perfil. +
+4. El RRHH realiza los cambios necesarios y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
+5. El sistema valida y guarda los cambios en el perfil de administrador. Después, +
+muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso. +
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH corrige los campos y vuelve a enviar el formulario. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se actualizan los datos del perfil de administrador en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-38: Eliminar perfil de administrador
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-38
+| **Caso de uso** | Eliminar perfil de administrador
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | Permite al RRHH eliminar un perfil de administrador del sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Eliminar perfil de administrador".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de administrador en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de administradores registrados. **(Ver EX
+-01)** +
+2. El RRHH selecciona un perfil y da clic en "Eliminar". **(Ver FA-01)** +
+3. El sistema muestra un mensaje de confirmación para eliminar el perfil. +
+4. El RRHH da clic en "Sí" para confirmar. +
+5. El sistema elimina el perfil de administrador de la base de datos y muestra +
+un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso. +
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se elimina el perfil de administrador del sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-39: Crear perfil de recepcionista
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-39
+| **Caso de uso** | Crear perfil de recepcionista
+| **Responsable** | Mauricio Noriega Delgado
+| **Descripción** | Permite al RRHH crear un perfil de recepcionista en el sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Crear perfil de recepcionista".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de administrador en el sistema.
+| **Flujo normal** |
+1. El sistema muestra un formulario con los campos a completar. +
+2. El RRHH completa el formulario y da clic en "Generar perfil". **(Ver FA-01)** +
+**(Ver FA-02)** **(Ver FA-03)** +
+3. El sistema valida la información y crea el perfil de recepcionista. +
+Después, muestra un mensaje de éxito.  **(Ver EX-01)** +
+4. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso. +
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH da clic en "Intentar nuevamente" y regresa al paso anterior del flujo normal. +
+
+*FA-03:* Usuario ya existente: +
+1. El sistema muestra un mensaje indicando que el usuario ya existe. +
+2. El RRHH da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El auditor da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se crea un nuevo perfil de recepcionista en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-40: Editar perfil de recepcionista
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-40
+| **Caso de uso** | Editar perfil de recepcionista
+| **Responsable** | Rodrigo Ivan Ahumada Rodríguez
+| **Descripción** | Permite al RRHH modificar los datos de un perfil de recepcionista existente
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Editar perfil de recepcionista".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de recepcionista en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de recepcionistas registrados. **(Ver EX-01)** +
+2. El RRHH selecciona un perfil y da clic en "Editar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema muestra un formulario con los datos actuales del perfil. +
+4. El RRHH realiza los cambios necesarios y da clic en "Guardar". **(Ver FA-01)** **(Ver FA-02)** +
+5. El sistema valida y guarda los cambios en el perfil de recepcionista. Después, +
+muestra un mensaje de éxito. **(Ver EX-01)** +
+6. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso. +
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Campos inválidos: +
+1. El sistema muestra un mensaje de error indicando los campos que requieren corrección. +
+2. El RRHH corrige los campos y vuelve a enviar el formulario. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se actualizan los datos del perfil de recepcionista en el sistema. +
+| **Reglas de negocio** | Ninguno
+| **Incluye** | Ninguno
+| **Extiende** | Ninguno
+|===
+
+==== CU-41: Eliminar perfil de recepcionista
+[cols="^20, <80", options="header"]
+|===
+| Campo | Descripción
+| **ID** | CU-41
+| **Caso de uso** | Eliminar perfil de recepcionista
+| **Responsable** | Abraham Cano Ramírez
+| **Descripción** | Permite al RRHH eliminar un perfil de recepcionista del sistema
+| **Actor** | AC-05 RRHH
+| **Disparador** | El RRHH da clic en "Eliminar perfil de recepcionista".
+| **Precondiciones** |
+*PRE-01:* Debe existir al menos un perfil de recepcionista en el sistema. +
+| **Flujo normal** |
+1. El sistema muestra una tabla con los perfiles de recepcionistas registrados. **(Ver EX-01)** +
+2. El RRHH selecciona un perfil y da clic en "Eliminar". **(Ver FA-01)** **(Ver FA-02)** +
+3. El sistema muestra un mensaje de confirmación para eliminar el perfil. +
+4. El RRHH da clic en "Sí" y el sistema elimina el perfil de recepcionista. Después, +
+muestra un mensaje de éxito. **(Ver EX-01)** +
+5. Termina el caso de uso.
+| **Flujos alternos** |
+*FA-01:* Clic en "Cancelar": +
+1. El sistema muestra un mensaje de confirmación para cancelar el proceso. +
+2. El RRHH da clic en "Sí" y termina el caso de uso. +
+3. El RRHH da clic en "No" y regresa al paso anterior del flujo normal. +
+
+*FA-02:* Perfil no encontrado: +
+1. El sistema muestra un mensaje indicando que el perfil no fue encontrado. +
+2. El RRHH da clic en "Aceptar" y regresa al paso 1 del flujo normal. +
+| **Excepciones** |
+*EX-01:* Error de base de datos: +
+1. El sistema muestra un mensaje indicando que hubo un error técnico. +
+2. El RRHH da clic en "Aceptar" y termina el caso de uso.
+| **Postcondiciones** |
+*POST-01:* Se elimina el perfil de recepcionista en el sistema. +
 | **Reglas de negocio** | Ninguno
 | **Incluye** | Ninguno
 | **Extiende** | Ninguno

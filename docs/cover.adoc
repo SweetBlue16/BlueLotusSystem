@@ -27,4 +27,5 @@
 |===
 | Versión | Fecha | Autor | Descripción de los cambios
 | 0.1 | 05/09/2025 | Todos | Estructura inicial del documento y secciones básicas.
+| 0.2 | 05/10/2025 | Todos | Hito 1 completado con secciones de introducción, análisis y diseño.
 |===
