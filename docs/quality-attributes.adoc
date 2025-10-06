@@ -195,6 +195,7 @@ Medida de la respuesta: Variación ≤ ±10%
 Siguiendo el estándar ISO/IEC 25010:2023, la escalabilidad es definida como la capacidad de un producto para manejar cargas de trabajo crecientes o decrecientes o para adaptar su capacidad para manejar variabilidad. Para el sistema de reservaciones de un hotel, la plataforma debe poder crecer en función del aumento de hoteles, usuarios y transacciones sin degradar su desempeño. Esto es esencial si se expande a nivel regional o internacional, ya que debe adaptarse a mayor carga de consultas y operaciones sin necesidades de rediseños completos.
 
 ===== QAS-10: Escalabilidad horizontal
+===== QAS-10: Escalabilidad horizontal
 [cols="^25, <75", options="header"]
 |===
 | Campo | Descripción
@@ -205,10 +206,10 @@ Siguiendo el estándar ISO/IEC 25010:2023, la escalabilidad es definida como la 
 | Refinamiento del escenario |
 Fuente del estímulo: Administrador del sistema +
 Estímulo: Adición de nuevos nodos de servicio +
-Ambiente: Nube pública distribuida +
-Artefacto: Clúster de microservicios +
-Respuesta: Throughput aumenta proporcionalmente sin degradación +
-Medida de la respuesta: Eficiencia ≥ 95% hasta 8 nodos
+Ambiente: Sistema guardando datos en la nube +
+Artefacto: Conjunto de servicios del sistema +
+Respuesta: El rendimiento mejora al repartir el trabajo entre servidores +
+Medida de la respuesta: Eficiencia ≥ 95% hasta 8 servidores
 |===
 
 ===== QAS-11: Escalabilidad vertical
@@ -221,8 +222,8 @@ Medida de la respuesta: Eficiencia ≥ 95% hasta 8 nodos
 | Preocupación del atributo | Escalabilidad vertical
 | Refinamiento del escenario |
 Fuente del estímulo: Equipo de infraestructura +
-Estímulo: Actualización de nodo con el doble de recursos +
-Ambiente: Entorno productivo +
+Estímulo: Subida o baja de solicitudes en el sistema +
+Ambiente: Sistema en funcionaiento normal +
 Artefacto: Servidor principal de base de datos +
 Respuesta: Reduce el tiempo de respuesta +
 Medida de la respuesta: Mejora ≥ 40% en latencia promedio
@@ -239,9 +240,9 @@ Medida de la respuesta: Mejora ≥ 40% en latencia promedio
 | Refinamiento del escenario |
 Fuente del estímulo: Fluctuación de usuarios concurrentes +
 Estímulo: Aumento o disminución de tráfico +
-Ambiente: Nube con autoescalado habilitado +
-Artefacto: Servicios de reservas y pagos +
-Respuesta: Ajusta nodos y recursos automáticamente +
+Ambiente: Plataforma en la nbe +
+Artefacto: Servicios principales del sistema +
+Respuesta: Aumenta o reduce recursos segun sea necesatio sin interrumpir el servicio +
 Medida de la respuesta: Tiempo de ajuste ≤ 120 s; uso de CPU ≤ 70%
 |===
 
