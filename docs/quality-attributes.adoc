@@ -304,7 +304,16 @@ Medida de la respuesta: Tiempo ≤ 30 s; tasa de detección ≥ 95%; falsos posi
 [cols="^20, <30, <30 ^20", options="header"]
 |===
 | ID | Restricción | Descripción | Origen
-|
+| CON-01 | Uso obligatorio de base de datos relacional (RDBMS) | El sistema debe almacenar todas las transacciones y registros en un gestor relacional para garantizar la consistencia de los datos y evitar dobles operaciones no requeridas. | Técnico.
+| CON-02 | Modelo de pago completo al reservar | El huesped debe cubrir el monto total de su estancia al momento de confirmar la reserva, no se aceptan pagos parciales | Negocio.
+| CON-03 | Politica de Overbooking | El sistema debe permitir un overbooking máximo del 10% de la capacidad total del hotel para optimizar la ocupación sin afectar la experiencia del cliente. | Negocio.
+| CON-04 | Cumplimiento de regulaciones de privacidad | El sistema debe cumplir con las regulaciones locales de protección de datos personales y financieros del cliente, garantizando la confidencialidad y seguridad de la información. | Legal.
+| CON-05 | Alta disponibilidad | El sistema debe garantizar una disponibilidad mínima del 95% incluso durante picos de carga o fallos parciales. | Técnico.
+| CON-06 | Integración obligatoria con servicio externo de pagos | El sistema no gestionará pagos directamente, debe integrarse con un proveedor externo confiable para procesar todas las transacciones financieras. | Técnico.
+| CON-07 | Idioma principal español con soporte futuro a inglés | La interfaz de usuario y documentación inicial deben estar en español, con la capacidad de añadir soporte para inglés en futuras versiones. | Negocio.
+| CON-08 | Arquitectura modular | El diseño debe seguir una arquitectura modular que permite crecimiento fututo sin requerir rediseños completos | Técnico.
+| CON-09 | Registro obligatorio de transacciones (Auditabilidad) | Todas las operaciones críticas, como reservas, cancelaciones y pagos, deben ser registradas para permitir la trazabilidad completa de eventos. | Legal.
+| CON-10 | Politica de recuperación ante desastres | Debe existir un plan de recuperación que permita el respaldo y recuperación para garantizar la continuidad operativa en caso de fallos graves. | Técnico.
 |===
 
 ==== Preocupaciones
