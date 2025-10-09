@@ -1,0 +1,12 @@
+== Método de Diseño
+
+=== Método de diseño usado
+
+=== Attribute-Driven Design (ADD)
+
+
+=== Cheeseman & Daniels (CBSE)
+
+
+=== Especificación y modelos de información
+

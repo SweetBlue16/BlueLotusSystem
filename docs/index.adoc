@@ -28,6 +28,8 @@ include::requirement-definition.adoc[]
 
 include::quality-attributes.adoc[]
 
+include::design-method.adoc[]
+
 include::views/deployment-view.adoc[]
 
 include::views/development-view.adoc[]

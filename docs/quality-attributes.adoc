@@ -2,7 +2,6 @@
 
 === Árbol de Utilidad
 
-==== Utility Tree
 [cols="^20, <20, <40, ^10, ^10", options="header"]
 |===
 | Atributo de Calidad | Refinamiento | Escenario (resumen breve) | Impacto (Negocio) | Dificultad (Técnica)
@@ -297,4 +296,20 @@ Ambiente: Red pública con tráfico mixto +
 Artefacto: Módulo IDS/IPS y logs del firewall +
 Respuesta: Bloquea la IP atacante y genera alerta al administrador +
 Medida de la respuesta: Tiempo ≤ 30 s; tasa de detección ≥ 95%; falsos positivos ≤ 2%
+|===
+
+=== Restricciones y preocupaciones
+
+==== Restricciones
+[cols="^20, <30, <30 ^20", options="header"]
+|===
+| ID | Restricción | Descripción | Origen
+|
+|===
+
+==== Preocupaciones
+[cols="^20, <60", ^20, options="header"]
+|===
+| ID | Preocupación | Objetivo
+|
 |===
