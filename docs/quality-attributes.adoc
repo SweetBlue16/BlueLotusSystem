@@ -301,7 +301,8 @@ Medida de la respuesta: Tiempo ≤ 30 s; tasa de detección ≥ 95%; falsos posi
 === Restricciones y preocupaciones
 
 ==== Restricciones
-[cols="^20, <30, <30 ^20", options="header"]
+
+[cols="^20, <30, <30, ^20", options="header"]
 |===
 | ID | Restricción | Descripción | Origen
 | CON-01 | Uso obligatorio de base de datos relacional (RDBMS) | El sistema debe almacenar todas las transacciones y registros en un gestor relacional para garantizar la consistencia de los datos y evitar dobles operaciones no requeridas. | Técnico.
@@ -317,6 +318,7 @@ Medida de la respuesta: Tiempo ≤ 30 s; tasa de detección ≥ 95%; falsos posi
 |===
 
 ==== Preocupaciones
+
 [cols="^20, <20, ^60", options="header"]
 |===
 | ID | Preocupación | Descripción
