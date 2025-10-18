@@ -70,12 +70,59 @@ El desarrollo de la arquitectura para este sistema se llevó a cabo mediante un 
   * **Resultado:** El sistema obtuvo la capacidad de responder a variaciones de tráfico, manteniendo la eficiencia operativa QAS-10 y ofreciendo una experiencia fluida tanto en la web como en dispositivos móviles.
 
 
-=== Attribute-Driven Design (ADD)
+=== Especificación CSBE: Identificación, interacción y Especificación de componentes
+El proceso de diseño incluyó la aplicación del modelo CSBE(Cheeseman & Daniels) para identificar y definir los componentes reutilizables dentro de la arquitectura. Se analizaron las funcionalidades del sistema y se descompusieron en módulos independientes que pudieran ser desarrollados.
 
-El enfoque ADD se centra en identificar y priorizar los atributos de calidad del sistema, como la disponibilidad, usabilidad y rendimiento. A través de este método, se establecen directrices de diseño que aseguran que estos atributos sean considerados en todas las etapas del desarrollo.
+==== Identificación de componentes
+A partir de los casos de uso y el modelo de conceptos de negocio, así como los artefactos realizados hasta el momento, se identificaron los siguientes componentes principales:
 
-=== Cheeseman & Daniels (CBSE)
-El enfoque CBSE se utiliza para promover la reutilización de componentes de software existentes, lo que permite acelerar el desarrollo y reducir costos. Se identifican componentes modulares que pueden ser integrados en la arquitectura del sistema, facilitando la escalabilidad y el mantenimiento.
+* **Gestor de Reservas**: Maneja la lógica de creación, modificación y cancelación de reservaciones.
+* **Gestor de Estancias**: Gestiona la integración con sistemas externos.
+* **Gestor de Usuarios**: Administra la autenticación, autorización y perfiles de usuarios.
+* **Gestor de Reportes**: Genera informes sobre el estado del sistema y las actividades de los usuarios.
+* **Módulo de Auditoría**: Registra todas las transacciones y cambios en el sistema para garantizar la trazabilidad.
+* **Procesador de Pagos**: Integra con pasarelas de pago externas y gestiona la lógica de transacciones financieras.
 
-=== Especificación y modelos de información
-El enfoque de especificación y modelos de información se centra en definir claramente los requisitos del sistema y los modelos de datos que lo sustentan. Esto incluye la creación de diagramas de flujo, modelos entidad-relación y especificaciones de interfaz que guían el desarrollo y aseguran la coherencia en la implementación.
+==== Interacción entre componentes
+
+* Se definieron las interacciones entre los componentes mediante diagramas de secuencia y colaboración, asegurando que cada módulo cumpliera con sus responsabilidades sin acoplamientos innecesarios.
+
+* Los componentes se comunican mediante interfaces REST con formato JSON.
+
+Ejemplo: El Gestor de Pagos consulta al Gestor de Reservas para validar la disponibilidad antes de confirmar una transacción; el Gestor de Auditoría escucha eventos de todos los módulos y guarda un registro permanente en la base de datos.
+
+==== Especificación de componentes
+Cada componente define sus interfaces provistas y requeridas como se muestra:
+
+[cols="^25, <35, <35", options="header"]
+|===
+| Componente | Interfaces Provistas | Interfaces Requeridas
+
+| GestorDeReservas | IReservacion, IConsultaDisponibilidad | IPago, IAuditoria
+| ProcesadorDePagos | IPago, ITransaccionExterna | IReservacion
+| GestorDeEstancias | ICheckIn, ICheckOut | IReservacion
+| GestorDeUsuarios | ILogin, IRegistro, IAutenticacion | IAuditoria
+| GestorDeReportes | IReporteAuditoria, IReporteFinanciero | IReservacion, IPago
+| MóduloDeAuditoría | IAuditoria | Ninguna
+|===
+
+Este diseño asegura bajo acoplamiento y alta cohesión, alineando las preocupaciones de cada componente con los drivers arquitectónicos definidos inicialmente (CRN-05, CRN-13).
+
+==== Iteraciones y Drivers atendidos
+Al concluir este proceso ADD, se documentaron los drivers atendidos y las decisiones tomadas en cada iteración, asegurando la trazabilidad desde los requisitos hasta la arquitectura final del sistema BlueLotus System.
+
+[cols="^10, <40, <50", options="header"]
+|===
+| Iteración | Drivers Atendidos | Decisiones Arquitectónicas
+
+| 1 | Mantenibilidad, Separación de responsabilidades | Arquitectura en capas, cliente-servidor, API RESTful
+| 2 | Rendimiento, Disponibilidad | Balanceo de carga, caché, recuperación automática
+| 3 | Seguridad, Trazabilidad | TLS 1.3, MFA, módulo de auditoría centralizada
+| 4 | Usabilidad, Escalabilidad | SPA/Flutter, Docker, Kubernetes, monitoreo en tiempo real
+|===
+
+El método ADD permitió construir una arquitectura que responde de manera directa a los impulsores de calidad, así como las restricciones y preocupaciones del sistema, garantizando una base sólida para el desarrollo y evolución futura de BlueLotus System.
+El enfoque CSBE aseguro la claridad estructural y modularidad necesaria para futuras extensiones, manteniendo la trazabilidad entre los casos de uso, los QAS, y las decisiones arquitectónicas tomadas.
+
+BlueLotus System, ahora, quedá definido por una arquitectura Cliente-Servidor basada en SPA y API RESTful, organizada por capas y orientada a componentes, que equilibra seguridad, rendimiento, disponibilidad, modificabilidad, escalabilidad y usabilidad asegurando el éxito del proyecto a largo plazo.
+
