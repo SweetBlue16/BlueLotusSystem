@@ -6,6 +6,10 @@
 === Justificación de las decisiones
 
 
+=== Estructura estática del sistema
+
+image::../images/ArchitectureStyleModel.png[Estructura Estática del Sistema, width=600, align="center"]
+
 === Modelo de Conceptos del Negocio
 
 El modelo de conceptos del negocio (BCM) describe los conceptos clave y las relaciones en el dominio del negocio. Proporciona una comprensión común de los términos y definiciones utilizados en la organización.
