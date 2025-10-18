@@ -299,22 +299,26 @@ Medida de la respuesta: Tiempo ≤ 30 s; tasa de detección ≥ 95%; falsos posi
 |===
 
 === Restricciones y preocupaciones
-
 ==== Restricciones
 
 [cols="^20, <30, <30, ^20", options="header"]
 |===
 | ID | Restricción | Descripción | Origen
-| CON-01 | Uso obligatorio de base de datos relacional (RDBMS) | El sistema debe almacenar todas las transacciones y registros en un gestor relacional para garantizar la consistencia de los datos y evitar dobles operaciones no requeridas. | Técnico.
-| CON-02 | Modelo de pago completo al reservar | El huesped debe cubrir el monto total de su estancia al momento de confirmar la reserva, no se aceptan pagos parciales | Negocio.
-| CON-03 | Politica de Overbooking | El sistema debe permitir un overbooking máximo del 10% de la capacidad total del hotel para optimizar la ocupación sin afectar la experiencia del cliente. | Negocio.
-| CON-04 | Cumplimiento de regulaciones de privacidad | El sistema debe cumplir con las regulaciones locales de protección de datos personales y financieros del cliente, garantizando la confidencialidad y seguridad de la información. | Legal.
-| CON-05 | Alta disponibilidad | El sistema debe garantizar una disponibilidad mínima del 95% incluso durante picos de carga o fallos parciales. | Técnico.
-| CON-06 | Integración obligatoria con servicio externo de pagos | El sistema no gestionará pagos directamente, debe integrarse con un proveedor externo confiable para procesar todas las transacciones financieras. | Técnico.
-| CON-07 | Idioma principal español con soporte futuro a inglés | La interfaz de usuario y documentación inicial deben estar en español, con la capacidad de añadir soporte para inglés en futuras versiones. | Negocio.
-| CON-08 | Arquitectura modular | El diseño debe seguir una arquitectura modular que permite crecimiento fututo sin requerir rediseños completos | Técnico.
-| CON-09 | Registro obligatorio de transacciones (Auditabilidad) | Todas las operaciones críticas, como reservas, cancelaciones y pagos, deben ser registradas para permitir la trazabilidad completa de eventos. | Legal.
-| CON-10 | Politica de recuperación ante desastres | Debe existir un plan de recuperación que permita el respaldo y recuperación para garantizar la continuidad operativa en caso de fallos graves. | Técnico.
+| CON-01 | Uso obligatorio de base de datos relacional (RDBMS) | El sistema debe almacenar todas las transacciones y registros en un gestor relacional para garantizar consistencia, trazabilidad y control de concurrencia. | Técnico.
+| CON-02 | Modelo de pago completo al reservar | El huésped debe cubrir el monto total de su estancia al confirmar la reserva, no se aceptan pagos parciales. | Negocio.
+| CON-03 | Política de Overbooking | Se permite un máximo del 10% de sobreventa por tipo de habitación y fecha para optimizar la ocupación sin comprometer la experiencia del huésped. | Negocio.
+| CON-04 | Cumplimiento legal de privacidad | El sistema debe cumplir con la Ley Federal de Protección de Datos Personales y estándares internacionales (ej. ISO/IEC 27001). | Legal.
+| CON-05 | Alta disponibilidad | La arquitectura debe garantizar al menos 95% de disponibilidad, incluyendo redundancia y recuperación automática de servicios. | Técnico.
+| CON-06 | Integración con pasarela de pagos externa | El sistema no procesará pagos directamente; se comunicará con un servicio externo certificado (Stripe, PayPal, etc.) mediante API segura. | Técnico.
+| CON-07 | Arquitectura Cliente-Servidor | El sistema operará bajo un modelo cliente-servidor, donde el cliente (web/móvil) consume servicios a través de una API RESTful centralizada. | Técnico.
+| CON-08 | Modelo en capas | El diseño se organizará en capas: Presentación, Lógica de Negocio, Acceso a Datos y API REST, para asegurar mantenibilidad y separación de responsabilidades. | Técnico.
+| CON-09 | Comunicación segura | Todas las comunicaciones entre cliente y servidor deben realizarse mediante HTTPS con cifrado TLS 1.3. | Técnico.
+| CON-10 | Registro obligatorio de transacciones | Todas las operaciones críticas (reservas, pagos, cancelaciones, auditorías) deben registrarse con sellado de tiempo para trazabilidad. | Legal.
+| CON-11 | Multiplataforma web y móvil | El sistema debe funcionar en navegadores modernos y apps móviles (Android/iOS) que consuman la misma API REST. | Técnico.
+| CON-12 | Desacoplamiento entre cliente y servidor | Ninguna operación de negocio o acceso a base de datos se ejecutará en el cliente; toda la lógica se gestiona del lado del servidor. | Técnico.
+| CON-13 | Rendimiento mínimo garantizado | La API REST debe responder confirmaciones de reserva en ≤2.5 s (P95) bajo carga normal y ≤4.0 s (P99) en picos de tráfico. | Técnico.
+| CON-14 | Política de recuperación ante desastres | Se debe contar con respaldos automáticos y capacidad de restaurar operación en ≤24 horas ante fallos graves. | Técnico.
+| CON-15 | Despliegue modular y escalable | Cada capa (frontend, backend y base de datos) debe poder desplegarse y escalar de manera independiente en entornos cloud. | Técnico.
 |===
 
 ==== Preocupaciones
@@ -322,7 +326,19 @@ Medida de la respuesta: Tiempo ≤ 30 s; tasa de detección ≥ 95%; falsos posi
 [cols="^20, <20, ^60", options="header"]
 |===
 | ID | Preocupación | Descripción
-| CRN-01 | Centralización | Diseño con plataforma única que permita la gestión de hoteles, políticas e inventario desde un solo punto, asegurando consistencia en toda la cadena hotelera.
-| CRN-02 | Seguridad y privacidad de datos | Sistema con mecanismos para proteger la información personal y de pago de los clientes, cumpliendo regulaciones de privacidad.
-| CRN-03 | Usabilidad | Diseño de interfaz y flujos de trabajo intuitivos que permitan al nuevo personal operar el sistema de forma autónoma con una instrucción mínima.
+| CRN-01 | Centralización operativa | El sistema debe permitir administrar hoteles, habitaciones y políticas de negocio desde un punto centralizado accesible vía web y móvil.
+| CRN-02 | Experiencia fluida del usuario | La interfaz SPA debe ofrecer una navegación continua y responsiva, evitando recargas completas de página y mostrando mensajes contextuales inmediatos.
+| CRN-03 | Seguridad de datos y autenticación | Protección integral de datos personales y financieros mediante autenticación multifactor (MFA), cifrado TLS, y control de accesos por roles.
+| CRN-04 | Escalabilidad progresiva | La infraestructura debe soportar el crecimiento de usuarios, hoteles y transacciones mediante escalabilidad horizontal (nuevas instancias) y vertical (mayor capacidad de cómputo).
+| CRN-05 | Mantenibilidad por capas | Cada capa debe poder modificarse, probarse y desplegarse sin afectar a las demás, facilitando actualizaciones y correcciones.
+| CRN-06 | Eficiencia en la comunicación cliente-servidor | Las peticiones y respuestas API deben minimizar latencia y consumo de ancho de banda, especialmente en redes móviles.
+| CRN-07 | Disponibilidad continua | El sistema debe mantener sus servicios operativos incluso durante actualizaciones, con mecanismos de failover y balanceo de carga.
+| CRN-08 | Observabilidad y monitoreo | El sistema debe registrar métricas de uso, rendimiento y errores para análisis y diagnóstico, facilitando la detección temprana de fallos.
+| CRN-09 | Integración con servicios externos | Debe ser posible conectar el sistema con APIs de terceros (pasarelas de pago, correo electrónico, agencias de viaje) sin afectar la operación principal.
+| CRN-10 | Consistencia e integridad de datos | Las operaciones de reserva, pago y cancelación deben ser atómicas, garantizando que los datos reflejen el mismo estado en todos los componentes.
+| CRN-11 | Recuperación ante fallos | El sistema debe restaurar servicios críticos de manera automática en ≤60 segundos, sin pérdida de información o sesiones activas.
+| CRN-12 | Despliegue controlado | Los cambios en backend o base de datos deben poder revertirse (rollback) de forma segura y auditable.
+| CRN-13 | Separación de responsabilidades | Definir claramente las funciones de cada capa: interfaz (cliente), negocio (servidor) y persistencia (base de datos).
+| CRN-14 | Compatibilidad con dispositivos móviles | La interfaz debe adaptarse dinámicamente a distintos tamaños de pantalla y mantener el mismo rendimiento en dispositivos de gama media o baja.
+| CRN-15 | Evolución tecnológica | La arquitectura debe permitir incorporar nuevos frameworks o servicios (como microservicios o GraphQL) sin afectar el núcleo del sistema.
 |===
