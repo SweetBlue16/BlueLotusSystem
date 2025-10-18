@@ -1,0 +1,10 @@
+== Vista lógica
+
+=== Propósito de la vista
+
+
+=== Justificación de las decisiones
+
+
+=== Modelo de Conceptos del Negocio
+

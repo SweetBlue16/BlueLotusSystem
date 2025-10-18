@@ -1,0 +1,11 @@
+== Vista de proceso
+
+=== Propósito de la vista
+
+
+=== Justificación de las decisiones
+
+
+=== Diagramas de Secuencia
+
+

@@ -1,0 +1,10 @@
+== Vista de despliegue
+
+=== Propósito de la vista
+
+
+=== Justificación de las decisiones
+
+
+=== Diagramas de despliegue
+
