@@ -8,3 +8,48 @@
 
 === Modelo de Conceptos del Negocio
 
+El modelo de conceptos del negocio (BCM) describe los conceptos clave y las relaciones en el dominio del negocio. Proporciona una comprensión común de los términos y definiciones utilizados en la organización.
+A continuación, se presenta el modelo de conceptos del negocio para este proyecto, representado mediante un diagrama de clases UML:
+
+==== Diagrama del Modelo de Conceptos del Negocio
+
+image::../images/BusinessConceptModel.png[Modelo de Conceptos del Negocio, width=600, align="center"]
+
+==== Verificación de Creación, Modificación y Eliminación de Conceptos
+
+[cols="^25, <75", options="header"]
+|===
+| Entidad | Verificación de creación, modificación y eliminación
+| Hotel | Se requieren casos de uso para agregar, modificar y dar de baja hoteles desde el backoffice.
+| Habitación | Se requieren casos de uso para gestionar el inventario: agregar, modificación de estado o dar de baja habitaciones.
+| TipoHabitación | Se requieren casos de uso para crear nuevos tipos de habitación, modificarlos o eliminarlos.
+| Tarifa | Se necesita un caso de uso específico para la creación y modificación diaria de tarifas.
+| Reservación | Se necesita un caso de uso para su creación y otro para su cancelación (eliminación lógica).
+| Estancia | Se crea durante el check-in, se finaliza en el check-out y se modifica si hay un cambio de habitación.
+| Consumo | Se necesita un caso de uso para registrar consumos y, opcionalmente, para modificarlos o eliminarlos en caso de error.
+| Pago | Se crea al reservar. Su estado puede cambiar, lo que implica una gestión, pero no se modifica ni elimina el registro original.
+| Usuario | Se requieren casos de uso para la administración completa de todos los roles de usuario.
+|===
+
+==== Verificación de Actualización de Asociaciones
+
+[cols="^35, <65", options="header"]
+|===
+| Relaciones | Estado
+| Huésped - Reservación | Nunca cambia.
+| Reservación - Hotel | Nunca cambia.
+| Reservación - TipoHabitación | Podría cambiar si se implementa una modificación de la reservación.
+| Reservación - Pago | Nunca cambia.
+| Reservación - Estancia | Se establece una vez en el check-in y no cambia.
+| Estancia - Habitación | Puede cambiar, ya que la funcionalidad de "cambio de habitación" está contemplada.
+| Estancia - Consumo | Es dinámica; se agregan consumos a lo largo de la estancia.
+| Estancia - Servicio | Es dinámica; se agregan servicios a lo largo de la estancia.
+| Hotel - Habitación | Nunca cambia.
+| Habitación - TipoHabitación | Nunca cambia.
+| Administrador - Tarifa | Es dinámica, un administrador puede actualizar diferentes tarifas según sea necesario.
+| Tarifa - TipoHabitación | Puede cambiar, ya que "los administradores podrán cambiar tarifas diarias".
+|===
+
+==== Modelo de Relaciones de Actores
+
+image::../images/ActorRelationshipsModel.png[Modelo de Relaciones de Actores, width=600, align="center"]
