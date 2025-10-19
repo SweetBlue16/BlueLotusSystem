@@ -1,12 +1,128 @@
 == Método de Diseño
 
-=== Método de diseño usado
+El diseño de la arquitectura del sistema BlueLotus System se basa en una combinación de enfoques y metodologías reconocidas en la ingeniería de software, adaptadas a las necesidades específicas del proyecto. Este diseño arquitectónico se desarrolló aplicando el método de Attribute-Driven Design (ADD), complementado con principios de Cheeseman & Daniels (CBSE) y técnicas de especificación y modelos de información, con el propósito de derivar una arquitectura racional, trazable y justificada a partir de los impulsores arquitectónicos definidos. Este proceso permitió construir la estructura del sistema de manera iterativa, guiada por los atributos de calidad priorizados, las restricciones impuestas y las preocupaciones de los distintos stakeholders involucrados en el proyecto.
 
-=== Attribute-Driven Design (ADD)
+=== Blacklog de Drivers
+El punto de partida fue la identificación y priorización de los impulsores arquitectónicos (drivers) del sistema, conformados por los atributos de calidad (QAS), las restricciones no negociables (CON) así como las preocupaciones (CRN). Estos drivers fueron recopilados a través de sesiones de análisis, revisiones de requisitos y estudios de mercado, asegurando que reflejaran las necesidades y expectativas del negocio.
+
+Los atributos de calidad con mayor prioridad para BlueLotus System incluyen:
+
+* **Disponibilidad**: Garantizar que el sistema esté operativo y accesible para los usuarios en todo momento, minimizando tiempos de inactividad.
+* **Usabilidad**: Proporcionar una interfaz intuitiva y fácil de usar para todos los perfiles de usuarios, disminuyendo la curva de aprendizaje y el uso eficiente del sistema.
+* **Rendimiento**: Asegurar tiempos de respuesta rápidos y una alta capacidad de procesamiento para manejar múltiples transacciones simultáneas sin degradación del servicio.
+* **Escalabilidad**: Diseñar el sistema para que pueda crecer y adaptarse a un aumento en la cantidad de usuarios, transacciones y datos sin comprometer su rendimiento.
+* **Seguridad**: Implementar medidas robustas para proteger los datos sensibles de los usuarios y garantizar la privacidad de la información conforme a las normativas vigentes.
+
+En cuanto a las restricciones no negociables, se identificaron aspectos como:
+
+* El uso obligatorio de una base de datos relacional (RDBMS) para garantizar la consistencia de las transacciones.
+* La adopción de un arquitectura Cliente-Servidor con un modelo en capas.
+* La comunicación segura mediante HTTPS y TLS 1.3.
+* El manejo individual entre cliente y servidor, garantizando independencia de la interfaz respecto a la lógica de negocio.
+* Multiplataforma Web-Móvil, que permite planificar un único backend para diferentes frontends.
+
+Por último, se consideraron las preocupaciones de los stakeholders, incluyendo:
+
+* La necesidad de una gestión centralizada de múltiples hoteles.
+* La integración con sistemas de pago externos.
+* La capacidad de generar reportes detallados para auditoría y análisis.
+* La facilidad de mantenimiento y actualización del sistema a lo largo del tiempo.
+* La compatibilidad con futuras expansiones y nuevas funcionalidades.
+* Una experiencia fluida para el usuario final, tanto huéspedes como personal del hotel.
+* Compatibilidad con dispositivos móviles y navegadores web modernos.
+
+=== Iteraciones del Diseño Arquitectónico
+El desarrollo de la arquitectura para este sistema se llevó a cabo mediante un proceso iterativo, donde en cada ciclo se evaluaron y ajustaron las decisiones de diseño en función de los drivers identificados. Este enfoque permitió refinar continuamente la arquitectura, asegurando que cumpliera con los requisitos de calidad y las restricciones establecidas. Dandonos así 4 iteraciones principales cada una orientada a atender un grupo especifico de drivers y a consolidar componentes concretos del sistema.
 
 
-=== Cheeseman & Daniels (CBSE)
+==== Iteración 1: Modificabilidad y separación de responsabilidades
+
+  * **Objetivo:** Atender los drivers de Mantenibilidad y  Separación de responsabilidades.
+  * **Decisiones tomadas:** Se adoptó una arquitectura en capas compuesta por:
+    ** Capa de Presentación (Frontend): Responsable de la interacción con el usuario, Web SPA y App Móvil.
+    ** Capa de Lógica de Negocio (Backend): Encargada de procesar las reglas del negocio, servicios REST.
+    ** Capa de Acceso a Datos: Gestiona la comunicación con la base de datos relacional (RDBMS).
+    ** Capa de Base de Datos: Almacena y gestiona la información del sistema (MySQL).
+  Se aplicaron las tácticas de "Encapsulamiento" y "Separación de módulo" para aislar la lógica de negocio de la interfaz de usuario, permitiendo que futuras modificaciones o mejoras visuales no afecten a la lógica interna ni la persistencia de datos.
+  * **Resultado:** Se obtuvo una estructura base Cliente-Servidor, con comunicación mediante API RESTful y formato JSON. Este diseño responde directamente a las restricciones requeridas y estableció la base para la interacción controlada entre capas.
+
+==== Iteración 2: Rendimiento y disponibilidad
+  * **Objetivo:** Optimizar el rendimiento y asegurar la disponibilidad del sistema.
+  * **Decisiones tomadas:**
+  Se introdujo el patrón controlador de servicios (Service Slayer) para centralizar las operaciones críticas de reservas, pagos e instancias. Para mejorar la disponibilidad, se planificó un esquema de balanceo de carga en la capa de API y un mecanismo de recuperación automética (failover) ante fallas del servidor.
+  Asimismo, se integraron tácticas de rendimiento como "Limitar la concurrencia" y "Mantener sesiones ligeras", junto con el uso de caché temporal para datos frecuentemente consultados.
+  * **Resultado:** La arquitectura resultante es capaz de manejar múltiples solicitudes simultáneas de manera eficiente, garantizando la disponibilidad del sistema incluso en situaciones de alta demanda. El diseño atiende los QAS de latencia en ≤2.5 s (P95) y disponibilidad ≥95%.
+
+==== Iteración 3: Seguridad y trazabilidad
+  * **Objetivo:** Implementar medidas de seguridad robustas y asegurar la trazabilidad de las transacciones.
+  * **Decisiones tomadas:**
+  Se aplicó la táctica de "Autenticación en capas" mediante OAuth 2.0 y MFA (autenticación multifactor) para usuarios administrativos.
+  Toda comunicación Cliente-Servidor se realiza a través de HTTPS con TLS 1.3, garantizando la confidencialidad e integridad de los datos en tránsito, cumpliendo con el escenario QAS-13, se añadieron componentes de auditoría y logging centralizado con trazabilidad por transacción, apoyando la detección de intrusión así como la integridad legal de las operaciones.
+  * **Resultado:** La arquitectura adquirió un módulo de autenticación independiente que gestiona sesiones, tokens y permisos. El módulo de auditoría se comunica con todos los servicios críticos para registrar reservas, pagos y cambios administrativos.
+
+==== Iteración 4: Usabilidad y Escalabilidad
+  * **Objetivo:** Resolver los ddrivers de usabilidad y escalabilidad.
+  * **Decisiones tomadas:**
+  En la capa de presentación se eligió una Aplicación de Internet Rica (SPA) dessarrollada en React o Angular, que ofrece una navegación fluida, validaciones dinámicas y retroalimentación inmediata sin recargas completas.
+  Para la app móvil se planificó un desarrollo en React Native o Flutter, reutilizando los endpoints del mismo backend.
+  A nivel de infraestructura, se estableció el uso de contenedores Docker para cada servicio y orquestación con Kubernetes, habilitando el escalado automático basado en la demanda real del sistema (elasticidad).
+  Además de esto se integró un sistema de monitoreo y alertas para observar el rendimiento y la salud del sistema, así como detectar anomalías en tiempo real.
+  * **Resultado:** El sistema obtuvo la capacidad de responder a variaciones de tráfico, manteniendo la eficiencia operativa QAS-10 y ofreciendo una experiencia fluida tanto en la web como en dispositivos móviles.
 
 
-=== Especificación y modelos de información
+=== Especificación CSBE: Identificación, interacción y Especificación de componentes
+El proceso de diseño incluyó la aplicación del modelo CSBE(Cheeseman & Daniels) para identificar y definir los componentes reutilizables dentro de la arquitectura. Se analizaron las funcionalidades del sistema y se descompusieron en módulos independientes que pudieran ser desarrollados.
+
+==== Identificación de componentes
+A partir de los casos de uso y el modelo de conceptos de negocio, así como los artefactos realizados hasta el momento, se identificaron los siguientes componentes principales:
+
+* **Gestor de Reservas**: Maneja la lógica de creación, modificación y cancelación de reservaciones.
+* **Gestor de Estancias**: Gestiona la integración con sistemas externos.
+* **Gestor de Usuarios**: Administra la autenticación, autorización y perfiles de usuarios.
+* **Gestor de Reportes**: Genera informes sobre el estado del sistema y las actividades de los usuarios.
+* **Módulo de Auditoría**: Registra todas las transacciones y cambios en el sistema para garantizar la trazabilidad.
+* **Procesador de Pagos**: Integra con pasarelas de pago externas y gestiona la lógica de transacciones financieras.
+
+==== Interacción entre componentes
+
+* Se definieron las interacciones entre los componentes mediante diagramas de secuencia y colaboración, asegurando que cada módulo cumpliera con sus responsabilidades sin acoplamientos innecesarios.
+
+* Los componentes se comunican mediante interfaces REST con formato JSON.
+
+Ejemplo: El Gestor de Pagos consulta al Gestor de Reservas para validar la disponibilidad antes de confirmar una transacción; el Gestor de Auditoría escucha eventos de todos los módulos y guarda un registro permanente en la base de datos.
+
+==== Especificación de componentes
+Cada componente define sus interfaces provistas y requeridas como se muestra:
+
+[cols="^25, <35, <35", options="header"]
+|===
+| Componente | Interfaces Provistas | Interfaces Requeridas
+
+| GestorDeReservas | IReservacion, IConsultaDisponibilidad | IPago, IAuditoria
+| ProcesadorDePagos | IPago, ITransaccionExterna | IReservacion
+| GestorDeEstancias | ICheckIn, ICheckOut | IReservacion
+| GestorDeUsuarios | ILogin, IRegistro, IAutenticacion | IAuditoria
+| GestorDeReportes | IReporteAuditoria, IReporteFinanciero | IReservacion, IPago
+| MóduloDeAuditoría | IAuditoria | Ninguna
+|===
+
+Este diseño asegura bajo acoplamiento y alta cohesión, alineando las preocupaciones de cada componente con los drivers arquitectónicos definidos inicialmente (CRN-05, CRN-13).
+
+==== Iteraciones y Drivers atendidos
+Al concluir este proceso ADD, se documentaron los drivers atendidos y las decisiones tomadas en cada iteración, asegurando la trazabilidad desde los requisitos hasta la arquitectura final del sistema BlueLotus System.
+
+[cols="^10, <40, <50", options="header"]
+|===
+| Iteración | Drivers Atendidos | Decisiones Arquitectónicas
+
+| 1 | Mantenibilidad, Separación de responsabilidades | Arquitectura en capas, cliente-servidor, API RESTful
+| 2 | Rendimiento, Disponibilidad | Balanceo de carga, caché, recuperación automática
+| 3 | Seguridad, Trazabilidad | TLS 1.3, MFA, módulo de auditoría centralizada
+| 4 | Usabilidad, Escalabilidad | SPA/Flutter, Docker, Kubernetes, monitoreo en tiempo real
+|===
+
+El método ADD permitió construir una arquitectura que responde de manera directa a los impulsores de calidad, así como las restricciones y preocupaciones del sistema, garantizando una base sólida para el desarrollo y evolución futura de BlueLotus System.
+El enfoque CSBE aseguro la claridad estructural y modularidad necesaria para futuras extensiones, manteniendo la trazabilidad entre los casos de uso, los QAS, y las decisiones arquitectónicas tomadas.
+
+BlueLotus System, ahora, quedá definido por una arquitectura Cliente-Servidor basada en SPA y API RESTful, organizada por capas y orientada a componentes, que equilibra seguridad, rendimiento, disponibilidad, modificabilidad, escalabilidad y usabilidad asegurando el éxito del proyecto a largo plazo.
 

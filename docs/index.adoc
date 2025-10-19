@@ -30,12 +30,16 @@ include::quality-attributes.adoc[]
 
 include::design-method.adoc[]
 
-include::views/deployment-view.adoc[]
+include::views/logical-view.adoc[]
 
 include::views/development-view.adoc[]
 
-include::views/logical-view.adoc[]
-
 include::views/process-view.adoc[]
 
+include::views/deployment-view.adoc[]
+
 include::views/scenarios.adoc[]
+
+include::cross-cutting-concerns.adoc[]
+
+include::traceability.adoc[]
