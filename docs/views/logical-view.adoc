@@ -1,10 +1,26 @@
 == Vista lógica
 
 === Propósito de la vista
+El propósito de la Vista Lógica es presentar la estructura estática del BlueLotus System, así como el modelo de conceptos de negocio y un modelo de relaciones de actores. Esta vista se descompone en los componentes lógicos, en los cuales, se describen sus responsabilidades individuales y sus relaciones, sin entrar en detalles de implementación física o despliegue.
 
+Esta vista facilita la comunicación entre arquitectos, desarrolladores y líderes, debido a que ofrece un lenguaje común del sistema.
+Para los desarrolladores, esta vista sirve como una guía fundamental, mostrando la organización del sistema y cómo encaja cada elemento de funcionalidad.
+
+Además, facilita establecer y demostrar cómo el sistema responderá a los principales atributos de calidad, en este caso, la modificabilidad, usabilidad, rendimiento, seguridad y escalabilidad.
 
 === Justificación de las decisiones
 
+**Adopción de arquitectura cliente-servidor:** Se eligió para separar las responsabilidades en todo el sistema. Permite que el desarrollo del front-end (cliente) y el de back-end (servidor) trabajen y evolucionen de forma independiente, maximizando la modificabilidad y facilitando el mantenimiento a largo plazo.
+
+**Cliente de tipo Single-Page Application (SPA):** Al cargar la aplicación una sola vez y actualizar el contenido dinámicamente, ofrece una experiencia de usuario más rápida y fluida, mejorando el rendimiento percibido por el usuario.
+
+**Estructura de servidor en capas:** Promueve la separación de responsabilidades y la modificabilidad, donde cada capa tiene un propósito claro, lo que simplifica el desarrollo y mantenimiento.
+
+**Uso de API RESTful:** Proporciona una interfaz estándar entre cliente y el ervsidor con el fin de apoyar la interoperabilidad y la separación entre la capa de presentación y la lógica de negocio.
+
+**Acceso a datos con el patrón DAO/ORM:** Ofrece la capacidad de desacoplar la lógica de negocio con la tecnología de bases de datos usada, facilitando migraciones y protegiendo al sistema de cambios, desembocando en una satisfacción de la mantenibilidad.
+
+**Uso de dockers/kubernetes:** Esta estrategia satisface los atributos de escalabilidad y disponibilidad. Permite que la aplicación se empaquete en contenedores Docker, creando módulos portables y consistentes. Para su gestión de forma automatizada y replicarlos en momentos de alta demanda, se usarán Kubernetes.
 
 === Estructura estática del sistema
 
