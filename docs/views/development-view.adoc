@@ -6,10 +6,10 @@
 === Justificación de las decisiones
 
 
-=== Diagrama de Especificación de Componentes
+=== Diagramas de Especificación de Componentes
 
 
-=== Diagrama de Especificación de Interfaces
+=== Diagramas de Especificación de Interfaces
 
 
 === Interacción de Componentes
