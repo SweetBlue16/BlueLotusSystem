@@ -102,9 +102,104 @@ image::../images/IInventarioSpecification.png[width=600,align="center",alt="Diag
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| agregarHotel() |
+- datosHotel contiene datos válidos. +
+- No existe un HotelInfoInventario con el mismo nombre y dirección.
+|
+- Se crea una nueva instancia de HotelInfoInventario. +
+- nuevoHotel se rellena con los datos de datosHotel. +
+- Se genera y se asigna un idHotel único a nuevoHotel. +
+- nuevoHotel.estado se establece en "disponible". +
+- El valor de retorno (ResultadoHotel) indica éxito y contiene el idHotel de nuevoHotel. +
+- Si falla una precondición, el valor de retorno indica fallo con mensajeError. No se crear el hotel.
+| crearTipoHabitación() |
+- Existe un HotelInfoInventario con idHotel. +
+- datosTipo contiene datos válidos.
+|
+- Se crea una nueva instancia de TipoHabitaciónInfoInventario. +
+- nuevoTipo se rellena con los datos de datosTipo. +
+- Se genera y asigna un idTipoHabitacion único a nuevoTipo.idTipoHabitacion. +
+- nuevoTipo se asocia con el hotel especificado. +
+- El valor de retorno (ResultadoTipoHabitacion) indica éxito y contiene el nuevo idTipoHabitacion. +
+- Si falla una precondición, el valor de retorno indica fallo con mensajeError. No se crea el tipo.
+| registrarHabitación() |
+- Existe un HotelInfoInventario con el idHotel dado. +
+- Existe un TipoHabitacionInfoInventario con el idTipoHabitacion dado y pertenece a hotel. +
+- datosHabitacion contiene datos válidos. +
+- No existe ya una HabitacionInfoInventario dentro de hotel con el mismo numeroHabitacion.
+|
+- Se crea una nueva instancia de HabitacionInfoInventario. +
+- nuevaHab se rellena con los datos de datosHabitacion. +
+- Se genera y asigna un idHabitacion único a nuevaHab.idHabitacion. +
+- nuevaHab se asocia con el hotel y tipo especificados. +
+- nuevaHab.estado se establece a 'Disponible' (estado por defecto). +
+- El valor de retorno (ResultadoHabitacion) indica éxito y contiene el nuevo idHabitacion. +
+- Si falla una precondición, el valor de retorno indica fallo con mensajeError. No se crea la habitación.
+| cambiarEstadoHabitación() |
+- Existe una HabitacionInfoInventario con el idHabitacion dado. +
+- nuevoEstado es un estado válido de la lista definida.
+|
+- El estado de la habitación se actualiza: hab.estado = nuevoEstado. +
+- El valor de retorno (ResultadoOperacion) indica éxito. +
+- Si falla una precondición, el valor de retorno indica fallo con mensajeError. El estado no cambia.
+| modificarHotel() |
+- Existe un HotelInfoInventario con el idHotel proporcionado. +
+- Los datos en datosHotel son válidos. +
+- Si se cambia el nombre, este no debe entrar en conflicto con otro hotel en la misma ciudad.
+|
+- Los atributos del hotel se actualizan con los valores proporcionados in datosHotel. +
+- El valor de retorno (ResultadoOperacion) indica éxito. +
+- Si falla una precondición, el valor de retorno indica fallo con mensajeError. El estado del hotel no cambia.
+| obtenerHotel() |
+- Existe un HotelInfoInventario con el idHotel proporcionado. +
+|
+- Se retorna la instancia completa de HotelInfoInventario correspondiente al idHotel. +
+- El estado del sistema no cambia. +
+| listarHoteles() |
+N/A
+|
+- Se retorna una lista (list<HotelInfoInventario>) con todos los hoteles del sistema. +
+- Si no hay hoteles, se retorna una lista vacía. +
+- El estado del sistema no cambia.
+| modificarTipoHabitación() |
+- Existe un TipoHabitacionInfoInventario con el idTipoHabitacion proporcionado. +
+- Los datos en datosTipo son válidos.
+|
+- Los atributos del tipo se actualizan con los valores de datosTipo. +
+- El valor de retorno (ResultadoOperacion) indica éxito. +
+- Si falla una precondición, el valor de retorno indica fallo con mensajeError. El estado del tipo no cambia.
+| obtenerTipoHabitación() |
+- Existe un TipoHabitacionInfoInventario con el idTipoHabitacion proporcionado.
+|
+- Se retorna la instancia completa de TipoHabitacionInfoInventario. +
+- El estado del sistema no cambia.
+| listarTiposHabitaciónPorHotel() |
+- Existe un HotelInfoInventario con el idHotel proporcionado.
+|
+- Se retorna una lista (list<TipoHabitacionInfoInventario>) con todos los tipos de habitación asociados al hotel.
+- Si el hotel no tiene tipos de habitación definidos, se retorna una lista vacía. +
+- El estado del sistema no cambia. +
+| modificarHabitación() |
+- Existe una HabitacionInfoInventario con el idHabitacion proporcionado. +
+- Los datos en datosHabitacion son válidos.
+|
+- Los atributos de la hab se actualizan con los valores de datosHabitacion. +
+- El valor de retorno (ResultadoOperacion) indica éxito. +
+- Si falla una precondición, el valor de retorno indica fallo con mensajeError. El estado de la habitación no cambia.
+| obtenerHabitación() |
+- Existe una HabitacionInfoInventario con el idHabitacion proporcionado.
+|
+- Se retorna la instancia completa de HabitacionInfoInventario. +
+- El estado del sistema no cambia.
+| listarHabitacionesPorHotel() |
+- Existe un HotelInfoInventario con el idHotel proporcionado.
+|
+- Se retorna una lista (list<HabitacionInfoInventario>) con todas las habitaciones asociadas al hotel. +
+- Si el hotel no tiene habitaciones registradas, se retorna una lista vacía. +
+- El estado del sistema no cambia.
 |===
 
-==== Diagrama de Especificación de Interfaces IPago
+==== Diagrama de Especificación de Interfaces de IPago
 image::../images/IPagoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IPago"]
 
 ==== Especificación de las Operaciones de IPago
