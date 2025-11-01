@@ -84,6 +84,21 @@ image::../images/IConsultaDisponibilidadSpecification.bmp[width=600,align="cente
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| consultarDisponibilidad() |
+- Las fechas en consulta son válidas (fechaInicio < fechaFin, fechaInicio >= fecha actual). +
+- Si se especifica consulta.idHotel, el hotel debe existir y estar activo. +
+- Si se especifica consulta.idTipoHabitacion, este debe existir y pertenecer al idHotel (si se especificó hotel). +
+- Si se especifica consulta.numeroHuespedes, este debe ser un entero positivo.
+|
+- Se retorna una lista (list<DisponibilidadResultado>) que contiene una entrada por cada combinación de HotelInfoConsulta y TipoHabitacionInfoConsulta que cumple con los criterios de la consulta y tiene disponibilidad en al menos una parte del rango consulta.fechaInicio a consulta.fechaFin. +
+- Cada DisponibilidadResultado en la lista contiene: +
+  * La **información** del hotel y tipo de habitación. +
+  * **fechasDisponibles:** Una lista de rangos de fechas dentro del rango consultado donde sí hay disponibilidad. Si hay disponibilidad continua en todo el rango, esta lista contendrá un solo DateRange igual al consultado. +
+  * **tarifaPromedioNoche:** El precio promedio por noche calculado para ese tipo de habitación en las fechas consultadas. +
+  * **numeroHabitacionesDisponibles:** El número estimado de habitaciones disponibles (puede ser > número físico si hay overbooking). +
+- Si consulta.numeroHuespedes fue especificado, solo se incluyen resultados donde TipoHabitacionInfoConsulta.capacidadMaxima >= consulta.numeroHuespedes. +
+- Si no se encuentra ninguna disponibilidad que coincida con los criterios, se retorna una lista vacía. +
+- El estado del sistema no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces IGestionEstancias
