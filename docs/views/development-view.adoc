@@ -251,7 +251,28 @@ image::../images/IReservaciónSpecification.png[width=600,align="center",alt="Di
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| crearReservacion() |
+- Existe y está activo un HotelInfo con el idHotel dado. +
+- Existe el TipoHabitacionInfo con el idTipoHabitacion dado y pertence al idHotel especificado. +
+- La fechaCreacion y fechaFin de la ReservacionInfo es válida (fechaCreacion < fechaFin, fechaInicio >= fecha actual). +
+- Hay disponibilidad para idTipoHabitacion en el idHotel durante el rango de fechas especificado. +
+- Debe existir ClienteInfo del idCliente dado.
+|
+- Se crea una nueva instancia de ReservacionInfo. +
+- nuevaRes contiene todos los datos proporcionados. +
+- El estado de nuevaRes se establece como 'Pendiente'. +
+- El costoTotal de las nuevaRes se calcula y establece en las tarifas vigentes de las fechas y el tipo de habitación. +
+- La fechaCreacion de la nuevaRes queda estblecida con la fecha/hora actual.
+- El valor de retorno de ReultadoReservacion indica éxito, conteniendo el idReservacion de la nuevaRes y el costoCalculado.
+|cancelarReservacion()|
+- Existe un ReservacionInfo con el idReservacion elegido. +
+- fechaFin de ReservacionInfo no expirada. +
+- Las
+|
+-
+
 |===
+
 
 === Interacción de Componentes
 
