@@ -96,6 +96,15 @@ image::../images/ICheckOutSpecification.png[width=600,align="center",alt="Diagra
 | Operación | Precondiciones | Postcondiciones
 |===
 
+==== Diagrama de Especificación de Interfaces de ICliente
+image::../images/IClienteSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICliente"]
+
+==== Especificación de las Operaciones de ICliente
+[cols="^20,<40,<40", options="header"]
+|===
+| Operación | Precondiciones | Postcondiciones
+|===
+
 ==== Diagrama de Especificación de Interfaces IConsultaDisponibilidad
 image::../images/IConsultaDisponibilidadSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces IConsultaDisponibilidad"]
 
@@ -299,4 +308,67 @@ image::../images/IReservaciónSpecification.png[width=600,align="center",alt="Di
 |===
 
 === Interacción de Componentes
+Los diagramas de interacción de componentes se utilizan para ilustrar cómo los diferentes componentes del sistema interactúan entre sí para llevar a cabo procesos específicos. Estos diagramas muestran el flujo de mensajes y la secuencia de interacciones entre los componentes, destacando cómo colaboran para lograr funcionalidades del sistema.
 
+A continuación, se presentan los diagramas de interacción de componentes del sistema, para las operaciones donde interactúan múltiples componentes:
+
+==== Diagramas de Interacción de Componentes para IAuditoría
+
+
+==== Diagramas de Interacción de Componentes para IAutenticación
+
+
+==== Diagramas de Interacción de Componentes para ICheckIn
+
+
+==== Diagramas de Interacción de Componentes para ICheckOut
+
+**Obtener Detalle de Cargos de Estancia**
+
+image::../images/ObtenerDetalleCargosEstanciasInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICheckOut - obtenerDetalleCargosEstancia"]
+
+==== Diagramas de Interacción de Componentes para ICliente
+
+**Actualizar Datos de Cliente**
+
+image::../images/ActualizarDatosClenteInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICliente - actualizarDatosCliente"]
+
+==== Diagramas de Interacción de Componentes para IConsultaDisponibilidad
+
+
+==== Diagramas de Interacción de Componentes para IGestionEstancias
+
+**Registrar Consumo en Estancia**
+
+image::../images/RegistrarConsumoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestionEstancias - registrarConsumoEstancia"]
+
+==== Diagramas de Interacción de Componentes para IInventario
+
+
+==== Diagramas de Interacción de Componentes para IPago
+
+
+==== Diagramas de Interacción de Componentes para IPasarelaPago
+
+
+==== Diagramas de Interacción de Componentes para IRegistro
+
+
+==== Diagramas de Interacción de Componentes para IReporteAuditoría
+
+**Generar Reporte de Auditoría**
+
+image::../images/GenerarReporteActividadInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteAuditoria"]
+
+==== Diagramas de Interacción de Componentes para IReporteFinanciero
+
+
+==== Diagramas de Interacción de Componentes para IReservación
+
+**Crear Reservación**
+
+image::../images/CrearReservaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReservación - crearReservacion"]
+
+**Obtener Detalle de Reservación**
+
+image::../images/ObtenerDetallesReservaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReservación - obtenerDetalleReservacion"]
