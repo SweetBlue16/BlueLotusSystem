@@ -344,7 +344,7 @@ image::../images/IPasarelaPagoSpecification.bmp[width=600,align="center",alt="Di
 **Si respuesta.exito es false:** +
 - El gateway rechazó la solicitud de reembolso. +
 - mensaje contiene la razón del fallo. +
-- Sistema usa esta respuesta para actualizar el PagoInfo interno o crear uno nuevo para el reembolso.
+- Sistema usa la respuesta para actualizar el PagoInfo interno o crear uno nuevo para el reembolso.
 |===
 
 ==== Diagrama de Especificación de Interfaces IRegistro
