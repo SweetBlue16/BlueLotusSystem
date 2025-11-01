@@ -57,6 +57,26 @@ image::../images/IAutenticaciónSpecification.png[width=600,align="center",alt="
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| iniciarSesion() |
+- Los datos en credenciales son formalmente válidos
+|
+**Caso Éxito:** +
+- Las credenciales.identificador y credenciales.contrasena coinciden con un usuario registrado y activo en el sistema. +
+- El valor de retorno indica éxito (exito = true). +
+- El resultado.usuarioInfo contiene los datos del usuario autenticado. +
+- Se genera un tokenSesion único y con tiempo de expiracionToken definido, que se incluye en resultado.usuarioInfo. +
+- Se registra el intento de inicio de sesión exitoso. +
+**Caso Fallo (Credenciales Inválidas):** +
+- Las credenciales.identificador y credenciales.contrasena no coinciden con un usuario registrado y activo. +
+- El valor de retorn indica fallo (exito = false). +
+- El resultado.mensajeError indica "Credenciales inválidas" o un mensaje similar genérico. +
+- resultado.usuarioInfo es nulo o indefinido. +
+**Caso Fallo (Usuario Inactivo/Bloqueado):** +
+- Las credenciales coinciden, pero la cuenta del usuario está inactiva o bloqueada. +
+- El valor de retorno indica fallo (exito = false). +
+- El resultado.mensajeError indica "Cuenta inactiva" o "Cuenta bloqueada". +
+- resultado.usuarioInfo es nulo o indefinido. +
+- Se registra el intento de inicio de sesión fallido.
 |===
 
 ==== Diagrama de Especificación de Interfaces de ICheckIn
@@ -127,6 +147,39 @@ image::../images/IGestionEstanciaSpecification.bmp[width=600,align="center",alt=
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| cambiarHabitacion() |
+- Existe una EstanciaInfoGestion con el idEstancia proporcionado y está 'Activa'. +
+- Existe una HabitacionInfoGestion con idNuevaHabitacion en el mismo hotel (estancia.habitacionAsignada.hotel). +
+- La nueva habitación está actualmente 'Disponible' (habNueva.estadoActual = 'Disponible'). +
+- La habitación actual asignada a la estancia (habActual = estancia.habitacionAsignada) existe y está 'Ocupada'.
+|
+- El estado de la habitación actual se cambia a 'Disponible' (o 'Limpieza Pendiente'). +
+- El estado de la nueva habitación se cambia a 'Ocupada'. +
+- La estancia se actualiza para referenciar a la nueva habitación: estancia.habitacionAsignada = habNueva. +
+- Se calcula un ajusteCosto si habNueva.tipoHabitacion tiene una tarifa diferente a habActual.tipoHabitacion para las noches restantes. Este ajuste se suma (o resta) a estancia.saldoPendiente. +
+- El valor de retorno indica éxito (exito = true), contiene el nuevoNumeroHabitacion (habNueva.numeroHabitacion) y el ajusteCosto calculado. +
+- Si alguna precondición falla, el valor de retorno indica fallo (exito = false) y mensajeError explica por qué. El estado del sistema no cambia.
+| extenderEstancia() |
+- Existe una EstanciaInfoGestion con el idEstancia proporcionado y está 'Activa'. +
+- La nuevaFechaFin es posterior a la estancia.fechaCheckOutPrevista actual. +
+- La habitación actualmente asignada (habActual = estancia.habitacionAsignada) está disponible (no tiene otras reservas conflictivas) entre estancia.fechaCheckOutPrevista (exclusivo) y nuevaFechaFin (inclusivo). +
+|
+- La fecha de salida prevista de la estancia se actualiza: estancia.fechaCheckOutPrevista = nuevaFechaFin. +
+- Se recalcula el costo total de la estancia (basado en las tarifas diarias del habActual.tipoHabitacion para las noches añadidas) y se actualiza estancia.saldoPendiente con la diferencia. +
+-El valor de retorno indica éxito (exito = true), la nuevaFechaFin y el nuevoCostoTotal recalculado de la estancia. +
+- Si alguna precondición falla, el valor de retorno indica fallo (exito = false) y mensajeError lo explica. El estado de la estancia no cambia.
+| registrarConsumo() |
+- Existe una EstanciaInfoGestion con el idEstancia proporcionado y está 'Activa'. +
+- El producto o servicio identificado por detalleConsumo.idProductoServicio existe en el catálogo y tiene un precio definido. +
+- La detalleConsumo.cantidad es un número positivo.
+|
+- Se crea un nuevo registro de ConsumoInfo asociado a la estancia. +
+- nuevoConsumo contiene los detalles proporcionados (idProductoServicio, cantidad, notas). +
+- Se calcula nuevoConsumo.costoTotal (cantidad * costo unitario del producto/servicio).  +
+- nuevoConsumo.fechaRegistro se establece a la fecha/hora actual. +
+- El estancia.saldoPendiente se incrementa por el nuevoConsumo.costoTotal. +
+- El valor de retorno  indica éxito (exito = true), el idConsumoRegistrado y el costoConsumo. +
+- Si alguna precondición falla, el valor de retorno indica fallo (exito = false) y mensajeError lo detalla. El saldoPendiente de la estancia no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces IInventario
@@ -249,6 +302,40 @@ image::../images/IPasarelaPagoSpecification.bmp[width=600,align="center",alt="Di
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| autorizarPago() |
+- Los datos en solicitud son válidos según los requisitos del gateway.
+|
+- Se recibe una RespuestaAutorizacion. +
+**Si respuesta.exitoInicio es true:** +
+- El gateway ha aceptado la solicitud para procesarla. +
+- Se recibe un idTransaccionExterna único del gateway. +
+- Se recibe un estadoInicial ("PENDING", "REDIRECT_REQUIRED", etc.). +
+- Si estadoInicial es "REDIRECT_REQUIRED", urlRedireccionUsuario contiene la URL a la que se debe redirigir al cliente. +
+**Si respuesta.exitoInicio es false:** +
+- El gateway rechazó la solicitud inicial. +
+- Mensaje contiene la razón del fallo. idTransaccionExterna puede ser nulo. +
+- Sistema usa respuestas para actualizar su PagoInfo interno.
+| consultarEstadoTransaccion() |
+- idTransaccionExterna es un ID válido previamente devuelto por el gateway en una RespuestaAutorizacion.
+|
+- Se recibe un EstadoTransaccionExterna. +
+- respuesta.estado refleja el estado actual en el gateway ("COMPLETED", "FAILED", "PENDING", etc.). +
+- Otros campos contienen detalles relevantes del estado actual según la definición del gateway. +
+- Sistema usa la respuesta para actualizar el estado de su PagoInfo interno correspondiente.
+| reembolsarPago() |
+- solicitud.idTransaccionOriginal corresponde a una transacción completada ("COMPLETED") en el gateway. +
+- solicitud.montoReembolsar es positivo y no mayor al monto original pagado. +
+- El motivo es proporcionado si es requerido por el gateway.
+|
+- Se recibe una RespuestaReembolso. +
+**Si respuesta.exito es true:** +
+- El gateway ha procesado o iniciado el proceso de reembolso. +
+- Se recibe un idTransaccionReembolso. +
+- Se recibe un estadoReembolso ("PROCESSING", "COMPLETED", etc.). +
+**Si respuesta.exito es false:** +
+- El gateway rechazó la solicitud de reembolso. +
+- mensaje contiene la razón del fallo. +
+- Sistema usa esta respuesta para actualizar el PagoInfo interno o crear uno nuevo para el reembolso.
 |===
 
 ==== Diagrama de Especificación de Interfaces IRegistro
@@ -287,6 +374,21 @@ image::../images/IReporteFinancieroSpecification.bmp[width=600,align="center",al
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| generarReporteIngresosPorPeriodo() |
+- El usuario que invoca la operación tiene permisos para generar reportes financieros. +
+- Los criterios en filtro son válidos (fechaInicio <= fechaFin). +
+- Si se especifica filtro.idHotel, este debe existir.
+|
+- Se consultan los datos relevantes (pagos, reservaciones completadas, estancias finalizadas, consumos registrados) de las interfaces correspondientes (IPago, IReservacion, IEstancia, etc.) que caen dentro del rango de fechas y hotel especificados en filtro. +
+- Se construye un objeto ReporteFinancieroGenerado. +
+- reporte.titulo se establece adecuadamente. +
+- reporte.fechaGeneracion es la fecha/hora actual. +
+- reporte.periodo describe el rango filtro.fechaInicio a filtro.fechaFin. +
+- reporte.hotel indica el ID o nombre del hotel si se filtró por uno, o "Toda la cadena" si no. +
+- reporte.filtrosAplicados describe los criterios usados. +
+- Se calcula y rellena reporte.resumenIngresos agregando los montos de las transacciones consultadas (separando alojamiento de consumos). +
+- Se retorna el reporte generado. +
+- El estado del sistema no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces IReservación
@@ -300,22 +402,39 @@ image::../images/IReservaciónSpecification.png[width=600,align="center",alt="Di
 - Existe y está activo un HotelInfo con el idHotel dado. +
 - Existe el TipoHabitacionInfo con el idTipoHabitacion dado y pertence al idHotel especificado. +
 - La fechaCreacion y fechaFin de la ReservacionInfo es válida (fechaCreacion < fechaFin, fechaInicio >= fecha actual). +
-- Hay disponibilidad para idTipoHabitacion en el idHotel durante el rango de fechas especificado. +
-- Debe existir ClienteInfo del idCliente dado.
+- Hay disponibilidad para idTipoHabitacion en el idHotel durante el rango de fechas especificado (considerando políticas de overbooking). +
+- Si se proporciona detallesCli.idCliente, este debe corresponder a un cliente existente. +
+- Si no se proporciona detallesCli.idCliente, se deben incluir nombre, email y postCode válidos para crear un cliente nuevo.
 |
 - Se crea una nueva instancia de ReservacionInfo. +
 - nuevaRes contiene todos los datos proporcionados. +
 - El estado de nuevaRes se establece como 'Pendiente'. +
 - El costoTotal de las nuevaRes se calcula y establece en las tarifas vigentes de las fechas y el tipo de habitación. +
-- La fechaCreacion de la nuevaRes queda estblecida con la fecha/hora actual.
+- La fechaCreacion de la nuevaRes queda estblecida con la fecha/hora actual. +
 - El valor de retorno de ReultadoReservacion indica éxito, conteniendo el idReservacion de la nuevaRes y el costoCalculado.
 |cancelarReservacion()|
-- Existe un ReservacionInfo con el idReservacion elegido. +
-- fechaFin de ReservacionInfo no expirada. +
-- Las
+- Existe un ReservacionInfo con el idReservacion proporcionado. +
+- La reservación asociada a idReservacion está en un estado cancelable. No se puede cancelar si está 'Completada', 'Ocupada' o ya 'Cancelada'.
 |
--
-
+- El estado de la reservació se actualiza a 'Cancelada'. +
+- Se calcula la penalizacionAplicada según las políticas de cancelación. +
+- El valor de retorno (ResultadoCancelacion) indica éxito (exito = true), incluye un mensaje informativo y el monto de penalizacionAplicada.
+| obtenerDetallesReservacion()|
+- Existe una ReservacionInfo con el idReservacion proporcionado.
+|
+- Se retorna la instancia completa de ReservacionInfo correspondiente al idReservacion. +
+- El estado del sistema no cambia.
+| modificarReservacion() |
+- Existe una ReservacionInfo con el idReservacion proporcionado. +
+- La reservación está en un estado modificable. +
+- Las nuevas fechas en nuevosDetalles son válidas (inicio < fin, inicio >= fecha actual). +
+- El nuevo hotel (nuevosDetalles.idHotel) existe. +
+- El nuevo tipo de habitación (nuevosDetalles.idTipoHabitacion) existe en ese hotel. +
+- Hay disponibilidad para el nuevosDetalles.idTipoHabitacion en el nuevosDetalles.idHotel durante el nuevo rango de fechas (considerando overbooking y liberando la disponibilidad anterior).
+|
+- Los atributos de la reservación se actualizan con los valores de nuevosDetalles (fechas, tipo de habitación). +
+- Se recalcula y actualiza res.costoTotal basado en las nuevas condiciones y tarifas. +
+- El valor de retorno (ResultadoModificacion) indica éxito (exito = true) y el nuevoCosto.
 |===
 
 
