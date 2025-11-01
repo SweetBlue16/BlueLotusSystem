@@ -229,6 +229,64 @@ image::../images/IGestionEstanciaSpecification.bmp[width=600,align="center",alt=
 - Si alguna precondición falla, el valor de retorno indica fallo (exito = false) y mensajeError lo detalla. El saldoPendiente de la estancia no cambia.
 |===
 
+==== Diagrama de Especificación de Interfaces de IGestiónPersonal
+image::../images/IGestiónPersonalSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónPersonal"]
+
+==== Especificación de las Operaciones de IGestiónPersonal
+[cols="^20,<40,<40", options="header"]
+|===
+| Operación | Precondiciones | Postcondiciones
+| crearPerfilPersonal() |
+- El usuario que invoca la operación tiene rol 'RRHH'. +
+- datos.email no está vacío y tiene formato válido. +
+- datos.password cumple con la política de seguridad. +
+- datos.rol es 'Administrador' o 'Recepcionista'. +
+- No existe otro PerfilPersonalInfo con el mismo datos.email.
+|
+- Se ha creado una nueva instancia de PerfilPersonalInfo. +
+- nuevoPerfil se rellena con los datos. +
+- Se genera y asigna un idUsuario único a nuevoPerfil.idUsuario. +
+- nuevoPerfil.activo se establece a true. +
+- nuevoPerfil.fechaCreacion se establece a la fecha/hora actual. +
+- Se crea un registro de credencial seguro usando datos.password. +
+- El valor de retorno (ResultadoPerfil) indica éxito y contiene el idUsuario. +
+- Se registra el evento en auditoría. +
+- Si la precondición del email único falla, retorna exito = false y mensajeError.
+| modificarPerfilPersonal() |
+- El usuario que invoca la operación tiene rol 'RRHH'. +
+- Existe un PerfilPersonalInfo con el idUsuario proporcionado. +
+- Si se modifica datos.email, este no debe existir en otro perfil.
+|
+- Los atributos de perfil se actualizan con los valores proporcionados en datos. +
+- Si se incluye password en datos, se actualiza la credencial. +
+- El valor de retorno (ResultadoOperacion) indica éxito. +
+- Se registra el evento en auditoría. +
+- Si falla, retorna exito = false y mensajeError.
+| eliminarPerfilPersonal() |
+- El usuario que invoca la operación tiene rol 'RRHH'. +
+- Existe un PerfilPersonalInfo con el idUsuario proporcionado. +
+- No se puede eliminar al último administrador.
+|
+- El perfil se marca como inactivo: perfil.activo = false. +
+- El valor de retorno (ResultadoOperacion) indica éxito. +
+- Se registra el evento en auditoría. +
+- Si falla, retorna exito = false y mensajeError.
+| obtenerPerfilPersonal() |
+- Existe un PerfilPersonalInfo con el idUsuario proporcionado. +
+- El usuario que invoca la operación tiene rol 'RRHH'.
+|
+- Se retorna la instancia completa de PerfilPersonalInfo correspondiente al idUsuario. +
+- El estado del sistema no cambia. +
+- Si falla, retorna exito = false y mensajeError.
+| listarPerfilesPersonales() |
+- El usuario que invoca la operación tiene rol 'RRHH'. +
+- Existe un rolFiltro válido si se proporciona (Administrador o Recepcionista).
+|
+- Se retorna una lista (list<PerfilPersonalInfo>) con todos los perfiles que coinciden con rolFiltro (si se proporcionó). +
+- Si no hay perfiles que coincidan, se retorna una lista vacía. +
+- El estado del sistema no cambia.
+|===
+
 ==== Diagrama de Especificación de Interfaces IInventario
 image::../images/IInventarioSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IInventario"]
 
@@ -484,6 +542,9 @@ A continuación, se presentan los diagramas de interacción de componentes del s
 ==== Diagramas de Interacción de Componentes para IAutenticación
 
 
+==== Diagramas de Interacción de Componentes para ICatálogo
+
+
 ==== Diagramas de Interacción de Componentes para ICheckIn
 
 
@@ -507,6 +568,20 @@ image::../images/ActualizarDatosClenteInteraction.png[width=600,align="center",a
 **Registrar Consumo en Estancia**
 
 image::../images/RegistrarConsumoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestionEstancias - registrarConsumoEstancia"]
+
+==== Diagramas de Interacción de Componentes para IGestiónPersonal
+
+**Crear Perfil de Personal**
+
+image::../images/CrearPerfilPersonalInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónPersonal - crearPerfilPersonal"]
+
+**Modificar Perfil de Personal**
+
+image::../images/ModificarPerfilPersonalInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónPersonal - modificarPerfilPersonal"]
+
+**Eliminar Perfil de Personal**
+
+image::../images/EliminarPerfilPersonalInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónPersonal - eliminarPerfilPersonal"]
 
 ==== Diagramas de Interacción de Componentes para IInventario
 
