@@ -66,6 +66,25 @@ image::../images/ICheckInSpecification.bmp[width=600,align="center",alt="Diagram
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| realizarCheckIn() |
+- Existe una ReservacionInfoCheckIn con el idReservacion proporcionado. +
+- La fecha actual está dentro del rango permitido para el check-in de la reservación. +
+- El estado de la reservación permite el check-in. +
+- Existe al menos una HabitacionInfo disponible en el hotel y del tipo especificados en la reservación.
+|
+- Se identifica o crea una instancia de EstanciaInfo asociada a la reservación. +
+- Se selecciona una HabitacionInfo que cumple las condiciones. +
+- El estado de la habitación seleccionada se actualiza a 'Ocupada'. +
+- La estancia se actualiza o crea con: +
+* **estancia.habitacionAsignada = hab** +
+* **estancia.fechaCheckIn = fecha/hora actual** +
+* **estancia.fechaCheckOutPrevista = res.fechaFin** +
+* **estancia.estado = 'Activa'** +
+* **estancia.huesped = res.huesped** +
+- El estado de la reservación res se actualiza para reflejar que el check-in ocurrió. +
+- El valor de retorno (ResultadoCheckIn) indica éxito, contiene el idEstancia y el numeroHabitacionAsignada. +
+- Si alguna precondición falla, el valor de retorno indica fallo y mensajeError detalla la causa. El estado del sistema no cambia.
+
 |===
 
 ==== Diagrama de Especificación de Interfaces ICheckOut
