@@ -35,6 +35,8 @@ image::../images/StaysManagerComponent.png[width=600,align="center",alt="Diagram
 ==== Diagrama de Especificación de Componentes del Módulo de Usuarios
 image::../images/UserManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Usuarios"]
 
+==== Diagrama de Especificación de Componentes del Módulo de Catálogo
+image::../images/CatalogManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Catálogo"]
 
 === Diagramas de Especificación de Interfaces
 Los diagramas de especificación de interfaces se utilizan para definir las interfaces que los componentes del sistema exponen y consumen. Estos diagramas detallan los métodos, atributos y protocolos de comunicación que permiten la interacción entre diferentes componentes. Se centran en cómo los componentes se comunican entre sí a través de sus interfaces, asegurando una integración efectiva y coherente.
@@ -79,6 +81,43 @@ image::../images/IAutenticaciónSpecification.png[width=600,align="center",alt="
 - Se registra el intento de inicio de sesión fallido.
 |===
 
+==== Diagrama de Especificación de Interfaces de ICatálogo
+image::../images/ICatálogoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICatálogo"]
+
+==== Especificación de las Operaciones de ICatálogo
+[cols="^20,<40,<40", options="header"]
+|===
+| Operación | Precondiciones | Postcondiciones
+| agregarItemCatálogo() |
+- El idHotel existe. +
+- Los datos en datosItem son válidos. +
+- No existe otro ítem en el catálogo de ese hotel con el mismo nombre.
+|
+- Se crea una nueva instancia de ItemCatalogoInfo. +
+- nuevoItem se rellena con datosItem y se asocia al idHotel. +
+- Se genera y asigna un idItem único. +
+- El valor de retorno (ResultadoItemCatalogo) indica éxito y contiene el idItem. +
+- Si falla, retorna exito = false y mensajeError. +
+| modificarItemCatálogo() |
+- Existe un ItemCatalogoInfo con el idItem proporcionado. +
+- Los datos en datosItem son válidos.
+|
+- Los atributos de item se actualizan con los valores de datosItem. +
+- El valor de retorno (ResultadoOperacion) indica éxito. +
+- Si falla, retorna exito = false y mensajeError.
+| obtenerItemCatálogo() |
+- Existe un ItemCatalogoInfo con el idItem proporcionado.
+|
+- Se retorna la instancia completa de ItemCatalogoInfo. +
+- El estado del sistema no cambia.
+| listarItemsCatálogoPorHotel() |
+- Existe un HotelInfoCatalogo con el idHotel proporcionado.
+|
+- Se retorna una lista (list<ItemCatalogoInfo>) con todos los ítems del catálogo asociados al hotel. +
+- Si no hay ítems, se retorna una lista vacía. +
+- El estado del sistema no cambia.
+|===
+
 ==== Diagrama de Especificación de Interfaces de ICheckIn
 image::../images/ICheckInSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICheckIn"]
 
@@ -104,7 +143,6 @@ image::../images/ICheckInSpecification.bmp[width=600,align="center",alt="Diagram
 - El estado de la reservación res se actualiza para reflejar que el check-in ocurrió. +
 - El valor de retorno (ResultadoCheckIn) indica éxito, contiene el idEstancia y el numeroHabitacionAsignada. +
 - Si alguna precondición falla, el valor de retorno indica fallo y mensajeError detalla la causa. El estado del sistema no cambia.
-
 |===
 
 ==== Diagrama de Especificación de Interfaces ICheckOut
@@ -433,19 +471,7 @@ image::../images/IReservaciónSpecification.png[width=600,align="center",alt="Di
 |
 - Se retorna la instancia completa de ReservacionInfo correspondiente al idReservacion. +
 - El estado del sistema no cambia.
-| modificarReservacion() |
-- Existe una ReservacionInfo con el idReservacion proporcionado. +
-- La reservación está en un estado modificable. +
-- Las nuevas fechas en nuevosDetalles son válidas (inicio < fin, inicio >= fecha actual). +
-- El nuevo hotel (nuevosDetalles.idHotel) existe. +
-- El nuevo tipo de habitación (nuevosDetalles.idTipoHabitacion) existe en ese hotel. +
-- Hay disponibilidad para el nuevosDetalles.idTipoHabitacion en el nuevosDetalles.idHotel durante el nuevo rango de fechas (considerando overbooking y liberando la disponibilidad anterior).
-|
-- Los atributos de la reservación se actualizan con los valores de nuevosDetalles (fechas, tipo de habitación). +
-- Se recalcula y actualiza res.costoTotal basado en las nuevas condiciones y tarifas. +
-- El valor de retorno (ResultadoModificacion) indica éxito (exito = true) y el nuevoCosto.
 |===
-
 
 === Interacción de Componentes
 Los diagramas de interacción de componentes se utilizan para ilustrar cómo los diferentes componentes del sistema interactúan entre sí para llevar a cabo procesos específicos. Estos diagramas muestran el flujo de mensajes y la secuencia de interacciones entre los componentes, destacando cómo colaboran para lograr funcionalidades del sistema.
