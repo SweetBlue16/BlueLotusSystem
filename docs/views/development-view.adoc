@@ -239,6 +239,17 @@ image::../images/IRegistroSpecification.png[width=600,align="center",alt="Diagra
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| registrarNuevoHuesped() |
+- Los datos en datosNuevoHuesped son válidos.
+- El email proporcionado en datosNuevoHuesped.email no está asociado a ninguna cuenta de HuespedInfoRegistro existente en el sistema.
+|
+- Se ha creado una nueva instancia de HuespedInfoRegistro asociada a esta interfaz.
+- nuevoHuesped tiene los datos proporcionados.
+- nuevoHuesped.fechaRegistro se establece a la fecha/hora actual.
+- Se genera y asigna un idCliente único a nuevoHuesped.idCliente.
+- Se crea un registro de credenciales seguro asociado al nuevoHuesped.idCliente usando datosNuevoHuesped.password.
+- El valor de retorno (ResultadoRegistro) indica éxito y contiene el idCliente del nuevo huésped.
+- Si la precondición del email único falla, el valor de retorno indica fallo y mensajeError explica la causa.
 |===
 
 ==== Diagrama de Especificación de Interfaces IReporteAuditoría
