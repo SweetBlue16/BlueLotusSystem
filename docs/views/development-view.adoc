@@ -656,6 +656,7 @@ A continuación, se presentan los diagramas de interacción de componentes del s
 
 ==== Diagramas de Interacción de Componentes para IAutenticación
 **Iniciar sesión**
+
 image::../images/iniciarSesión.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IAutenticación - iniciarSesión"]
 
 ==== Diagramas de Interacción de Componentes para ICatálogo
@@ -689,6 +690,7 @@ image::../images/ActualizarDatosClenteInteraction.png[width=600,align="center",a
 
 ==== Diagramas de Interacción de Componentes para IConsultaDisponibilidad
 **Consultar Disponibilidad**
+
 image::../images/consultarDisponibilidad.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IConsultaDisponibilidad - consultarDisponibilidad"]
 
 ==== Diagramas de Interacción de Componentes para IGestionEstancias
@@ -752,6 +754,7 @@ image::../images/CambiarEstadoHabitaciónInteraction.png[width=600,align="center
 image::../images/consultarEstadoPago.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - consultarEstadoPago"]
 
 **Registrar Pago Externo**
+
 image::../images/registrarPagoExterno.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - registrarPagoExterno"]
 
 ==== Diagramas de Interacción de Componentes para IPasarelaPago
@@ -768,11 +771,13 @@ image::../images/GenerarReporteActividadInteraction.png[width=600,align="center"
 
 
 **Generar Reporte de Cancelaciónes**
+
 image::../images/generarReporteCancelacionesReembolsos.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteCancelaciones"]
 
 ==== Diagramas de Interacción de Componentes para IReporteFinanciero
 
 **Generar Reporte de Ingresos por Período**
+
 image::../images/generarReporteIngresosPorPeriodo.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteFinanciero - generarReporteIngresosPorPeriodo"]
 
 ==== Diagramas de Interacción de Componentes para IReservación
