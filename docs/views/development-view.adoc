@@ -720,7 +720,6 @@ Los diagramas de interacción de componentes se utilizan para ilustrar cómo los
 
 A continuación, se presentan los diagramas de interacción de componentes del sistema, para las operaciones donde interactúan múltiples componentes:
 
-==== Diagramas de Interacción de Componentes para IAuditoría
 
 
 ==== Diagramas de Interacción de Componentes para IAutenticación
@@ -843,7 +842,7 @@ image::../images/consultarEstadoPago.png[width=600,align="center",alt="Diagrama 
 
 image::../images/registrarPagoExterno.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - registrarPagoExterno"]
 
-==== Diagramas de Interacción de Componentes para IPasarelaPago
+
 
 
 ==== Diagramas de Interacción de Componentes para IRegistro
