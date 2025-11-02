@@ -102,7 +102,7 @@ Los diagramas de especificación de interfaces se utilizan para definir las inte
 A continuación, se presentan los diagramas de especificación de interfaces del sistema:
 
 ==== Diagrama de Especificación de Interfaces de IAuditoría
-image::../images/IAuditoriaSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IAuditoría"]
+image::../images/IAuditoriaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IAuditoría"]
 
 ==== Especificación de las Operaciones de IAuditoría
 [cols="^20,<40,<40", options="header"]
@@ -194,7 +194,7 @@ image::../images/ICatálogoSpecification.png[width=600,align="center",alt="Diagr
 |===
 
 ==== Diagrama de Especificación de Interfaces de ICheckIn
-image::../images/ICheckInSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICheckIn"]
+image::../images/ICheckInSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICheckIn"]
 
 ==== Especificación de las Operaciones de ICheckIn
 [cols="^20,<40,<40", options="header"]
@@ -256,7 +256,7 @@ image::../images/ICheckOutSpecification.png[width=600,align="center",alt="Diagra
 
 
 ==== Diagrama de Especificación de Interfaces de ICliente
-image::../images/IClienteSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICliente"]
+image::../images/IClienteSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICliente"]
 
 ==== Especificación de las Operaciones de ICliente
 [cols="^20,<40,<40", options="header"]
@@ -282,7 +282,7 @@ image::../images/IClienteSpecification.bmp[width=600,align="center",alt="Diagram
 
 
 ==== Diagrama de Especificación de Interfaces IConsultaDisponibilidad
-image::../images/IConsultaDisponibilidadSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces IConsultaDisponibilidad"]
+image::../images/IConsultaDisponibilidadSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IConsultaDisponibilidad"]
 
 ==== Especificación de las Operaciones de IConsultaDisponibilidad
 [cols="^20,<40,<40", options="header"]
@@ -306,7 +306,7 @@ image::../images/IConsultaDisponibilidadSpecification.bmp[width=600,align="cente
 |===
 
 ==== Diagrama de Especificación de Interfaces IGestionEstancias
-image::../images/IGestionEstanciaSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces IGestionEstancias"]
+image::../images/IGestionEstanciaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IGestionEstancias"]
 
 ==== Especificación de las Operaciones de IGestionEstancias
 [cols="^20,<40,<40", options="header"]
@@ -560,7 +560,7 @@ image::../images/IPagoSpecification.png[width=600,align="center",alt="Diagrama d
 
 
 ==== Diagrama de Especificación de Interfaces IPasarelaPago
-image::../images/IPasarelaPagoSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces IPasarelaPago"]
+image::../images/IPasarelaPagoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IPasarelaPago"]
 
 ==== Especificación de las Operaciones de IPasarelaPago
 [cols="^20,<40,<40", options="header"]
@@ -657,7 +657,7 @@ image::../images/IReporteAuditoríaSpecification.png[width=600,align="center",al
 
 
 ==== Diagrama de Especificación de Interfaces IReporteFinanciero
-image::../images/IReporteFinancieroSpecification.bmp[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReporteFinanciero"]
+image::../images/IReporteFinancieroSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReporteFinanciero"]
 
 ==== Especificación de las Operaciones de IReporteFinanciero
 [cols="^20,<40,<40", options="header"]
@@ -719,8 +719,6 @@ image::../images/IReservaciónSpecification.png[width=600,align="center",alt="Di
 Los diagramas de interacción de componentes se utilizan para ilustrar cómo los diferentes componentes del sistema interactúan entre sí para llevar a cabo procesos específicos. Estos diagramas muestran el flujo de mensajes y la secuencia de interacciones entre los componentes, destacando cómo colaboran para lograr funcionalidades del sistema.
 
 A continuación, se presentan los diagramas de interacción de componentes del sistema, para las operaciones donde interactúan múltiples componentes:
-
-
 
 ==== Diagramas de Interacción de Componentes para IAutenticación
 
@@ -841,9 +839,6 @@ image::../images/consultarEstadoPago.png[width=600,align="center",alt="Diagrama 
 **Registrar Pago Externo**
 
 image::../images/registrarPagoExterno.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - registrarPagoExterno"]
-
-
-
 
 ==== Diagramas de Interacción de Componentes para IRegistro
 
