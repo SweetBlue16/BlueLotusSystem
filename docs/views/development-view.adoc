@@ -1,10 +1,67 @@
 == Vista de implementación
 
 === Propósito de la vista
-
+La vista de implementación del BlueLotus System tiene como objetivo mostrar cómo se materializa la arquitectura  en una estructura técnica real. Explica cómo las partes del sistema —sus componentes, módulos e interfaces— están organizadas en el entorno de desarrollo y cómo cada una cumple su papel dentro de la solución. Esta vista busca representar la manera en que la arquitectura se traduce a elementos concretos de software, definiendo las relaciones de dependencia, los límites entre módulos y las responsabilidades que cada uno asume.
 
 === Justificación de las decisiones
 
+En la vista de implementación se tomaron diferentes decisiones que buscaban reflejar de forma clara y coherente la arquitectura planteada en el diseño. Esta vista no solo muestra cómo se organiza el código, sino también cómo las decisiones técnicas se relacionan con los objetivos del sistema. Todo lo que se construyó en esta etapa se basó en lo establecido en la documentación, donde se definen las interfaces, los módulos, las operaciones y la forma en que cada parte se comunica con las demás. De esta manera, la implementación no fue improvisada, sino una traducción directa de la arquitectura lógica hacia una estructura técnica real, enfocada en cumplir los requerimientos funcionales y los atributos de calidad que guían el proyecto.
+
+**Drivers**
+
+Las decisiones tomadas durante la implementación estuvieron impulsadas por diferentes factores técnicos y funcionales. Uno de los principales fue la necesidad de mantener una arquitectura modular y escalable, capaz de soportar las operaciones esenciales del dominio hotelero. El sistema debía dividirse en componentes independientes que pudieran trabajar de forma coordinada, pero sin depender directamente unos de otros. Esto no solo facilita el mantenimiento, sino que también permite que varios desarrolladores colaboren sin generar conflictos en el código. Por eso, desde el inicio se buscó que cada módulo tuviera un propósito definido y un conjunto de responsabilidades bien delimitadas.
+
+Otro driver importante fue la mantenibilidad, ya que el sistema no se consideró como un producto terminado, sino como una base que crecerá con el tiempo. Se decidió implementar el proyecto con una estructura que permitiera agregar nuevas funcionalidades sin afectar las existentes. Para lograrlo, se usaron contratos estables en forma de interfaces, lo que permite modificar implementaciones internas sin alterar las dependencias externas. Esto ayuda a que, si en el futuro cambia la forma en que se manejan los pagos o las reservas, el resto de los módulos continúe funcionando correctamente, siempre y cuando se mantengan las firmas de las operaciones.
+
+La seguridad también fue un factor determinante. El sistema gestiona información sensible, como datos personales de los huéspedes y detalles de pago, por lo que se tomaron decisiones orientadas a proteger esa información. Se establecieron límites claros entre módulos, de modo que solo se comuniquen mediante las operaciones autorizadas y definidas. Esto reduce los riesgos de exposición de datos y mantiene un control estricto sobre qué partes del sistema tienen acceso a cierta información. Además, la separación de responsabilidades contribuye a que, si ocurre un fallo en una parte del sistema, no se vea comprometido el resto.
+
+Además, se tomó en cuenta el rendimiento. Aunque el proyecto prioriza la claridad y mantenibilidad, también se buscó que la ejecución fuera eficiente y que las operaciones más utilizadas respondieran con rapidez. Por eso se optó por distribuir la carga entre diferentes componentes en lugar de concentrar toda la lógica en uno solo. Este enfoque permite que el sistema maneje múltiples peticiones al mismo tiempo y que los recursos se usen de manera más equilibrada. En los procesos que requieren comunicación externa, como los pagos, se consideró la posibilidad de manejar respuestas asíncronas o colas de procesamiento para evitar bloqueos.
+
+Otro driver que influyó en la implementación fue la trazabilidad. Desde el punto de vista operativo y de auditoría, era necesario poder seguir cada acción dentro del sistema, saber quién la ejecutó, cuándo ocurrió y con qué resultados. Por eso, se decidió incluir mecanismos de registro y monitoreo en las operaciones críticas, de manera que sea posible rastrear eventos y facilitar el mantenimiento y la detección de errores. Esto también se alinea con los objetivos de calidad y transparencia del sistema.
+
+Finalmente, se consideró la interoperabilidad, especialmente en lo referente a la comunicación con servicios externos. Dado que algunos procesos dependen de terceros, como la pasarela de pago, era importante implementar una arquitectura que permita reemplazar o actualizar esas integraciones sin alterar el funcionamiento interno del sistema. Este driver promovió la idea de encapsular las conexiones externas y tratarlas como puntos de extensión controlados.
+
+**Tácticas**
+
+Para atender estos impulsores, se aplicaron distintas tácticas que permitieron mantener orden, claridad y coherencia en la implementación. Una de ellas fue la separación por capas, que divide el sistema en tres niveles principales: presentación, aplicación y datos o integración. Este enfoque evita mezclar responsabilidades y mantiene el control sobre las dependencias. En la capa de presentación se manejan las interacciones con los usuarios o actores del sistema; en la de aplicación se orquesta la lógica de negocio; y en la de datos se gestionan los accesos a fuentes externas o almacenamiento. Esta separación facilita que cada parte evolucione de forma independiente y permite localizar errores más rápido.
+
+El encapsulamiento también es una táctica importante. Cada módulo oculta su lógica interna y expone únicamente lo que necesita ser accesible a otros componentes. Esto evita que los detalles de implementación se propaguen por el sistema y mantiene la coherencia de los datos. Por ejemplo, los módulos que gestionan pagos, reservas o estancias solo exponen operaciones definidas en sus interfaces, sin mostrar cómo internamente procesan la información. Este tipo de encapsulamiento protege el sistema ante cambios futuros y reduce la posibilidad de errores por modificaciones externas.
+
+También se aplicó la distribución de responsabilidades, una táctica que busca evitar que un solo componente se vuelva demasiado complejo o difícil de mantener. En lugar de crear servicios que hagan todo, se diseñaron componentes que colaboran entre sí, cada uno encargado de una parte específica del proceso. Esto se ve, por ejemplo, en el flujo de pagos, donde el componente principal gestiona la solicitud del pago y la pasarela externa se encarga de la autorización. De esta manera, si una parte del proceso falla, solo se afecta esa parte y no el sistema completo.
+
+La definición formal de interfaces también fue una táctica clave. En lugar de permitir conexiones directas entre módulos, todas las interacciones se realizan mediante contratos bien definidos. Esto da claridad y uniformidad, y garantiza que cada parte cumpla con su responsabilidad. Además, las interfaces facilitan la colaboración entre distintos desarrolladores, ya que pueden trabajar en diferentes módulos sin necesidad de conocer los detalles de implementación del otro.
+
+También el desacoplamiento de dependencias, aplicando principios de inversión de dependencias y la inyección de componentes. En vez de crear instancias directamente dentro del código, las dependencias se inyectan desde el exterior, lo que permite reemplazar o cambiar implementaciones sin alterar el flujo general. Este enfoque es útil cuando se desea probar componentes de forma aislada o cuando se necesita cambiar un servicio externo sin modificar la lógica interna.
+
+Por último, se utilizó la observabilidad del sistema, integrando puntos de registro y monitoreo en operaciones críticas. Esto hace posible entender el comportamiento del sistema en tiempo real, detectar anomalías y tomar decisiones informadas para mejorar su rendimiento o estabilidad. La observabilidad también facilita las pruebas y la depuración, ya que se puede rastrear el origen de un error con mayor precisión.
+
+**Patrones y Decisiones**
+
+Todas estas tácticas se concretaron a través de patrones de diseño y decisiones específicas que guiaron la implementación. Uno de los más evidentes fue el Service Layer, que organiza las funcionalidades principales en servicios con una responsabilidad bien definida. Este patrón ayuda a centralizar la lógica de negocio, separándola de las capas de presentación y de datos. Así, las reglas del negocio se mantienen en un solo lugar y no se repiten en distintas partes del sistema, lo que mejora la consistencia y facilita el mantenimiento.
+
+Otro patrón aplicado fue el Facade, especialmente útil en módulos complejos que agrupan varios procesos internos. En lugar de que el cliente o la capa superior tenga que coordinar varias operaciones, se expone un solo punto de acceso que se encarga de orquestarlas. Este patrón se puede ver, por ejemplo, en los flujos de pagos y reservaciones, donde un método de alto nivel se encarga de manejar los pasos necesarios sin que el usuario conozca los detalles.
+
+También se utilizó el Adapter, que permite conectar el sistema con servicios o componentes externos sin depender directamente de ellos. Esta decisión fue esencial para los módulos que se comunican con proveedores de pago o servicios de terceros. Al usar adaptadores, se puede cambiar o actualizar un servicio externo sin que el resto del sistema deba modificarse, ya que la interfaz de comunicación se mantiene estable.
+
+El principio de Dependency Inversion se aplicó para asegurar que los módulos de mayor nivel dependan de abstracciones y no de implementaciones concretas. Esto hace que la arquitectura sea más flexible y que los cambios en una parte no rompan el sistema. Además, se combinó con Dependency Injection para facilitar las pruebas, permitiendo inyectar versiones simuladas de los componentes cuando es necesario probar comportamientos específicos.
+
+En la organización del código se adoptó una estructura modular por dominio, donde cada área del sistema (como autenticación, pagos o reservas) tiene su propio espacio con sus clases, interfaces y servicios relacionados. Esto hace que el proyecto sea más ordenado y que cualquier persona pueda entender rápidamente dónde se encuentra cada funcionalidad. Además, se establecieron convenciones de nombres y carpetas para mantener la coherencia entre los módulos.
+
+Otra decisión importante fue la inclusión de auditoría y registro de operaciones. Esto se consideró esencial para los procesos críticos del sistema, como la gestión de pagos o la creación de reservaciones. Al registrar los eventos y sus resultados, se puede reconstruir lo que ocurrió en caso de un error o inconsistencia, y se cumple con los requerimientos de trazabilidad y control del proyecto.
+
+**Trade-offs**
+
+Cada decisión tomada durante la implementación implicó ciertos compromisos. Diseñar una arquitectura modular y desacoplada genera una mayor complejidad inicial, ya que requiere más planificación, más clases y una coordinación más precisa entre módulos. Sin embargo, este esfuerzo inicial se traduce en beneficios a largo plazo, ya que el sistema se vuelve más estable y fácil de mantener.
+
+Otro compromiso es el aumento en el número de llamadas entre componentes. Al dividir las responsabilidades, los procesos se vuelven más distribuidos, lo que puede agregar una pequeña sobrecarga en tiempo de ejecución. A pesar de esto, los beneficios en claridad, control y mantenibilidad superan la pérdida mínima de rendimiento.
+
+También se asumió una mayor carga documental, ya que la definición de interfaces y contratos exige mantener la documentación actualizada. Aunque esto implica más trabajo, permite que el sistema sea comprensible para cualquier integrante nuevo del equipo y facilita las auditorías y revisiones.
+
+Además, la integración con servicios externos introduce el riesgo de dependencias fuera del control del sistema, como caídas o lentitud de un proveedor. Este riesgo se mitiga con el uso de adaptadores y manejo de errores controlado, pero no puede eliminarse completamente. Aun así, el beneficio de delegar en servicios especializados, como las pasarelas de pago, compensa ese riesgo.
+
+Otro trade-off fue la curva de aprendizaje para nuevos desarrolladores. Entender la estructura modular, los contratos y las convenciones toma tiempo, pero una vez familiarizados, trabajar en el sistema se vuelve más rápido y seguro. Por último, el diseño orientado a la observabilidad y auditoría genera un consumo adicional de recursos para almacenar y procesar los registros, aunque este costo se justifica por la mejora en la capacidad de monitoreo y la facilidad para resolver problemas.
+
+En general, los trade-offs asumidos no representan desventajas graves, sino decisiones conscientes que priorizan la calidad y sostenibilidad del sistema. Las elecciones hechas en esta vista permiten mantener el equilibrio entre rendimiento, flexibilidad y seguridad, garantizando que el sistema pueda seguir creciendo sin perder estabilidad.
 
 === Diagramas de Especificación de Componentes
 Los diagramas de especificación de componentes se utilizan para describir la estructura y organización de los componentes del sistema. Estos diagramas muestran cómo se dividen las funcionalidades en diferentes componentes y cómo se relacionan entre sí. Se centran en los aspectos técnicos de la implementación, como las interfaces de los componentes, sus dependencias y la forma en que interactúan.
