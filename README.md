@@ -40,5 +40,11 @@ Para compilar y visualizar correctamente la documentación:
 
 ## 🧩 Compilación local (bash)
 Ejecutar en la raíz del repositorio:
-- ***Generar versión HTML:*** asciidoctor -D build docs/index.adoc
-- ***Generar versión PDF:*** asciidoctor-pdf -o build/index.pdf docs/index.adoc
+- ***Generar versión HTML:***
+```bash
+asciidoctor -D build docs/index.adoc
+```
+- ***Generar versión PDF:***
+```bash
+asciidoctor-pdf -o build/index.pdf docs/index.adoc
+```
