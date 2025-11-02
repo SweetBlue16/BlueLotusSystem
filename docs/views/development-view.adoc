@@ -544,6 +544,17 @@ A continuación, se presentan los diagramas de interacción de componentes del s
 
 ==== Diagramas de Interacción de Componentes para ICatálogo
 
+**Agregar Ítem al Catálogo**
+
+image::../images/AgregarItemCatálogoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICatálogo - agregarItemCatálogo"]
+
+**Modificar Ítem del Catálogo**
+
+image::../images/ModificarItemCatálogoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICatálogo - modificarItemCatálogo"]
+
+**Eliminar Ítem del Catálogo**
+
+image::../images/EliminarItemCatálogoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICatálogo - eliminarItemCatálogo"]
 
 ==== Diagramas de Interacción de Componentes para ICheckIn
 
@@ -585,6 +596,33 @@ image::../images/EliminarPerfilPersonalInteraction.png[width=600,align="center",
 
 ==== Diagramas de Interacción de Componentes para IInventario
 
+**Agregar Nuevo Hotel**
+
+image::../images/AgregarHotelInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - agregarNuevoHotel"]
+
+**Modificar Información de Hotel**
+
+image::../images/ModificarHotelInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - modificarInformaciónHotel"]
+
+**Registrar Nuevo Tipo de Habitación**
+
+image::../images/CrearTipoHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - registrarNuevoTipoHabitacion"]
+
+**Modificar Tipo de Habitación**
+
+image::../images/ModificarTipoHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - modificarTipoHabitacion"]
+
+**Registrar Nueva Habitación**
+
+image::../images/RegistrarHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - registrarNuevaHabitacion"]
+
+**Modificar Información de Habitación**
+
+image::../images/ModificarHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - modificarInformaciónHabitacion"]
+
+**Cambiar Estado de Habitación**
+
+image::../images/CambiarEstadoHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - cambiarEstadoHabitacion"]
 
 ==== Diagramas de Interacción de Componentes para IPago
 
