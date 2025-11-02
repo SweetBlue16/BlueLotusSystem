@@ -656,7 +656,7 @@ A continuación, se presentan los diagramas de interacción de componentes del s
 
 ==== Diagramas de Interacción de Componentes para IAutenticación
 **Iniciar sesión**
-image::../images/iniciarSesión().png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IAutenticación - iniciarSesión"]
+image::../images/iniciarSesión.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IAutenticación - iniciarSesión"]
 
 ==== Diagramas de Interacción de Componentes para ICatálogo
 
@@ -699,7 +699,7 @@ image::../images/RegistrarConsumoInteraction.png[width=600,align="center",alt="D
 
 **Extender estancia**
 
-image::../images/extenderEstancia().png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestionEstancias - extenderEstancia"]
+image::../images/extenderEstancia.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestionEstancias - extenderEstancia"]
 
 ==== Diagramas de Interacción de Componentes para IGestiónPersonal
 
@@ -749,10 +749,10 @@ image::../images/CambiarEstadoHabitaciónInteraction.png[width=600,align="center
 
 **Consultar Estado de Pago**
 
-image::../images/consultarEstadoPago().png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - consultarEstadoPago"]
+image::../images/consultarEstadoPago.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - consultarEstadoPago"]
 
 **Registrar Pago Externo**
-image::../images/registrarPagoExterno().png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - registrarPagoExterno"]
+image::../images/registrarPagoExterno.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - registrarPagoExterno"]
 
 ==== Diagramas de Interacción de Componentes para IPasarelaPago
 
@@ -768,12 +768,12 @@ image::../images/GenerarReporteActividadInteraction.png[width=600,align="center"
 
 
 **Generar Reporte de Cancelaciónes**
-image::../images/generarReporteCancelacionesReembolsos().png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteCancelaciones"]
+image::../images/generarReporteCancelacionesReembolsos.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteCancelaciones"]
 
 ==== Diagramas de Interacción de Componentes para IReporteFinanciero
 
 **Generar Reporte de Ingresos por Período**
-image::../images/generarReporteIngresosPorPeriodo().png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteFinanciero - generarReporteIngresosPorPeriodo"]
+image::../images/generarReporteIngresosPorPeriodo.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteFinanciero - generarReporteIngresosPorPeriodo"]
 
 ==== Diagramas de Interacción de Componentes para IReservación
 
