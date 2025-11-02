@@ -733,8 +733,15 @@ image::../images/EliminarItemCatálogoInteraction.png[width=600,align="center",a
 
 ==== Diagramas de Interacción de Componentes para ICheckIn
 
+**Realizar Check-In**
+
+image::../images/RealizarCheckInInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICheckIn - realizarCheckIn"]
 
 ==== Diagramas de Interacción de Componentes para ICheckOut
+
+**Realizar Check-Out**
+
+image::../images/RealizarCheckOutInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICheckOut - realizarCheckOut"]
 
 **Obtener Detalle de Cargos de Estancia**
 
@@ -757,6 +764,10 @@ image::../images/consultarDisponibilidad.png[width=600,align="center",alt="Diagr
 **Registrar Consumo en Estancia**
 
 image::../images/RegistrarConsumoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestionEstancias - registrarConsumoEstancia"]
+
+**Cambiar Habitación de Estancia**
+
+image::../images/CambiarHabitacionInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestionEstancias - cambiarHabitacion"]
 
 **Extender estancia**
 
@@ -808,6 +819,10 @@ image::../images/CambiarEstadoHabitaciónInteraction.png[width=600,align="center
 
 ==== Diagramas de Interacción de Componentes para IPago
 
+**Iniciar Proceso de Pago**
+
+image::../images/IniciarProcesoPagoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - iniciarProcesoPago"]
+
 **Consultar Estado de Pago**
 
 image::../images/consultarEstadoPago.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IPago - consultarEstadoPago"]
@@ -821,8 +836,16 @@ image::../images/registrarPagoExterno.png[width=600,align="center",alt="Diagrama
 
 ==== Diagramas de Interacción de Componentes para IRegistro
 
+**Registrar Nuevo Huésped**
+
+image::../images/RegistrarNuevoHuespedInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IRegistro - registrarNuevoHuesped"]
+
 
 ==== Diagramas de Interacción de Componentes para IReporteAuditoría
+
+**Generar Reporte de Accesos**
+
+image::../images/GenerarReporteAccesosInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteAccesos"]
 
 **Generar Reporte de Auditoría**
 
@@ -832,6 +855,9 @@ image::../images/GenerarReporteActividadInteraction.png[width=600,align="center"
 **Generar Reporte de Cancelaciónes**
 
 image::../images/generarReporteCancelacionesReembolsos.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteCancelaciones"]
+
+**Generar Reporte de Trazabilidad de Entidad**
+image::../images/GenerarReporteTrazabilidadEntidadInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteTrazabilidadEntidad"]
 
 ==== Diagramas de Interacción de Componentes para IReporteFinanciero
 
@@ -844,6 +870,10 @@ image::../images/generarReporteIngresosPorPeriodo.png[width=600,align="center",a
 **Crear Reservación**
 
 image::../images/CrearReservaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReservación - crearReservacion"]
+
+**Cancelar reservación**
+
+image::../images/CancelarReservaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReservación - cancelarReservacion"]
 
 **Obtener Detalle de Reservación**
 
