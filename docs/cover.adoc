@@ -18,8 +18,8 @@
 * **Programa Educativo**: Ingeniería de Software
 * **Experiencia Educativa**: Diseño de Software
 * **Profesor**: Dr. Jorge Octavio Ocharán Hernández
-* **Fecha (segundo hito)**: 19 de octubre de 2025
-* **Repositorio**: https://github.com/SweetBlue16/HotelBookingSystem
+* **Fecha (tercer hito)**: 02 de noviembre de 2025
+* **Repositorio**: https://github.com/SweetBlue16/BlueLotusSystem
 
 === Control de versiones
 
@@ -29,4 +29,5 @@
 | 0.1 | 05/09/2025 | Todos | Estructura inicial del documento y secciones básicas.
 | 0.2 | 05/10/2025 | Todos | Hito 1 completado con secciones de introducción, análisis y diseño.
 | 0.3 | 19/10/2025 | Todos | Hito 2 completado con secciones de método de diseño y vista lógica.
+| 0.4 | 02/11/2025 | Todos | Hito 3 completado con secciones de vista de implementación.
 |===
