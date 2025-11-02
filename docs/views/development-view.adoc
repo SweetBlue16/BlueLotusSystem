@@ -1,7 +1,8 @@
 == Vista de implementación
 
 === Propósito de la vista
-La vista de implementación del BlueLotus System tiene como objetivo mostrar cómo se materializa la arquitectura  en una estructura técnica real. Explica cómo las partes del sistema —sus componentes, módulos e interfaces— están organizadas en el entorno de desarrollo y cómo cada una cumple su papel dentro de la solución. Esta vista busca representar la manera en que la arquitectura se traduce a elementos concretos de software, definiendo las relaciones de dependencia, los límites entre módulos y las responsabilidades que cada uno asume.
+La vista de implementación del BlueLotus System tiene como objetivo mostrar cómo se materializa la arquitectura  en una estructura técnica real. Explica cómo las partes del sistema —sus componentes, módulos e interfaces— están organizadas en el entorno de desarrollo y cómo cada una cumple su papel dentro de la solución. Esta vista busca representar la manera en que la arquitectura se traduce a elementos concretos de software, definiendo las relaciones de dependencia, los límites entre módulos y las responsabilidades que cada uno asume. Además, esta vista ayuda a identificar las decisiones técnicas tomadas durante la implementación, los patrones de diseño aplicados y los trade-offs asumidos para cumplir con los requisitos funcionales y no funcionales del sistema.
+Se espera que esta vista sirva como guía para los desarrolladores, facilitando la comprensión del código y promoviendo buenas prácticas de desarrollo. Al detallar cómo se estructuran los componentes y cómo interactúan entre sí, se busca asegurar que el sistema sea mantenible, escalable y adaptable a futuros cambios. En resumen, la vista de implementación es una representación técnica que conecta la arquitectura lógica con la realidad del código, proporcionando una base sólida para el desarrollo y evolución del BlueLotus System.
 
 === Justificación de las decisiones
 
