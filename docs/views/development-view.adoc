@@ -50,6 +50,22 @@ image::../images/IAuditoriaSpecification.bmp[width=600,align="center",alt="Diagr
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+
+| registrarEvento |
+Los datos en evento son válidos (por ejemplo, tipoEvento y descripcionDetallada no están vacíos, origen está presente). |
+Se ha creado una nueva instancia persistente de RegistroAuditoriaInfo (nuevoRegistro). +
+nuevoRegistro se rellena con los datos proporcionados en evento. +
+Se genera y asigna un idEvento único a nuevoRegistro.idEvento. +
+nuevoRegistro.timestamp se establece a la fecha/hora actual del servidor de auditoría. +
+El valor de retorno (ResultadoRegistroEvento) indica éxito (exito = true) y contiene el idEvento. +
+Si falla (exito = false), indica un problema grave en el subsistema de auditoría (mensajeError lo indicaría) y el componente llamador debería tener una estrategia de contingencia (por ejemplo, log local temporal).
+
+| consultarLogs |
+El usuario que invoca la operación tiene los permisos adecuados para consultar logs. +
+Los criterios en filtro son válidos (por ejemplo, fechaInicio < = fechaFin si ambas están presentes). |
+Se retorna una lista (list<RegistroAuditoriaInfo>) que contiene todas las entradas del log que coinciden con los criterios especificados en filtro. +
+Si no se encuentran coincidencias, se retorna una lista vacía. +
+El estado del sistema (los logs existentes) no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces de IAutenticación
@@ -152,6 +168,31 @@ image::../images/ICheckOutSpecification.png[width=600,align="center",alt="Diagra
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+
+| realizarCheckOut |
+Existe una EstanciaInfoCheckOut (estancia) con el idEstancia proporcionado. +
+El estado de la estancia es 'Activa' (estancia.estado = 'Activa'). +
+La habitación asignada a la estancia (estancia.habitacionAsignada) existe y está en estado 'Ocupada'. |
+Se calcula el montoTotal final de la estancia (costo de alojamiento ajustado si es necesario + suma del costoTotal de todos los estancia.consumosRegistrados). +
+Se actualiza estancia.saldoPendiente con el montoTotal (o la parte que faltaba por pagar). +
+Se intenta procesar el pago de estancia.saldoPendiente (la interfaz ICheckOut solo registra el resultado). +
+Se actualiza estancia.saldoPendiente restando el montoCobrado. +
+El estado de la estancia se actualiza a 'Finalizada'. +
+Se registra fechaCheckOutReal con la fecha/hora actual. +
+El estado de la habitación asignada se actualiza a 'Disponible' (o 'Limpieza Pendiente'). +
+El valor de retorno (ResultadoCheckOut) indica éxito (exito = true), reporta montoTotalCobrado y un mensaje de confirmación. +
+Se notifica al sistema de facturación (IBilling) la finalización de la estancia y los cargos finales. +
+Si alguna precondición falla o el pago falla críticamente, el valor de retorno indica fallo (exito = false) y mensajeError detalla la causa; el estado del sistema intenta mantenerse consistente.
+
+| obtenerDetalleCargosEstancia |
+Existe una EstanciaInfoCheckOut (estancia) con el idEstancia proporcionado. +
+La estancia está en estado 'Activa'. |
+Se calcula el costoAlojamiento final. +
+Se recopila la listaConsumos de estancia.consumosRegistrados. +
+Se calcula costoTotalConsumos sumando los costos de la lista. +
+Se calcula montoTotal = costoAlojamiento + costoTotalConsumos. +
+Se retorna un objeto DetalleCargos con toda esta información. +
+El estado del sistema no cambia y permanece igual que antes de ejecutar la operación.
 |===
 
 ==== Diagrama de Especificación de Interfaces de ICliente
@@ -161,6 +202,21 @@ image::../images/IClienteSpecification.bmp[width=600,align="center",alt="Diagram
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+
+| obtenerDatosCliente |
+Existe un ClienteInfo (cli) con el idCliente proporcionado. |
+Se retorna la instancia completa de ClienteInfo (cli) correspondiente al idCliente. +
+El estado del sistema no se modifica; la información de los clientes permanece igual que antes de ejecutar la operación. +
+Si la precondición falla (el cliente no existe), se puede retornar null o un objeto ClienteInfo vacío/inválido (esto debería especificarse o manejarse con excepciones según la tecnología utilizada).
+
+| actualizarDatosCliente |
+Existe un ClienteInfo (cli) con el idCliente proporcionado. +
+Los datos en nuevosDatos son válidos (por ejemplo, si incluye email, tiene formato correcto; si se actualiza email, no debe existir ya en otro cliente). |
+Los atributos del cliente se actualizan con los valores presentes en nuevosDatos. +
+Los campos no incluidos en nuevosDatos permanecen sin cambios. +
+Si se actualiza el email, se valida que no esté en uso por otro cliente; si lo está, la operación falla (exito = false). +
+El valor de retorno (ResultadoActualizacionCliente) indica éxito (exito = true). +
+Si alguna precondición falla (el cliente no existe, los datos son inválidos o el email está duplicado), el valor de retorno indica fallo (exito = false) y mensajeError detalla la causa. El estado del cliente no cambia; sus datos permanecen iguales que antes de ejecutar la operación.
 |===
 
 ==== Diagrama de Especificación de Interfaces IConsultaDisponibilidad
@@ -398,6 +454,41 @@ image::../images/IPagoSpecification.png[width=600,align="center",alt="Diagrama d
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+
+| iniciarProcesoPago |
+La infoPago.idReservacion corresponde a una reservación existente y válida (probablemente en estado 'Pendiente'). +
+El infoPago.monto es positivo. +
+Los infoPago.datosMetodoPago son válidos y corresponden a un método soportado. |
+Se crea una nueva instancia de PagoInfo (nuevoPago) asociada a esta interfaz, con estado 'Pendiente' o 'Procesando', idReservacion, monto, moneda y fechaCreacion. +
+Se genera y asigna un idPago único a nuevoPago.idPago. +
+Se invoca la operación correspondiente en IPasarelaPago con los detalles del pago. +
+Si la llamada a la pasarela es exitosa, nuevoPago.estado = 'Procesando', se guarda idTransaccionPasarela (si aplica) y el valor de retorno (ResultadoInicioPago) indica éxito (exito = true), con idPago, estado 'Procesando' y datosRedireccion si aplica. +
+Si falla la llamada, nuevoPago.estado = 'Fallido' y el valor de retorno indica fallo (exito = false), con mensaje de error. +
+En ambos casos, nuevoPago.fechaUltimaActualizacion se actualiza. +
+(Efecto externo implícito) Se puede notificar a IReservacion sobre el inicio del proceso de pago.
+
+| consultarEstadoPago |
+Existe un PagoInfo (pago) con el idPago proporcionado. |
+Si pago.estado = 'Procesando', se consulta IPasarelaPago con pago.idTransaccionPasarela. +
+El pago.estado se actualiza según la respuesta de la pasarela ('Exitoso', 'Fallido', o sigue 'Procesando'). +
+Se actualiza pago.fechaUltimaActualizacion. +
+Se retorna un EstadoPagoInfo con idPago y el estado actualizado. +
+(Efecto externo implícito) Si el estado cambia a 'Exitoso' o 'Fallido', se notifica a IReservacion o GestorDeEstancias para actualizar la reserva o estancia. +
+El estado general del sistema (más allá del PagoInfo consultado) no cambia directamente.
+
+| registrarPagoExterno |
+La infoPagoExterno.idReservacion corresponde a una reservación o estancia existente. +
+El infoPagoExterno.monto es positivo. +
+El infoPagoExterno.metodoPagoUtilizado es válido. |
+Se crea una nueva instancia de PagoInfo (nuevoPago) asociada a esta interfaz. +
+Se genera y asigna un idPago único a nuevoPago.idPago. +
+nuevoPago se rellena con los datos de infoPagoExterno (idReservacion, monto, moneda, metodoPagoUtilizado). +
+El nuevoPago.estado se establece en 'Exitoso'. +
+Se asignan fechaCreacion y fechaUltimaActualizacion (posiblemente infoPagoExterno.fechaPago). +
+nuevoPago.idTransaccionPasarela puede guardar infoPagoExterno.referenciaExterna. +
+El valor de retorno (ResultadoRegistroPago) indica éxito (exito = true) y contiene el idPago interno. +
+(Efecto externo implícito) Se notifica a IReservacion o GestorDeEstancias para actualizar el estado o saldo de la reserva o estancia correspondiente. +
+Si alguna precondición falla (reserva no existe, monto inválido), se retorna exito = false con mensajeError y no se crea PagoInfo.
 |===
 
 ==== Diagrama de Especificación de Interfaces IPasarelaPago
@@ -470,6 +561,30 @@ image::../images/IReporteAuditoríaSpecification.png[width=600,align="center",al
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+
+| generarReporteActividad |
+El usuario que invoca la operación tiene permisos para generar reportes de auditoría. +
+Los criterios en filtro son válidos (fechaInicio ≤ fechaFin). |
+Se invoca la operación consultarLogs (o similar) de IAuditoria con los filtros proporcionados. +
+Se construye un objeto ReporteAuditoriaGenerado (reporte). +
+reporte.titulo se establece adecuadamente (ej. “Reporte de Actividad”). +
+reporte.fechaGeneracion es la fecha/hora actual. +
+reporte.filtrosAplicados describe los criterios usados. +
+reporte.datos contiene la lista de RegistroAuditoriaInfoReporte devuelta por IAuditoria que coincide con el filtro. +
+Se retorna el reporte generado. +
+El estado del sistema (logs de auditoría) no cambia.
+
+| generarReporteTrazabilidadEntidad |
+El usuario que invoca la operación tiene permisos para generar reportes de auditoría. +
+Los criterios en filtro son válidos (entidadAfectadaTipo y entidadAfectadaID no están vacíos, fechas opcionales válidas). |
+Se invoca la operación consultarLogs (o similar) de IAuditoria filtrando por entidadAfectadaTipo, entidadAfectadaID y opcionalmente fechas. +
+Se construye un objeto ReporteAuditoriaGenerado (reporte). +
+reporte.titulo se establece adecuadamente (ej. “Trazabilidad de [Tipo] ID: [ID]”). +
+reporte.fechaGeneracion es la fecha/hora actual. +
+reporte.filtrosAplicados describe los criterios usados. +
+reporte.datos contiene la lista de RegistroAuditoriaInfoReporte devuelta por IAuditoria que coincide con el filtro, ordenada cronológicamente. +
+Se retorna el reporte generado. +
+El estado del sistema (logs de auditoría) no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces IReporteFinanciero
@@ -544,6 +659,17 @@ A continuación, se presentan los diagramas de interacción de componentes del s
 
 ==== Diagramas de Interacción de Componentes para ICatálogo
 
+**Agregar Ítem al Catálogo**
+
+image::../images/AgregarItemCatálogoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICatálogo - agregarItemCatálogo"]
+
+**Modificar Ítem del Catálogo**
+
+image::../images/ModificarItemCatálogoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICatálogo - modificarItemCatálogo"]
+
+**Eliminar Ítem del Catálogo**
+
+image::../images/EliminarItemCatálogoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para ICatálogo - eliminarItemCatálogo"]
 
 ==== Diagramas de Interacción de Componentes para ICheckIn
 
@@ -585,6 +711,33 @@ image::../images/EliminarPerfilPersonalInteraction.png[width=600,align="center",
 
 ==== Diagramas de Interacción de Componentes para IInventario
 
+**Agregar Nuevo Hotel**
+
+image::../images/AgregarHotelInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - agregarNuevoHotel"]
+
+**Modificar Información de Hotel**
+
+image::../images/ModificarHotelInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - modificarInformaciónHotel"]
+
+**Registrar Nuevo Tipo de Habitación**
+
+image::../images/CrearTipoHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - registrarNuevoTipoHabitacion"]
+
+**Modificar Tipo de Habitación**
+
+image::../images/ModificarTipoHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - modificarTipoHabitacion"]
+
+**Registrar Nueva Habitación**
+
+image::../images/RegistrarHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - registrarNuevaHabitacion"]
+
+**Modificar Información de Habitación**
+
+image::../images/ModificarHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - modificarInformaciónHabitacion"]
+
+**Cambiar Estado de Habitación**
+
+image::../images/CambiarEstadoHabitaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IInventario - cambiarEstadoHabitacion"]
 
 ==== Diagramas de Interacción de Componentes para IPago
 
