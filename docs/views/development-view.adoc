@@ -857,13 +857,14 @@ image::../images/GenerarReporteActividadInteraction.png[width=600,align="center"
 image::../images/generarReporteCancelacionesReembolsos.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteCancelaciones"]
 
 **Generar Reporte de Trazabilidad de Entidad**
+
 image::../images/GenerarReporteTrazabilidadEntidadInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteAuditoría - generarReporteTrazabilidadEntidad"]
 
 ==== Diagramas de Interacción de Componentes para IReporteFinanciero
 
 **Generar Reporte de Ingresos por Período**
 
-image::../images/generarReporteIngresosPorPeriodo.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteFinanciero - generarReporteIngresosPorPeriodo"]
+image::../images/GenerarReporteIngresosInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReporteFinanciero - generarReporteIngresosPorPeriodo"]
 
 ==== Diagramas de Interacción de Componentes para IReservación
 
@@ -873,7 +874,7 @@ image::../images/CrearReservaciónInteraction.png[width=600,align="center",alt="
 
 **Cancelar reservación**
 
-image::../images/CancelarReservaciónInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReservación - cancelarReservacion"]
+image::../images/CancelarReservacionInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IReservación - cancelarReservacion"]
 
 **Obtener Detalle de Reservación**
 
