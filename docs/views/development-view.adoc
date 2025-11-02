@@ -62,7 +62,7 @@ Si falla (exito = false), indica un problema grave en el subsistema de auditorí
 
 | consultarLogs |
 El usuario que invoca la operación tiene los permisos adecuados para consultar logs. +
-Los criterios en filtro son válidos (por ejemplo, fechaInicio <= fechaFin si ambas están presentes). |
+Los criterios en filtro son válidos (por ejemplo, fechaInicio < = fechaFin si ambas están presentes). |
 Se retorna una lista (list<RegistroAuditoriaInfo>) que contiene todas las entradas del log que coinciden con los criterios especificados en filtro. +
 Si no se encuentran coincidencias, se retorna una lista vacía. +
 El estado del sistema (los logs existentes) no cambia.
@@ -192,7 +192,7 @@ Se recopila la listaConsumos de estancia.consumosRegistrados. +
 Se calcula costoTotalConsumos sumando los costos de la lista. +
 Se calcula montoTotal = costoAlojamiento + costoTotalConsumos. +
 Se retorna un objeto DetalleCargos con toda esta información. +
-El estado del sistema no cambia (estancia = estancia@pre).
+El estado del sistema no cambia y permanece igual que antes de ejecutar la operación.
 |===
 
 ==== Diagrama de Especificación de Interfaces de ICliente
@@ -204,22 +204,19 @@ image::../images/IClienteSpecification.bmp[width=600,align="center",alt="Diagram
 | Operación | Precondiciones | Postcondiciones
 
 | obtenerDatosCliente |
-Existe un ClienteInfo (cli) con el idCliente proporcionado. +
-(OCL tentativo: ClienteInfo->exists(cli | cli.idCliente = idCliente)) |
+Existe un ClienteInfo (cli) con el idCliente proporcionado. |
 Se retorna la instancia completa de ClienteInfo (cli) correspondiente al idCliente. +
-(OCL tentativo: result = cli) +
-El estado del sistema no cambia (ClienteInfo = ClienteInfo@pre). +
-Si la precondición falla (cliente no existe), se podría retornar null o un objeto ClienteInfo vacío/inválido (esto debería especificarse o manejarse con excepciones si la tecnología lo permite).
+El estado del sistema no se modifica; la información de los clientes permanece igual que antes de ejecutar la operación. +
+Si la precondición falla (el cliente no existe), se puede retornar null o un objeto ClienteInfo vacío/inválido (esto debería especificarse o manejarse con excepciones según la tecnología utilizada).
 
 | actualizarDatosCliente |
 Existe un ClienteInfo (cli) con el idCliente proporcionado. +
 Los datos en nuevosDatos son válidos (por ejemplo, si incluye email, tiene formato correcto; si se actualiza email, no debe existir ya en otro cliente). |
-Los atributos de cli se actualizan con los valores presentes en nuevosDatos. +
-Los campos no presentes en nuevosDatos permanecen sin cambios. +
-(OCL tentativo: if not nuevosDatos.nombre.oclIsUndefined() then cli.nombre = nuevosDatos.nombre else cli.nombre = cli.nombre@pre endif …) +
+Los atributos del cliente se actualizan con los valores presentes en nuevosDatos. +
+Los campos no incluidos en nuevosDatos permanecen sin cambios. +
 Si se actualiza el email, se valida que no esté en uso por otro cliente; si lo está, la operación falla (exito = false). +
 El valor de retorno (ResultadoActualizacionCliente) indica éxito (exito = true). +
-Si alguna precondición falla (cliente no existe, datos inválidos o email duplicado), el valor de retorno indica fallo (exito = false) y mensajeError detalla la causa. El estado del cliente no cambia (cli = cli@pre).
+Si alguna precondición falla (el cliente no existe, los datos son inválidos o el email está duplicado), el valor de retorno indica fallo (exito = false) y mensajeError detalla la causa. El estado del cliente no cambia; sus datos permanecen iguales que antes de ejecutar la operación.
 |===
 
 ==== Diagrama de Especificación de Interfaces IConsultaDisponibilidad
