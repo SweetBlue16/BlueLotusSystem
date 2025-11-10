@@ -360,6 +360,35 @@ image::../images/interfaces/IGestiónIncidentesSpecification.png[width=600,align
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| registrarIncidente() |
+- El usuario autenticado tiene rol 'Recepcionista'. +
+- atosIncidente.idHotel existe. +
+- Si se provee datosIncidente.idEstancia, esta debe existir y estar 'Activa'. +
+- datosIncidente.descripcion no está vacía.
+|
+- Se crea una nueva instancia de IncidenteInfo. +
+- estado se establece en 'Abierto'. +
+- reportadoPor se establece con el ID del usuario autenticado. +
+- fechaHora se establece a la fecha/hora actual. +
+- El valor de retorno (ResultadoIncidente) indica exito = true y el idIncidente. +
+- Se registra el evento en IAuditoria. +
+- Si falla, retorna exito = false y mensajeError.
+| resolverIncidente() |
+- Existe un IncidenteInfo (incidente) con el idIncidente dado. +
+- incidente.estado es 'Abierto'.
+|
+- El incidente.estado se actualiza a 'Cerrado'. +
+- incidente.resolucion se actualiza con el texto proporcionado. +
+- El valor de retorno (ResultadoOperacion) indica exito = true. +
+- Se registra el evento en IAuditoria. +
+- Si falla, retorna exito = false y mensajeError.
+| consultarIncidentesAbiertos() |
+- El idHotel existe. +
+- El usuario autenticado tiene permisos.
+|
+- Retorna una lista (list<IncidenteInfo>) donde idHotel coincide y estado = 'Abierto'. +
+- Si no hay, retorna una lista vacía. +
+- El estado del sistema no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces de IGestiónMétodosPago
@@ -369,6 +398,30 @@ image::../images/interfaces/IGestiónMétodosPagoSpecification.png[width=600,ali
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| agregarMétodoPago() |
+- El idCliente en datosMetodo existe. +
+- Los datos de la tarjeta son válidos. +
+- El usuario autenticado es el idCliente o un rol autorizado.
+|
+- Se llama a IPasarelaPago::autorizarPago para validar y tokenizar la tarjeta. +
+- Se crea una nueva instancia de MetodoPagoInfo guardando únicamente datos seguros. +
+- El valor de retorno (ResultadoMetodoPago) indica exito = true y el idMetodoPago. +
+- Se registra el evento en IAuditoria. +
+- Si la tokenización falla, retorna exito = false y mensajeError.
+| eliminarMétodoPago() |
+- El idMetodoPago existe. +
+- El usuario autenticado es el dueño del método de pago.
+|
+- La instancia MetodoPagoInfo correspondiente se elimina. +
+- El valor de retorno (ResultadoOperacion) indica exito = true. +
+- Se registra el evento en IAuditoria. +
+- Si falla, retorna exito = false y mensajeError.
+| listarMétodosPago() |
+- El idCliente existe. +
+- El usuario autenticado es el idCliente.
+|
+- Retorna una lista (list<MetodoPagoInfo>) de los métodos guardados para ese idCliente. +
+- El estado del sistema no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces de IGestiónPersonal
@@ -436,6 +489,23 @@ image::../images/interfaces/IGestiónReseñasSpecification.png[width=600,align="
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| crearReseña() |
+- El idReservacion existe. +
+- La reservación (consultada a IReservacion) tiene estado = 'Finalizada'. +
+- El cliente autenticado es el dueño de la reservación. +
+- No existe otra ReseñaInfo para esta idReservacion. +
+- datosReseña.calificacion está en el rango [1, 5].
+|
+- Se crea una nueva instancia de ReseñaInfo con los datos proporcionados. +
+- El valor de retorno (ResultadoReseña) indica exito = true y el idReseña. +
+- Se registra el evento en IAuditoria. +
+- Si falla, retorna exito = false y mensajeError.
+| obtenerReseñasPorHotel() |
+- El idHotel existe.
+|
+- Retorna una lista (list<ReseñaInfo>) de todas las reseñas asociadas a ese idHotel. +
+- Si no hay, retorna una lista vacía. +
+- El estado del sistema no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces de IGestiónTarifas
@@ -445,6 +515,33 @@ image::../images/interfaces/IGestiónTarifasSpecification.png[width=600,align="c
 [cols="^20,<40,<40", options="header"]
 |===
 | Operación | Precondiciones | Postcondiciones
+| establecerTarifaDiaria() |
+- El usuario autenticado tiene rol 'Administrador'. +
+- El idTipoHabitacion debe existir en el inventario. +
+- La fecha es una fecha válida. +
+- El precio debe ser un valor monetario no negativo.
+|
+- Se crea o actualiza un registro TarifaEspecialInfo para el idTipoHabitacion y fecha dados con el precio especificado. +
+- El valor de retorno (ResultadoOperacion) indica exito = true. +
+- Se registra el evento en IAuditoria. +
+- Si falla una precondición, retorna exito = false y mensajeError.
+| establecerTarifaRango() |
+- El usuario autenticado tiene rol 'Administrador'. +
+- El idTipoHabitacion debe existir. +
+- fechaInicio y fechaFin definen un rango válido (fechaInicio <= fechaFin). +
+- El precio debe ser un valor monetario no negativo.
+|
+- Se crean o actualizan múltiples registros TarifaEspecialInfo, uno por cada día en el rango de fechas. +
+- El valor de retorno (ResultadoOperacion) indica exito = true. +
+- Se registra el evento en IAuditoria. +
+- Si falla, retorna exito = false y mensajeError.
+| consultarTarifaEfectiva() |
+- El idTipoHabitacion debe existir. +
+- La fecha es válida.
+|
+- Retorna el precioEspecial del TarifaEspecialInfo si existe uno para esa fecha y idTipoHabitacion. +
+- Si no existe, consulta IInventario y retorna la tarifaBase del TipoHabitacionInfoInventario correspondiente. +
+- El estado del sistema no cambia.
 |===
 
 ==== Diagrama de Especificación de Interfaces IInventario
