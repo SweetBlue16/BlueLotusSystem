@@ -71,7 +71,7 @@ Del analisis de los documentos y los actores involucrados, se identifican las si
 El proposito principal del diseño es establecer una arquitectura de software que alinee los objetivos del negocio con las necesidades de los usuarios y los atributos de calidad requeridos, garantizando así un sistema eficiente y efectivo.
 El diseño debe servir como una guia estructural y conceptual para las etapas posteriores de desarrolllo, asegurando que cada decisión técnica responde a las preocupaciones identificadas de los stakeholders. De esta forma el BLS no solo resuelve la problematica operativa de las reservas, sino que se convierte en una herramientra que impulsa la eficiencia, mejora la experiencia del usuario.
 
-image::ContextDiagram.png[Diagrama de contexto del sistema de reservas, width=600, align=center]
+image::../images/other/ContextDiagram.png[Diagrama de contexto del sistema de reservas, width=600, align=center]
 
 ===== Proposito del proyecto
 Desarrollar un sistema de reservaciones centralizado y robust para una cadena hotelera con más de 5,0000 hoteles y 1,000,000 de habitaciones, sustituyendo las soluciones locales que actualmente generan inconsistencias. El sistema debe permitir gestionar tarifas y reservaciones en tiempo real, brindando una experiencia fluida al cliente final y optimizando procesos operativos. Además, debe garantizar alta disponibilidad, consistencia y escalabilidad para soportar el crecimiento futuro de la cadena.

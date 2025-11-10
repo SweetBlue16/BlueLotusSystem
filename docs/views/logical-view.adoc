@@ -190,7 +190,7 @@ _Trade-offs:_
 
 La vista lógica describe la estructura estática del BlueLotus System, descomponiendo el software en sus principales componentes lógicos y sus responsabilidades. El diagrama ilustra cómo la arquitectura final es el resultado directo del proceso iterativo **Attribute-Driven Design (ADD)**, garantizando que cada componente y capa responde de manera trazable a los impulsores críticos del sistema. A continuación, se presenta el diagrama de la estructura estática del sistema:
 
-image::../images/ArchitectureStyleModel.png[Estructura Estática del Sistema, width=600, align="center"]
+image::../images/other/ArchitectureStyleModel.png[Estructura Estática del Sistema, width=600, align="center"]
 
 La arquitectura del sistema es un modelo híbrido que se define como: una **arquitectura Cliente-Servidor basada en una Aplicación de Internet Rica (RIA) y una API RESTful, con una organización interna en el servidor por capas y orientadas a componentes.** Esta estructura equilibra los atributos de calidad priorizados, como la modificabilidad, usabilidad, rendimiento, seguridad y escalabilidad.
 
@@ -225,7 +225,7 @@ A continuación, se presenta el modelo de conceptos del negocio para este proyec
 
 ==== Diagrama del Modelo de Conceptos del Negocio
 
-image::../images/BusinessConceptModel.png[Modelo de Conceptos del Negocio, width=600, align="center"]
+image::../images/other/BusinessConceptModel.png[Modelo de Conceptos del Negocio, width=600, align="center"]
 
 ==== Verificación de Creación, Modificación y Eliminación de Conceptos
 
@@ -264,4 +264,4 @@ image::../images/BusinessConceptModel.png[Modelo de Conceptos del Negocio, width
 
 ==== Modelo de Relaciones de Actores
 
-image::../images/ActorRelationshipsModel.png[Modelo de Relaciones de Actores, width=600, align="center"]
+image::../images/other/ActorRelationshipsModel.png[Modelo de Relaciones de Actores, width=600, align="center"]
