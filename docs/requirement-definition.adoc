@@ -81,19 +81,19 @@ Desarrollar un sistema de reservaciones centralizado y robust para una cadena ho
 En esta sección se presentan los diagramas de casos de uso para los diferentes actores del sistema de reservas de hotel.
 
 ==== Casos de uso del AC-01 Huésped
-image::GuestUseCaseDiagram.png[Diagrama de casos de uso del AC-01 Huésped, width=600, align=center]
+image::../docs/images/use-cases/GuestUseCaseDiagram.png[Diagrama de casos de uso del AC-01 Huésped, width=600, align=center]
 
 ==== Casos de uso del AC-02 Recepcionista
-image::ReceptionistUseCaseDiagram.png[Diagrama de casos de uso del AC-02 Recepcionista, width=600, align=center]
+image::../docs/images/use-cases/ReceptionistUseCaseDiagram.png[Diagrama de casos de uso del AC-02 Recepcionista, width=600, align=center]
 
 ==== Casos de uso del AC-03 Administrador
-image::AdministratorUseCaseDiagram.png[Diagrama de casos de uso del AC-03 Administrador, width=600, align=center]
+image::../docs/images/use-cases/AdministratorUseCaseDiagram.png[Diagrama de casos de uso del AC-03 Administrador, width=600, align=center]
 
 ==== Casos de uso del AC-04 Auditor
-image::AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, width=600, align=center]
+image::../docs/images/use-cases/AuditorUseCaseDiagram.png[Diagrama de casos de uso del AC-04 Auditor, width=600, align=center]
 
 ==== Casos de uso del AC-05 RRHH
-image::HumanResourcesUseCaseDiagram.png[Diagrama de casos de uso del AC-05 RRHH, width=600, align=center]
+image::../docs/images/use-cases/HumanResourcesUseCaseDiagram.png[Diagrama de casos de uso del AC-05 RRHH, width=600, align=center]
 
 === Descripciones de casos de uso
 
