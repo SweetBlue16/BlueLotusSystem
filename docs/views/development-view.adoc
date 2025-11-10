@@ -96,6 +96,12 @@ image::../images/component/UserManagerComponent.png[width=600,align="center",alt
 ==== Diagrama de Especificación de Componentes del Módulo de Catálogo
 image::../images/component/CatalogManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Catálogo"]
 
+==== Diagrama de Especificación de Componentes del Módulo de Reseñas
+image::../images/component/ReviewManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Reseñas"]
+
+==== Diagrama de Especificación de Componentes del Módulo de Incidentes
+image::../images/component/IncidentManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Incidentes"]
+
 === Diagramas de Especificación de Interfaces
 Los diagramas de especificación de interfaces se utilizan para definir las interfaces que los componentes del sistema exponen y consumen. Estos diagramas detallan los métodos, atributos y protocolos de comunicación que permiten la interacción entre diferentes componentes. Se centran en cómo los componentes se comunican entre sí a través de sus interfaces, asegurando una integración efectiva y coherente.
 
