@@ -353,6 +353,24 @@ image::../images/interfaces/IGestionEstanciaSpecification.png[width=600,align="c
 - Si alguna precondición falla, el valor de retorno indica fallo (exito = false) y mensajeError lo detalla. El saldoPendiente de la estancia no cambia.
 |===
 
+==== Diagrama de Especificación de Interfaces de IGestiónIncidentes
+image::../images/interfaces/IGestiónIncidentesSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónIncidentes"]
+
+==== Especificación de las Operaciones de IGestiónIncidentes
+[cols="^20,<40,<40", options="header"]
+|===
+| Operación | Precondiciones | Postcondiciones
+|===
+
+==== Diagrama de Especificación de Interfaces de IGestiónMétodosPago
+image::../images/interfaces/IGestiónMétodosPagoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónMétodosPago"]
+
+==== Especificación de las Operaciones de IGestiónMétodosPago
+[cols="^20,<40,<40", options="header"]
+|===
+| Operación | Precondiciones | Postcondiciones
+|===
+
 ==== Diagrama de Especificación de Interfaces de IGestiónPersonal
 image::../images/interfaces/IGestiónPersonalSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónPersonal"]
 
@@ -409,6 +427,24 @@ image::../images/interfaces/IGestiónPersonalSpecification.png[width=600,align="
 - Se retorna una lista (list<PerfilPersonalInfo>) con todos los perfiles que coinciden con rolFiltro (si se proporcionó). +
 - Si no hay perfiles que coincidan, se retorna una lista vacía. +
 - El estado del sistema no cambia.
+|===
+
+==== Diagrama de Especificación de Interfaces de IGestiónReseñas
+image::../images/interfaces/IGestiónReseñasSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónReseñas"]
+
+==== Especificación de las Operaciones de IGestiónReseñas
+[cols="^20,<40,<40", options="header"]
+|===
+| Operación | Precondiciones | Postcondiciones
+|===
+
+==== Diagrama de Especificación de Interfaces de IGestiónTarifas
+image::../images/interfaces/IGestiónTarifasSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónTarifas"]
+
+==== Especificación de las Operaciones de IGestiónTarifas
+[cols="^20,<40,<40", options="header"]
+|===
+| Operación | Precondiciones | Postcondiciones
 |===
 
 ==== Diagrama de Especificación de Interfaces IInventario
