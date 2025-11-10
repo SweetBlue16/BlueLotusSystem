@@ -713,6 +713,13 @@ image::../images/interfaces/IReservaciónSpecification.png[width=600,align="cent
 |
 - Se retorna la instancia completa de ReservacionInfo correspondiente al idReservacion. +
 - El estado del sistema no cambia.
+| listarReservacionesPorCliente()|
+- El idCliente proporcionado debe existir. +
+- El usuario autenticado debe tener permisos para ver las reservaciones de este idCliente (ser el mismo cliente o un rol autorizado).
+|
+- Se retorna una lista (list<ReservacionInfo>) con todas las reservaciones (pasadas, presentes y futuras) asociadas al idCliente. +
+- Si no se encuentran reservaciones, se retorna una lista vacía. +
+- El estado del sistema no cambia.
 |===
 
 === Interacción de Componentes
