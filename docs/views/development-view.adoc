@@ -70,31 +70,31 @@ Los diagramas de especificación de componentes se utilizan para describir la es
 A continuación, se presentan los diagramas de especificación de componentes del sistema:
 
 ==== Diagrama de Especificación de Componentes del Módulo de Auditoría
-image::../images/AuditModuleComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Auditoría"]
+image::../images/component/AuditModuleComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Auditoría"]
 
 ==== Diagrama de Especificación de Componentes del Módulo de Inventario
-image::../images/InventoryManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Inventario"]
+image::../images/component/InventoryManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Inventario"]
 
 ==== Diagrama de Especificación de Componentes del Módulo de Pagos
-image::../images/PaymentManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Pagos"]
+image::../images/component/PaymentManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Pagos"]
 
 ==== Diagrama de Especificación de Componentes de la Pasarela de Pagos
-image::../images/PaymentServiceComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes de la Pasarela de Pagos"]
+image::../images/component/PaymentServiceComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes de la Pasarela de Pagos"]
 
 ==== Diagrama de Especificación de Componentes del Módulo de Reportes
-image::../images/ReportManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Reportes"]
+image::../images/component/ReportManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Reportes"]
 
 ==== Diagrama de Especificación de Componentes del Módulo de Reservaciones
-image::../images/ReservationManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Reservaciones"]
+image::../images/component/ReservationManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Reservaciones"]
 
 ==== Diagrama de Especificación de Componentes del Módulo de Estancias
-image::../images/StaysManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Estancias"]
+image::../images/component/StaysManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Estancias"]
 
 ==== Diagrama de Especificación de Componentes del Módulo de Usuarios
-image::../images/UserManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Usuarios"]
+image::../images/component/UserManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Usuarios"]
 
 ==== Diagrama de Especificación de Componentes del Módulo de Catálogo
-image::../images/CatalogManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Catálogo"]
+image::../images/component/CatalogManagerComponent.png[width=600,align="center",alt="Diagrama de Especificación de Componentes del Módulo de Catálogo"]
 
 === Diagramas de Especificación de Interfaces
 Los diagramas de especificación de interfaces se utilizan para definir las interfaces que los componentes del sistema exponen y consumen. Estos diagramas detallan los métodos, atributos y protocolos de comunicación que permiten la interacción entre diferentes componentes. Se centran en cómo los componentes se comunican entre sí a través de sus interfaces, asegurando una integración efectiva y coherente.
@@ -102,7 +102,7 @@ Los diagramas de especificación de interfaces se utilizan para definir las inte
 A continuación, se presentan los diagramas de especificación de interfaces del sistema:
 
 ==== Diagrama de Especificación de Interfaces de IAuditoría
-image::../images/IAuditoriaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IAuditoría"]
+image::../images/interfaces/IAuditoriaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IAuditoría"]
 
 ==== Especificación de las Operaciones de IAuditoría
 [cols="^20,<40,<40", options="header"]
@@ -128,7 +128,7 @@ image::../images/IAuditoriaSpecification.png[width=600,align="center",alt="Diagr
 
 
 ==== Diagrama de Especificación de Interfaces de IAutenticación
-image::../images/IAutenticaciónSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IAutenticación"]
+image::../images/interfaces/IAutenticaciónSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IAutenticación"]
 
 ==== Especificación de las Operaciones de IAutenticación
 [cols="^20,<40,<40", options="header"]
@@ -157,7 +157,7 @@ image::../images/IAutenticaciónSpecification.png[width=600,align="center",alt="
 |===
 
 ==== Diagrama de Especificación de Interfaces de ICatálogo
-image::../images/ICatálogoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICatálogo"]
+image::../images/interfaces/ICatálogoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICatálogo"]
 
 ==== Especificación de las Operaciones de ICatálogo
 [cols="^20,<40,<40", options="header"]
@@ -194,7 +194,7 @@ image::../images/ICatálogoSpecification.png[width=600,align="center",alt="Diagr
 |===
 
 ==== Diagrama de Especificación de Interfaces de ICheckIn
-image::../images/ICheckInSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICheckIn"]
+image::../images/interfaces/ICheckInSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICheckIn"]
 
 ==== Especificación de las Operaciones de ICheckIn
 [cols="^20,<40,<40", options="header"]
@@ -221,7 +221,7 @@ image::../images/ICheckInSpecification.png[width=600,align="center",alt="Diagram
 |===
 
 ==== Diagrama de Especificación de Interfaces ICheckOut
-image::../images/ICheckOutSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces ICheckOut"]
+image::../images/interfaces/ICheckOutSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces ICheckOut"]
 
 ==== Especificación de las Operaciones de ICheckOut
 [cols="^20,<40,<40", options="header"]
@@ -256,7 +256,7 @@ image::../images/ICheckOutSpecification.png[width=600,align="center",alt="Diagra
 
 
 ==== Diagrama de Especificación de Interfaces de ICliente
-image::../images/IClienteSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICliente"]
+image::../images/interfaces/IClienteSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de ICliente"]
 
 ==== Especificación de las Operaciones de ICliente
 [cols="^20,<40,<40", options="header"]
@@ -282,7 +282,7 @@ image::../images/IClienteSpecification.png[width=600,align="center",alt="Diagram
 
 
 ==== Diagrama de Especificación de Interfaces IConsultaDisponibilidad
-image::../images/IConsultaDisponibilidadSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IConsultaDisponibilidad"]
+image::../images/interfaces/IConsultaDisponibilidadSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IConsultaDisponibilidad"]
 
 ==== Especificación de las Operaciones de IConsultaDisponibilidad
 [cols="^20,<40,<40", options="header"]
@@ -306,7 +306,7 @@ image::../images/IConsultaDisponibilidadSpecification.png[width=600,align="cente
 |===
 
 ==== Diagrama de Especificación de Interfaces IGestionEstancias
-image::../images/IGestionEstanciaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IGestionEstancias"]
+image::../images/interfaces/IGestionEstanciaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IGestionEstancias"]
 
 ==== Especificación de las Operaciones de IGestionEstancias
 [cols="^20,<40,<40", options="header"]
@@ -348,7 +348,7 @@ image::../images/IGestionEstanciaSpecification.png[width=600,align="center",alt=
 |===
 
 ==== Diagrama de Especificación de Interfaces de IGestiónPersonal
-image::../images/IGestiónPersonalSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónPersonal"]
+image::../images/interfaces/IGestiónPersonalSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces de IGestiónPersonal"]
 
 ==== Especificación de las Operaciones de IGestiónPersonal
 [cols="^20,<40,<40", options="header"]
@@ -406,7 +406,7 @@ image::../images/IGestiónPersonalSpecification.png[width=600,align="center",alt
 |===
 
 ==== Diagrama de Especificación de Interfaces IInventario
-image::../images/IInventarioSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IInventario"]
+image::../images/interfaces/IInventarioSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IInventario"]
 
 ==== Especificación de las Operaciones de IInventario
 [cols="^20,<40,<40", options="header"]
@@ -510,7 +510,7 @@ N/A
 |===
 
 ==== Diagrama de Especificación de Interfaces de IPago
-image::../images/IPagoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IPago"]
+image::../images/interfaces/IPagoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IPago"]
 
 ==== Especificación de las Operaciones de IPago
 [cols="^20,<40,<40", options="header"]
@@ -560,7 +560,7 @@ image::../images/IPagoSpecification.png[width=600,align="center",alt="Diagrama d
 
 
 ==== Diagrama de Especificación de Interfaces IPasarelaPago
-image::../images/IPasarelaPagoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IPasarelaPago"]
+image::../images/interfaces/IPasarelaPagoSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IPasarelaPago"]
 
 ==== Especificación de las Operaciones de IPasarelaPago
 [cols="^20,<40,<40", options="header"]
@@ -603,7 +603,7 @@ image::../images/IPasarelaPagoSpecification.png[width=600,align="center",alt="Di
 |===
 
 ==== Diagrama de Especificación de Interfaces IRegistro
-image::../images/IRegistroSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IRegistro"]
+image::../images/interfaces/IRegistroSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IRegistro"]
 
 ==== Especificación de las Operaciones de IRegistro
 [cols="^20,<40,<40", options="header"]
@@ -623,7 +623,7 @@ image::../images/IRegistroSpecification.png[width=600,align="center",alt="Diagra
 |===
 
 ==== Diagrama de Especificación de Interfaces IReporteAuditoría
-image::../images/IReporteAuditoríaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReporteAuditoría"]
+image::../images/interfaces/IReporteAuditoríaSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReporteAuditoría"]
 
 ==== Especificación de las Operaciones de IReporteAuditoría
 [cols="^20,<40,<40", options="header"]
@@ -657,7 +657,7 @@ image::../images/IReporteAuditoríaSpecification.png[width=600,align="center",al
 
 
 ==== Diagrama de Especificación de Interfaces IReporteFinanciero
-image::../images/IReporteFinancieroSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReporteFinanciero"]
+image::../images/interfaces/IReporteFinancieroSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReporteFinanciero"]
 
 ==== Especificación de las Operaciones de IReporteFinanciero
 [cols="^20,<40,<40", options="header"]
@@ -681,7 +681,7 @@ image::../images/IReporteFinancieroSpecification.png[width=600,align="center",al
 |===
 
 ==== Diagrama de Especificación de Interfaces IReservación
-image::../images/IReservaciónSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReservación"]
+image::../images/interfaces/IReservaciónSpecification.png[width=600,align="center",alt="Diagrama de Especificación de Interfaces IReservación"]
 
 ==== Especificación de las Operaciones de IReservación
 [cols="^20,<40,<40", options="header"]
