@@ -1,3 +1,164 @@
 == Trazabilidad
 
 === Matriz de Trazabilidad
+
+[cols="^20,<35,<35,^10", options="header"]
+|===
+| *Driver (ID y Tipo)* | *Decisión de Diseño (Táctica/Patrón)* | *Artefactos Afectados (Vistas/Elementos)* | *Estado*
+
+| QAS-01 — Detección de fallos en servicio de pagos (Disponibilidad)
+| Tácticas: Observabilidad y registro/monitoreo en operaciones críticas. +
+Patrón: Service Layer con puntos de logging.
+| Cap. 7.2 — Observabilidad del sistema; tácticas documentadas.
+| Cumple
+
+| QAS-02 — Manejo de picos de tráfico (Disponibilidad)
+| Tácticas: Separación por capas y servicios REST para distribuir carga. +
+Patrones: Cliente-Servidor; Service Layer.
+| Cap. 5.2.1 (capas) y comunicación REST/JSON; Iteración 2 orientada a rendimiento/disponibilidad.
+| Cumple
+
+| QAS-03 — Recuperación automática del servicio (Disponibilidad)
+| Enfoque de despliegue/operación (reinicios/rollback) no detallado como “auto-recuperación” en Hito 3. +
+Apoya con observabilidad para detección/recuperación operativa.
+| Referencia de Vista de Despliegue (Cap. 9) para futuras decisiones; Observabilidad en 7.2.
+| Parcial
+
+| QAS-04 — Eficiencia de uso del recepcionista (Usabilidad)
+| Tácticas: Separación Presentación/Negocio; frontends Web SPA y App Móvil. +
+Patrón: Arquitectura en capas.
+| Iteración 1 — capas y frontends; propósito de presentación.
+| Cumple
+
+| QAS-05 — Aprendizaje del sistema (Usabilidad)
+| Tácticas: UI unificada por dominio y convenciones de módulos; SPA/Web-Móvil. +
+Patrón: Capas + Service Layer.
+| Iteración 1 (capas y frontends); organización modular por dominio.
+| Cumple
+
+| QAS-06 — Retroalimentación inmediata (Usabilidad)
+| Táctica: Validación y mensajes desde capa de presentación con contratos claros. +
+Patrón: Service Layer (reglas en servicios) + interfaces formales.
+| Definición formal de interfaces y contratos entre módulos.
+| Cumple
+
+| QAS-07 — Latencia de respuesta (Rendimiento)
+| Tácticas: Encapsulamiento, separación de módulos y DI para eficiencia. +
+Patrones: Capas + Service Layer.
+| Iteración 2 (rendimiento); justificación de decisiones en 7.2.
+| Cumple
+
+| QAS-08 — Capacidad de procesamiento (Rendimiento)
+| Tácticas: Servicios REST desacoplados y orquestación vía Facade. +
+Patrones: Service Layer + Facade.
+| Patrones registrados (Service Layer/Facade); interacción REST entre componentes.
+| Cumple
+
+| QAS-09 — Consistencia temporal (Rendimiento)
+| Tácticas: Contratos/Interfaces estables y DI para comportamiento predecible. +
+Patrón: Capas + DI.
+| Definición formal de interfaces y uso de inversión/inyección de dependencias.
+| Cumple
+
+| QAS-10 — Escalabilidad horizontal (Escalabilidad)
+| Tácticas/Patrones documentados habilitan escalamiento lógico (capas/servicios), pero el escalado horizontal operativo no está detallado en Hito 3.
+| Referencia a Vista de Despliegue (Cap. 9) para decisiones de scaling.
+| Parcial
+
+| QAS-11 — Escalabilidad vertical (Escalabilidad)
+| Igual que el caso anterior: la arquitectura en capas/servicios lo permite, pero la estrategia vertical concreta no se especifica en Hito 3.
+| Vista de Despliegue (Cap. 9).
+| Parcial
+
+| QAS-12 — Elasticidad (Escalabilidad)
+| No hay decisión explícita de auto-escala/elasticidad; se apoya en diseño por interfaces y modularidad.
+| Vista de Despliegue (Cap. 9) para futuro; patrones de Adapter/DI para sustituibilidad.
+| Parcial
+
+| QAS-13 — Cifrado de datos en tránsito (Seguridad)
+| Táctica: Comunicación segura mediante HTTPS/TLS 1.3. +
+Patrón: Cliente-Servidor con REST.
+| Decisión explícita de HTTPS/TLS 1.3; Cliente-Servidor.
+| Cumple
+
+| QAS-14 — Autenticación multifactor (Seguridad)
+| Tácticas: Autenticación y auditoría centralizadas. +
+Patrones: Service Layer; módulos dedicados.
+| Componentes: `GestorDeUsuarios` (autenticación) y `MóduloDeAuditoría`; interfaces relacionadas (7.4/7.5).
+| Cumple
+
+| QAS-15 — Detección de intentos de intrusión (Seguridad)
+| Táctica: Observabilidad/registro para análisis y alertas (no se especifica IDS/IPS). +
+Patrón: Logging centralizado dentro de Service Layer.
+| Observabilidad en 7.2; Reportes de auditoría/finanzas (7.5.16–7.5.17).
+| Parcial
+|===
+
+
+==== Descripción General
+
+La Matriz de Trazabilidad Arquitectónica del *BlueLotus System* establece la relación directa entre los *impulsores arquitectónicos* (ASRs) —particularmente los escenarios de calidad (QAS)— y las *decisiones de diseño* documentadas en el Hito 3.
+Este artefacto permite rastrear el **por qué**, el **cómo** y el **qué** de cada decisión tomada durante el proceso arquitectónico:
+
+* El **por qué** se representa mediante los *drivers* (QAS, CON, CRN, CU), los cuales reflejan necesidades de calidad o restricciones técnicas significativas.
+* El **cómo** corresponde a las *tácticas* y *patrones arquitectónicos* aplicados en respuesta a cada driver.
+* El **qué** se vincula con los *artefactos arquitectónicos* (vistas, componentes, interfaces y diagramas) donde se evidencia la decisión.
+
+El propósito de esta matriz es demostrar la coherencia del diseño, asegurando que cada atributo de calidad definido tenga una correspondencia tangible en el modelo arquitectónico descrito en el *Hito03_Equipo01_Refinamiento.pdf*.
+De este modo, se garantiza la trazabilidad desde los escenarios de calidad hasta los artefactos finales implementados en el sistema.
+
+==== Justificación de la Matriz
+
+Cada fila de la matriz refleja la respuesta del diseño ante los escenarios de calidad (QAS-01 a QAS-15) definidos en el Capítulo 4 del Hito 3, vinculándolos con las tácticas y patrones documentados en las secciones *5.2 Iteraciones del Diseño*, *6.2 Justificación de las Decisiones* y *7.2 Vista de Implementación*.
+A continuación se detalla la justificación de cada vínculo:
+
+* *QAS-01 — Detección de fallos en servicio de pagos:*
+El sistema requiere detectar fallos oportunamente en el microservicio de pagos para preservar la disponibilidad. En el Hito 3 (§7.2) se establecen tácticas de *observabilidad* y *registro centralizado* dentro del *Service Layer*, las cuales permiten monitorear el estado del servicio. Por tanto, el diseño **cumple** con el escenario planteado.
+
+* *QAS-02 — Manejo de picos de tráfico:*
+La Iteración 2 (§5.2.2) aborda explícitamente el manejo de carga mediante *arquitectura en capas* y comunicación *REST/JSON*. Estas decisiones permiten distribuir el tráfico entre servicios, garantizando una disponibilidad ≥95%. Se marca como **cumple**.
+
+* *QAS-03 — Recuperación automática del servicio:*
+Aunque el diseño lógico habilita detección de fallos, no se documentan mecanismos automáticos de recuperación o fail-over. El soporte está limitado a *observabilidad* y *registro de eventos* (§7.2). Por ello, el cumplimiento es **parcial**.
+
+* *QAS-04 — Eficiencia de uso del recepcionista:*
+La *Iteración 1* define la *capa de presentación* con *frontend web* y *app móvil*, separando la interfaz de la lógica de negocio (§5.2.1). Esto facilita tareas rápidas y coherentes, satisfaciendo el atributo de *eficiencia de uso*. Se considera **cumple**.
+
+* *QAS-05 — Aprendizaje del sistema:*
+El uso de una interfaz unificada y coherente entre plataformas reduce la curva de aprendizaje. El *Service Layer* encapsula reglas y mantiene consistencia de flujo (§5.2.1). Se marca **cumple**.
+
+* *QAS-06 — Retroalimentación inmediata:*
+El Hito 3 documenta validaciones y mensajes de error contextualizados en la capa de presentación (§7.3–7.5). Las tácticas de *validación anticipada* y *contratos REST claros* garantizan feedback en tiempo real. Estado **cumple**.
+
+* *QAS-07 — Latencia de respuesta:*
+La Iteración 2 define tácticas de *encapsulamiento* y *inyección de dependencias* para optimizar tiempos de ejecución (§5.2.2). Estas reducen el acoplamiento y mejoran la eficiencia. Estado **cumple**.
+
+* *QAS-08 — Capacidad de procesamiento:*
+Se emplean patrones *Service Layer* y *Facade* para soportar múltiples solicitudes concurrentes (§7.2). Las interfaces REST desacopladas permiten procesar grandes volúmenes de peticiones. Estado **cumple**.
+
+* *QAS-09 — Consistencia temporal:*
+El uso de contratos estables y de inyección de dependencias garantiza uniformidad en los tiempos de respuesta (§7.2). Las interfaces deterministas minimizan la variabilidad temporal. Estado **cumple**.
+
+* *QAS-10 — Escalabilidad horizontal:*
+El diseño modular y por servicios lógicos admite crecimiento horizontal, pero no se documentan mecanismos de *replicación ni balanceo de instancias*. Capítulo 9 propone su análisis futuro. Estado **parcial**.
+
+* *QAS-11 — Escalabilidad vertical:*
+De forma similar, la estructura por capas permite aprovechar hardware más potente sin reescribir componentes, aunque el comportamiento bajo mayor capacidad no se prueba. Estado **parcial**.
+
+* *QAS-12 — Elasticidad:*
+El sistema es modular y adaptable mediante *Adapter Pattern* y *Dependency Injection*, pero no se implementa auto-escalado dinámico. Estado **parcial**.
+
+* *QAS-13 — Cifrado de datos en tránsito:*
+El Hito 3 define explícitamente el uso de *HTTPS/TLS 1.3* (§5.2.2), garantizando comunicación segura cliente-servidor. Estado **cumple**.
+
+* *QAS-14 — Autenticación multifactor:*
+Los módulos *GestorDeUsuarios* e *IAutenticación* reflejan tácticas de autenticación centralizada y control de acceso (§7.3–7.5). El diseño apoya MFA y registro de auditoría. Estado **cumple**.
+
+* *QAS-15 — Detección de intentos de intrusión:*
+Se documenta *observabilidad y registro de eventos* en el módulo de auditoría (§7.2), pero no un sistema IDS/IPS automatizado. Se considera **parcial**.
+
+==== Conclusión
+
+La matriz demuestra la alineación entre los requisitos de calidad definidos en los QAS y las decisiones arquitectónicas adoptadas en el diseño del *BlueLotus System*.
+Los escenarios con estado **cumple** evidencian que las tácticas implementadas responden efectivamente a los requerimientos críticos del sistema, mientras que los marcados como **parcial** representan oportunidades de mejora identificadas para iteraciones futuras o etapas de despliegue (Capítulo 9).
+En conjunto, la trazabilidad asegura la coherencia entre la visión del sistema, sus atributos de calidad y los artefactos que los materializan.
