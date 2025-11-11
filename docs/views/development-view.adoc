@@ -928,6 +928,22 @@ image::../images/interaction/CambiarHabitacionInteraction.png[width=600,align="c
 
 image::../images/interaction/ExtenderEstanciaInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestionEstancias - extenderEstancia"]
 
+==== Diagramas de Interacción de Componentes para IGestiónIncidentes
+
+**Registrar Incidente**
+
+image::../images/interaction/RegistrarIncidenteInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónIncidentes - registrarIncidente"]
+
+==== Diagramas de Interacción de Componentes para IGestiónMétodosPago
+
+**Agregar Método de Pago**
+
+image::../images/interaction/AgregarMétodoPagoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónMétodosPago - agregarMétodoPago"]
+
+**Eliminar Método de Pago**
+
+image::../images/interaction/EliminarMétodoPagoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónMétodosPago - eliminarMétodoPago"]
+
 ==== Diagramas de Interacción de Componentes para IGestiónPersonal
 
 **Crear Perfil de Personal**
@@ -941,6 +957,24 @@ image::../images/interaction/ModificarPerfilPersonalInteraction.png[width=600,al
 **Eliminar Perfil de Personal**
 
 image::../images/interaction/EliminarPerfilPersonalInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónPersonal - eliminarPerfilPersonal"]
+
+==== Diagramas de Interacción de Componentes para IGestiónReseñas
+
+**Crear Reseña**
+
+image::../images/interaction/CrearReseñaInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónReseñas - crearReseña"]
+
+
+==== Diagramas de Interacción de Componentes para IGestiónTarifas
+
+**Establecer Tarifa Diaria**
+
+image::../images/interaction/EstablecerTarifaDiariaInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónTarifas - establecerTarifaDiaria"]
+
+**Establecer Tarifa por Rango de Fechas**
+
+image::../images/interaction/EstablecerTarifaRangoInteraction.png[width=600,align="center",alt="Diagrama de Interacción de Componentes para IGestiónTarifas - establecerTarifaRango"]
+
 
 ==== Diagramas de Interacción de Componentes para IInventario
 
