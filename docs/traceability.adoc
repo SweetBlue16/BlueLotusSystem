@@ -97,14 +97,13 @@ Patrón: Logging centralizado dentro de Service Layer.
 
 ==== Descripción General
 
-La Matriz de Trazabilidad Arquitectónica del *BlueLotus System* establece la relación directa entre los *impulsores arquitectónicos* (ASRs) —particularmente los escenarios de calidad (QAS)— y las *decisiones de diseño* documentadas en el Hito 3.
-Este artefacto permite rastrear el **por qué**, el **cómo** y el **qué** de cada decisión tomada durante el proceso arquitectónico:
+La Matriz de Trazabilidad Arquitectónica del *BlueLotus System* establece la relación directa entre los *impulsores arquitectónicos* (ASRs) —particularmente los escenarios de calidad (QAS)— y las *decisiones de diseño* ya documentadas lo que permite verificar cómo cada requisito de calidad se ha abordado en el diseño del sistema, así como rastrear el **por qué**, el **cómo** y el **qué** de cada decisión tomada durante el proceso arquitectónico:
 
 * El **por qué** se representa mediante los *drivers* (QAS, CON, CRN, CU), los cuales reflejan necesidades de calidad o restricciones técnicas significativas.
 * El **cómo** corresponde a las *tácticas* y *patrones arquitectónicos* aplicados en respuesta a cada driver.
 * El **qué** se vincula con los *artefactos arquitectónicos* (vistas, componentes, interfaces y diagramas) donde se evidencia la decisión.
 
-El propósito de esta matriz es demostrar la coherencia del diseño, asegurando que cada atributo de calidad definido tenga una correspondencia tangible en el modelo arquitectónico descrito en el *Hito03_Equipo01_Refinamiento.pdf*.
+El propósito de esta matriz es demostrar la coherencia del diseño, asegurando que cada atributo de calidad definido tenga una correspondencia tangible en el modelo arquitectónico que se ha desarrollado.
 De este modo, se garantiza la trazabilidad desde los escenarios de calidad hasta los artefactos finales implementados en el sistema.
 
 ==== Justificación de la Matriz
@@ -113,31 +112,31 @@ Cada fila de la matriz refleja la respuesta del diseño ante los escenarios de c
 A continuación se detalla la justificación de cada vínculo:
 
 * *QAS-01 — Detección de fallos en servicio de pagos:*
-El sistema requiere detectar fallos oportunamente en el microservicio de pagos para preservar la disponibilidad. En el Hito 3 (§7.2) se establecen tácticas de *observabilidad* y *registro centralizado* dentro del *Service Layer*, las cuales permiten monitorear el estado del servicio. Por tanto, el diseño **cumple** con el escenario planteado.
+El sistema requiere detectar fallos oportunamente en el microservicio de pagos para preservar la disponibilidad. En la documentación se establecen tácticas de *observabilidad* y *registro centralizado* dentro del *Service Layer*, las cuales permiten monitorear el estado del servicio. Por tanto, el diseño **cumple** con el escenario planteado.
 
 * *QAS-02 — Manejo de picos de tráfico:*
-La Iteración 2 (§5.2.2) aborda explícitamente el manejo de carga mediante *arquitectura en capas* y comunicación *REST/JSON*. Estas decisiones permiten distribuir el tráfico entre servicios, garantizando una disponibilidad ≥95%. Se marca como **cumple**.
+La Iteración 2  aborda explícitamente el manejo de carga mediante *arquitectura en capas* y comunicación *REST/JSON*. Estas decisiones permiten distribuir el tráfico entre servicios, garantizando una disponibilidad ≥95%. Se marca como **cumple**.
 
 * *QAS-03 — Recuperación automática del servicio:*
-Aunque el diseño lógico habilita detección de fallos, no se documentan mecanismos automáticos de recuperación o fail-over. El soporte está limitado a *observabilidad* y *registro de eventos* (§7.2). Por ello, el cumplimiento es **parcial**.
+Aunque el diseño lógico habilita detección de fallos, no se documentan mecanismos automáticos de recuperación o fail-over. El soporte está limitado a *observabilidad* y *registro de eventos*. Por ello, el cumplimiento es **parcial**.
 
 * *QAS-04 — Eficiencia de uso del recepcionista:*
-La *Iteración 1* define la *capa de presentación* con *frontend web* y *app móvil*, separando la interfaz de la lógica de negocio (§5.2.1). Esto facilita tareas rápidas y coherentes, satisfaciendo el atributo de *eficiencia de uso*. Se considera **cumple**.
+La *Iteración 1* define la *capa de presentación* con *frontend web* y *app móvil*, separando la interfaz de la lógica de negocio. Esto facilita tareas rápidas y coherentes, satisfaciendo el atributo de *eficiencia de uso*. Se considera **cumple**.
 
 * *QAS-05 — Aprendizaje del sistema:*
-El uso de una interfaz unificada y coherente entre plataformas reduce la curva de aprendizaje. El *Service Layer* encapsula reglas y mantiene consistencia de flujo (§5.2.1). Se marca **cumple**.
+El uso de una interfaz unificada y coherente entre plataformas reduce la curva de aprendizaje. El *Service Layer* encapsula reglas y mantiene consistencia de flujo. Se marca **cumple**.
 
 * *QAS-06 — Retroalimentación inmediata:*
-El Hito 3 documenta validaciones y mensajes de error contextualizados en la capa de presentación (§7.3–7.5). Las tácticas de *validación anticipada* y *contratos REST claros* garantizan feedback en tiempo real. Estado **cumple**.
+El Hito 3 documenta validaciones y mensajes de error contextualizados en la capa de presentación. Las tácticas de *validación anticipada* y *contratos REST claros* garantizan feedback en tiempo real. Estado **cumple**.
 
 * *QAS-07 — Latencia de respuesta:*
-La Iteración 2 define tácticas de *encapsulamiento* y *inyección de dependencias* para optimizar tiempos de ejecución (§5.2.2). Estas reducen el acoplamiento y mejoran la eficiencia. Estado **cumple**.
+La Iteración 2 define tácticas de *encapsulamiento* y *inyección de dependencias* para optimizar tiempos de ejecución. Estas reducen el acoplamiento y mejoran la eficiencia. Estado **cumple**.
 
 * *QAS-08 — Capacidad de procesamiento:*
-Se emplean patrones *Service Layer* y *Facade* para soportar múltiples solicitudes concurrentes (§7.2). Las interfaces REST desacopladas permiten procesar grandes volúmenes de peticiones. Estado **cumple**.
+Se emplean patrones *Service Layer* y *Facade* para soportar múltiples solicitudes concurrentes. Las interfaces REST desacopladas permiten procesar grandes volúmenes de peticiones. Estado **cumple**.
 
 * *QAS-09 — Consistencia temporal:*
-El uso de contratos estables y de inyección de dependencias garantiza uniformidad en los tiempos de respuesta (§7.2). Las interfaces deterministas minimizan la variabilidad temporal. Estado **cumple**.
+El uso de contratos estables y de inyección de dependencias garantiza uniformidad en los tiempos de respuesta. Las interfaces deterministas minimizan la variabilidad temporal. Estado **cumple**.
 
 * *QAS-10 — Escalabilidad horizontal:*
 El diseño modular y por servicios lógicos admite crecimiento horizontal, pero no se documentan mecanismos de *replicación ni balanceo de instancias*. Capítulo 9 propone su análisis futuro. Estado **parcial**.
@@ -149,13 +148,13 @@ De forma similar, la estructura por capas permite aprovechar hardware más poten
 El sistema es modular y adaptable mediante *Adapter Pattern* y *Dependency Injection*, pero no se implementa auto-escalado dinámico. Estado **parcial**.
 
 * *QAS-13 — Cifrado de datos en tránsito:*
-El Hito 3 define explícitamente el uso de *HTTPS/TLS 1.3* (§5.2.2), garantizando comunicación segura cliente-servidor. Estado **cumple**.
+El Hito 3 define explícitamente el uso de *HTTPS/TLS 1.3*, garantizando comunicación segura cliente-servidor. Estado **cumple**.
 
 * *QAS-14 — Autenticación multifactor:*
-Los módulos *GestorDeUsuarios* e *IAutenticación* reflejan tácticas de autenticación centralizada y control de acceso (§7.3–7.5). El diseño apoya MFA y registro de auditoría. Estado **cumple**.
+Los módulos *GestorDeUsuarios* e *IAutenticación* reflejan tácticas de autenticación centralizada y control de acceso. El diseño apoya MFA y registro de auditoría. Estado **cumple**.
 
 * *QAS-15 — Detección de intentos de intrusión:*
-Se documenta *observabilidad y registro de eventos* en el módulo de auditoría (§7.2), pero no un sistema IDS/IPS automatizado. Se considera **parcial**.
+Se documenta *observabilidad y registro de eventos* en el módulo de auditoría, pero no un sistema IDS/IPS automatizado. Se considera **parcial**.
 
 ==== Conclusión
 
