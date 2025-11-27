@@ -66,7 +66,7 @@ A continuación se detallan los flujos de proceso para los escenarios más crít
 
 ==== Crear Reservación
 
-image::../images/sequence/CrearReservacionSequence.png[Crear Reservación - Diagrama de Secuencia, width=600]
+image::../images/sequence/CrearReservacionSequence.png[Crear Reservación - Diagrama de Secuencia, width=600, align=center]
 
 Este flujo ilustra la orquestación de una transacción crítica de negocio diseñada para garantizar la integridad de los datos y evitar la sobreventa de inventario en un entorno de alta concurrencia. El proceso comienza con el `GestorDeReservas` iniciando una transacción ACID local que coordina la lógica de bloqueo, creación y confirmación. Para gestionar la concurrencia de manera segura, se aplica una estrategia de bloqueo pesimista (Pessimistic Locking) a nivel de base de datos durante la verificación del inventario, lo que impide físicamente que otros procesos intenten reservar la misma habitación simultáneamente hasta que la transacción actual finalice.
 
@@ -74,7 +74,7 @@ La interacción con la pasarela de pagos externa se realiza de manera síncrona 
 
 ==== Consultar Disponibilidad
 
-image::../images/sequence/ConsultarDisponibilidadSequence.png[Consultar Disponibilidad - Diagrama de Secuencia, width=600]
+image::../images/sequence/ConsultarDisponibilidadSequence.png[Consultar Disponibilidad - Diagrama de Secuencia, width=600, align=center]
 
 Este diagrama representa la estrategia de optimización de lectura diseñada para soportar una carga elevada de consultas por segundo manteniendo una latencia mínima. El flujo implementa el patrón Cache-Aside utilizando una caché distribuida como primera línea de defensa. Al recibir una consulta, el `GestorDeInventario` verifica primero la memoria caché utilizando una clave única generada a partir de los parámetros de búsqueda; si la información está disponible, se retorna casi instantáneamente, evitando por completo el acceso a la base de datos y liberando carga del sistema de persistencia.
 
@@ -82,7 +82,7 @@ En el escenario donde los datos no se encuentran en la caché, el sistema dirige
 
 ==== Iniciar Proceso de Pago
 
-image::../images/sequence/IniciarProcesoPagoSequence.png[Iniciar Proceso de Pago - Diagrama de Secuencia, width=600]
+image::../images/sequence/IniciarProcesoPagoSequence.png[Iniciar Proceso de Pago - Diagrama de Secuencia, width=600, align=center]
 
 Este proceso detalla los mecanismos de robustez e integridad financiera implementados para gestionar la integración con la pasarela de pagos externa, un componente crítico fuera del control del sistema. El flujo inicia con la aplicación estricta del patrón de Idempotencia, donde el `GestorDePagos` consulta la base de datos para verificar si la clave única de la transacción ya ha sido procesada anteriormente. Esta validación previa previene eficazmente los cobros duplicados que podrían surgir por reintentos automáticos de la red o acciones repetidas del usuario en la interfaz.
 

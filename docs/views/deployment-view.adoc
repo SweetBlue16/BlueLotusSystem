@@ -6,5 +6,12 @@
 === Justificación de las decisiones
 
 
-=== Diagramas de despliegue
+=== Diagrama de despliegue
 
+image::../images/other/DeploymentDiagram.png[Diagrama de despliegue de BlueLotus System, width=600, align=center]
+
+La arquitectura de despliegue del BlueLotus System ha sido diseñada para satisfacer los exigentes requisitos de escalabilidad global y alta disponibilidad necesarios para soportar la operación de una cadena hotelera de gran magnitud. Para lograr la escalabilidad y elasticidad requeridas (QAS-10, QAS-12), se decidió desplegar los componentes de software como microservicios contenerizados dentro de un clúster de Kubernetes. Esta estrategia permite que servicios críticos como el `GestorDeInventario` o el `GestorDeReservas` escalen horizontalmente de manera independiente, aumentando automáticamente el número de réplicas (Pods) durante picos de demanda para soportar la carga de 300 consultas por segundo, sin desperdiciar recursos en componentes con menor tráfico.
+
+Para garantizar la alta disponibilidad del 95% estipulada (QAS-03) y la recuperación ante desastres, la infraestructura se apoya en dos pilares fundamentales. Primero, un Balanceador de Carga (Load Balancer) actúa como el único punto de entrada al sistema, distribuyendo el tráfico entre las instancias saludables y eliminando puntos únicos de fallo en la capa de aplicación. Segundo, en la capa de persistencia, se implementó una topología de base de datos Maestro-Esclavo (Master-Replica). El nodo maestro se dedica exclusivamente a las transacciones de escritura críticas para mantener la consistencia, mientras que las réplicas sirven las operaciones de lectura masiva; en caso de fallo del maestro, una réplica puede ser promovida automáticamente, minimizando drásticamente el tiempo fuera de servicio.
+
+La seguridad y la protección de datos sensibles (QAS-13, CRN-03) se gestionan mediante una estricta segmentación de red. El tráfico externo proveniente de internet es cifrado mediante HTTPS (TLS 1.3) y termina en el Balanceador de Carga situado en la DMZ. A partir de ahí, la comunicación interna hacia el clúster de aplicaciones y las bases de datos ocurre dentro de una red privada virtual (VPC) totalmente aislada y sin acceso directo desde el exterior, reduciendo la superficie de ataque. Finalmente, la integración con la Pasarela de Pagos externa se desacopla mediante un componente dedicado que se comunica vía HTTPS, asegurando que la latencia o los fallos en la red externa no bloqueen los recursos críticos del núcleo del sistema.
