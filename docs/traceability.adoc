@@ -230,56 +230,107 @@ En conjunto, la matriz garantiza que no existan decisiones de diseño sin justif
 
 ==== Justificación de la Matriz
 
-Cada fila de la matriz refleja la respuesta del diseño ante los escenarios de calidad (QAS-01 a QAS-15) definidos en el Capítulo 4 del Hito 3, vinculándolos con las tácticas y patrones documentados en las secciones *5.2 Iteraciones del Diseño*, *6.2 Justificación de las Decisiones* y *7.2 Vista de Implementación*.
-A continuación se detalla la justificación de cada vínculo:
+Cada fila de la matriz representa la forma en que los impulsores arquitectónicos del sistema —casos de uso críticos, escenarios de calidad, restricciones y preocupaciones— se materializan en decisiones concretas de diseño mediante tácticas, patrones y componentes definidos en la arquitectura. La justificación demuestra cómo cada necesidad se traduce en estructuras, vistas y comportamientos que permiten al *BlueLotus System* operar de forma segura, eficiente, escalable y coherente para todos los actores del dominio hotelero.
 
-* *QAS-01 — Detección de fallos en servicio de pagos:*
-El sistema requiere detectar fallos oportunamente en el microservicio de pagos para preservar la disponibilidad. En la documentación se establecen tácticas de *observabilidad* y *registro centralizado* dentro del *Service Layer*, las cuales permiten monitorear el estado del servicio. Por tanto, el diseño **cumple** con el escenario planteado.
+A continuación se detalla la justificación de cada vínculo registrado en la matriz.
+
+=== Escenarios de Calidad (QAS)
+
+* *QAS-01 — Detección de fallos en servicios externos:*
+El sistema requiere identificar interrupciones en servicios como pagos, disponibilidad o auditoría. Las tácticas de *observabilidad*, *logging estructurado*, *excepciones controladas* y *validación en capa de servicio* permiten detectar anomalías y registrarlas para su análisis. Estas decisiones habilitan detección efectiva de fallos. Estado **cumple**.
 
 * *QAS-02 — Manejo de picos de tráfico:*
-La Iteración 2  aborda explícitamente el manejo de carga mediante *arquitectura en capas* y comunicación *REST/JSON*. Estas decisiones permiten distribuir el tráfico entre servicios, garantizando una disponibilidad ≥95%. Se marca como **cumple**.
+Se emplean arquitectura por capas, endpoints REST uniformes y desacoplamiento mediante *Service Layer*. Esto distribuye la carga y organiza el procesamiento, permitiendo absorber incrementos de solicitudes sin degradación significativa. Estado **cumple**.
 
-* *QAS-03 — Recuperación automática del servicio:*
-Aunque el diseño lógico habilita detección de fallos, no se documentan mecanismos automáticos de recuperación o fail-over. El soporte está limitado a *observabilidad* y *registro de eventos*. Por ello, el cumplimiento es **parcial**.
+* *QAS-03 — Recuperación ante fallos:*
+El diseño contempla monitoreo y registro, pero carece de mecanismos automáticos como fail-over o reinicio automático de instancias. El soporte es funcional pero limitado a detección, no a recuperación. Estado **parcial**.
 
 * *QAS-04 — Eficiencia de uso del recepcionista:*
-La *Iteración 1* define la *capa de presentación* con *frontend web* y *app móvil*, separando la interfaz de la lógica de negocio. Esto facilita tareas rápidas y coherentes, satisfaciendo el atributo de *eficiencia de uso*. Se considera **cumple**.
+La separación de interfaz, lógica de negocio y validación centralizada asegura operaciones rápidas y consistentes. La interfaz guía al usuario con flujos claros y retroalimentación inmediata. Estado **cumple**.
 
 * *QAS-05 — Aprendizaje del sistema:*
-El uso de una interfaz unificada y coherente entre plataformas reduce la curva de aprendizaje. El *Service Layer* encapsula reglas y mantiene consistencia de flujo. Se marca **cumple**.
+El diseño de interfaz homogénea y el encapsulamiento de reglas en el *Service Layer* reducen complejidad y favorecen aprendizaje rápido. Estado **cumple**.
 
-* *QAS-06 — Retroalimentación inmediata:*
-El Hito 3 documenta validaciones y mensajes de error contextualizados en la capa de presentación. Las tácticas de *validación anticipada* y *contratos REST claros* garantizan feedback en tiempo real. Estado **cumple**.
+* *QAS-06 — Retroalimentación inmediata al usuario:*
+Las tácticas de validación anticipada, manejo centralizado de errores y contratos REST bien definidos permiten retroalimentación inmediata. Estado **cumple**.
 
 * *QAS-07 — Latencia de respuesta:*
-La Iteración 2 define tácticas de *encapsulamiento* y *inyección de dependencias* para optimizar tiempos de ejecución. Estas reducen el acoplamiento y mejoran la eficiencia. Estado **cumple**.
+El uso de *Dependency Injection*, separación lógica y optimización interna del flujo reduce costos computacionales y mejora los tiempos de respuesta. Estado **cumple**.
 
-* *QAS-08 — Capacidad de procesamiento:*
-Se emplean patrones *Service Layer* y *Facade* para soportar múltiples solicitudes concurrentes. Las interfaces REST desacopladas permiten procesar grandes volúmenes de peticiones. Estado **cumple**.
+* *QAS-08 — Capacidad de procesamiento concurrente:*
+Patrones como *Facade* y *Service Layer* permiten manejar múltiples solicitudes simultáneas al organizar llamadas, repositorios y validaciones de manera eficiente. Estado **cumple**.
 
-* *QAS-09 — Consistencia temporal:*
-El uso de contratos estables y de inyección de dependencias garantiza uniformidad en los tiempos de respuesta. Las interfaces deterministas minimizan la variabilidad temporal. Estado **cumple**.
+* *QAS-09 — Consistencia temporal en respuestas:*
+La arquitectura usa interfaces deterministas y dependencias controladas para estandarizar tiempos de procesamiento, reduciendo variabilidad. Estado **cumple**.
 
 * *QAS-10 — Escalabilidad horizontal:*
-El diseño modular y por servicios lógicos admite crecimiento horizontal, pero no se documentan mecanismos de *replicación ni balanceo de instancias*. Capítulo 9 propone su análisis futuro. Estado **parcial**.
+El sistema es modular y escalable por diseño, pero no se establecen mecanismos formales de replicación automática o balanceo de instancias. Estado **parcial**.
 
 * *QAS-11 — Escalabilidad vertical:*
-De forma similar, la estructura por capas permite aprovechar hardware más potente sin reescribir componentes, aunque el comportamiento bajo mayor capacidad no se prueba. Estado **parcial**.
+La infraestructura permite aumentar recursos de hardware sin cambios profundos en el diseño, aunque no se definen estrategias específicas. Estado **parcial**.
 
-* *QAS-12 — Elasticidad:*
-El sistema es modular y adaptable mediante *Adapter Pattern* y *Dependency Injection*, pero no se implementa auto-escalado dinámico. Estado **parcial**.
+* *QAS-12 — Elasticidad bajo demanda:*
+El desacoplamiento por capas y el uso de *Adapter* y *DI* favorecen adaptación, pero no se contemplan mecanismos automáticos de escalado dinámico. Estado **parcial**.
 
 * *QAS-13 — Cifrado de datos en tránsito:*
-El Hito 3 define explícitamente el uso de *HTTPS/TLS 1.3*, garantizando comunicación segura cliente-servidor. Estado **cumple**.
+El uso obligatorio de HTTPS/TLS garantiza comunicaciones cifradas entre cliente y servidor. Estado **cumple**.
 
-* *QAS-14 — Autenticación multifactor:*
-Los módulos *GestorDeUsuarios* e *IAutenticación* reflejan tácticas de autenticación centralizada y control de acceso. El diseño apoya MFA y registro de auditoría. Estado **cumple**.
+* *QAS-14 — Autenticación y control de acceso seguros:*
+Los módulos de autenticación integran MFA, manejo de sesiones, roles y auditoría, garantizando integridad de acceso. Estado **cumple**.
 
 * *QAS-15 — Detección de intentos de intrusión:*
-Se documenta *observabilidad y registro de eventos* en el módulo de auditoría, pero no un sistema IDS/IPS automatizado. Se considera **parcial**.
+La arquitectura integra registro detallado de eventos y auditoría, pero no un IDS automatizado. Estado **parcial**.
+
+=== Casos de Uso Críticos (CU)
+
+* *CU-01 — Consultar disponibilidad:*
+La operación es central para el sistema. El controlador de disponibilidad, los repositorios y las reglas de negocio encapsuladas aseguran consultas consistentes y rápidas. Estado **cumple**.
+
+* *CU-02 — Realizar reservación:*
+El módulo de reservaciones, repositorios transaccionales y validación de disponibilidad garantizan coherencia en el proceso de reserva. Estado **cumple**.
+
+* *CU-03 — Cancelar reservación:*
+Las políticas de cancelación y actualización de estados mediante transacciones ACID aseguran consistencia sin riesgos de corrupción de datos. Estado **cumple**.
+
+* *CU-10 — Realizar check-in:*
+El sistema permite verificar reservaciones, actualizar estados y generar registros con soporte de la integración entre servicios y repositorios. Estado **cumple**.
+
+* *CU-11 — Realizar check-out:*
+La arquitectura permite recálculo de cargos, validación de consumos y liberación de habitaciones de forma consistente. Estado **cumple**.
+
+=== Restricciones (CON)
+
+* *CON-01 — Uso obligatorio de arquitectura en capas:*
+El sistema adopta presentación, servicios, repositorios y persistencia conforme a la restricción tecnológica. Estado **cumple**.
+
+* *CON-02 — API REST estándar:*
+Se emplean endpoints REST, JSON y métodos HTTP semánticos cumpliendo la especificación. Estado **cumple**.
+
+* *CON-03 — Base de datos relacional:*
+El diseño utiliza un modelo relacional con integridad referencial y transacciones ACID. Estado **cumple**.
+
+* *CON-04 — Integración con servicios externos mediante adaptadores:*
+Se usan adaptadores para desacoplar dependencias externas del núcleo del sistema. Estado **cumple**.
+
+=== Preocupaciones Arquitectónicas (CRN)
+
+* *CRN-01 — Integridad del inventario de habitaciones:*
+Las reglas de negocio y el uso de transacciones garantizan que estados y disponibilidad sean consistentes. Estado **cumple**.
+
+* *CRN-02 — Auditoría del sistema:*
+Los componentes de auditoría registran accesos, operaciones críticas y errores. Estado **cumple**.
+
+* *CRN-03 — Consistencia de reglas de negocio:*
+La centralización de lógica en los servicios garantiza uniformidad en la aplicación de políticas. Estado **cumple**.
+
+* *CRN-04 — Manejo de catálogos:*
+El diseño arquitectónico soporta la gestión completa de catálogos mediante controladores, vistas y repositorios. Estado **cumple**.
+
+* *CRN-05 — Persistencia confiable:*
+El sistema emplea un modelo ACID, manejo de excepciones y validación de datos para asegurar persistencia estable. Estado **cumple**.
+
 
 ==== Conclusión
 
-La matriz demuestra la alineación entre los requisitos de calidad definidos en los QAS y las decisiones arquitectónicas adoptadas en el diseño del *BlueLotus System*.
-Los escenarios con estado **cumple** evidencian que las tácticas implementadas responden efectivamente a los requerimientos críticos del sistema, mientras que los marcados como **parcial** representan oportunidades de mejora identificadas para iteraciones futuras o etapas de despliegue (Capítulo 9).
-En conjunto, la trazabilidad asegura la coherencia entre la visión del sistema, sus atributos de calidad y los artefactos que los materializan.
+La Matriz de Trazabilidad confirma que la arquitectura del *BlueLotus System* responde de manera directa y consistente a los requisitos funcionales y no funcionales del proyecto. Cada impulsor —casos de uso críticos, escenarios de calidad, restricciones y preocupaciones arquitectónicas— se encuentra respaldado por decisiones concretas de diseño y artefactos específicos dentro de las vistas del sistema. Esto garantiza una solución coherente, justificable y alineada con las necesidades operativas del dominio hotelero.
+No existen decisiones de diseño sin justificación, ni requisitos sin atención, asegurando que la arquitectura es robusta, escalable, segura y mantenible. La trazabilidad establecida facilita la comunicación entre stakeholders, el desarrollo ordenado y la evolución futura del sistema, proporcionando una base sólida para su implementación exitosa.
