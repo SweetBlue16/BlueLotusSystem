@@ -1,3 +1,77 @@
+// ...existing code...
 == Aspectos transversales
 
+Este documento describe la estrategia aplicada en el proyecto HotelBookingSystem para gestionar tres concerns transversales clave: Seguridad, Registro y observabilidad, y Persistencia / Consistencia de datos. Las tácticas y frameworks mencionados ya están integrados en el código del sistema (capas API, Application, Infrastructure), y las decisiones de diseño están alineadas con la arquitectura por capas usada en los módulos BookingService, RoomRepository, PaymentGatewayClient y NotificationService.
+
+=== Concerns utilizados (lista explícita)
+- Seguridad (autenticación y autorización)
+- Registro y observabilidad (logs, trazas, métricas, salud del sistema)
+- Persistencia y consistencia de datos (base de datos, transacciones, caché)
+- Resiliencia y tolerancia a fallos (reintentos, circuit breaker) — táctica aplicada dentro de observabilidad/resiliencia.
+
+=== Tácticas y frameworks utilizados (lista explícita)
+- Autenticación: JWT + ASP.NET Core Identity
+- Autorización: políticas basadas en claims
+- Validación de entradas: FluentValidation
+- Gestión de secretos: User Secrets / Azure Key Vault
+- Logs: Serilog
+- Trazas distribuidas: OpenTelemetry
+- Métricas y salud: Prometheus-compatible + Health Checks (/healthz)
+- Resiliencia: Polly (retries, circuit-breaker)
+- Persistencia: Entity Framework Core (HotelContext)
+- Acceso a datos: Repository + Unit of Work
+- Caché distribuido: Redis (IDistributedCache), estrategia cache-aside
+- Comunicación interna: Domain Events para invalidación de caché y notificaciones.
+
+=== 1. Seguridad
+Estrategia (explicado sencillo)
+- Mantener la lógica de seguridad separada del código de negocio. Es decir, que verificar quién es el usuario y qué puede hacer no esté mezclado con cómo se crea una reserva.
+- Proteger por defecto todas las rutas de la API y permitir explícitamente sólo las que deben ser públicas.
+
+Tácticas usadas en el proyecto
+- Autenticación con tokens JWT y ASP.NET Core Identity para gestionar usuarios.
+- Políticas de autorización basadas en claims (ej. permisos como "Bookings.Create" o "Bookings.ManageAll").
+- Validación de entradas con FluentValidation para evitar que datos mal formados creen problemas de seguridad.
+- Almacenamiento seguro de credenciales externas (User Secrets en desarrollo o Azure Key Vault en producción) para cosas como las claves del pasarela de pago.
+- Middleware en Program.cs que centraliza la comprobación de tokens y políticas; los controllers usan esas políticas.
+
+Cómo se aplica aquí
+- Los controllers (p. ej. BookingsController) sólo reciben peticiones ya autenticadas/permitidas.
+- BookingService asume que las comprobaciones de permisos ya se han aplicado; los tests unitarios verifican casos críticos con mocks de autorización.
+
+=== 2. Registro y observabilidad
+Estrategia (explicado sencillo)
+- Tener visibilidad clara de qué pasa en el sistema: guardar logs legibles por máquinas, trazar llamadas que cruzan servicios y exponer métricas de salud para detectar problemas rápidamente.
+- Instrumentar puntos clave (entradas a la API, pagos, creación de reservas) sin mezclar esa instrumentación con la lógica principal.
+
+Tácticas usadas en el proyecto
+- Serilog para logs estructurados (se pueden enviar a archivo, consola o servidores de logs).
+- OpenTelemetry para trazar solicitudes que atraviesan la API y llamadas a servicios externos.
+- Exportación de métricas compatible con Prometheus y endpoint /healthz para comprobar dependencias (BD, Redis, pasarela de pago).
+- Polly para reintentos y circuit-breaker en llamadas externas, y registrar estos eventos para diagnóstico.
+
+Cómo se aplica aquí
+- Logger se inyecta en controllers y servicios (BookingService, NotificationService).
+- Llamadas a PaymentGatewayClient están envueltas en spans de OpenTelemetry y en políticas de Polly (reintentos y circuit-breaker).
+- El endpoint /healthz usa Health Checks para devolver si la base de datos o Redis están disponibles.
+
+=== 3. Persistencia y consistencia de datos
+Estrategia (explicado sencillo)
+- Mantener los datos correctos cuando ocurren errores: asegurar que si un pago falla no quede una reserva confirmada.
+- Usar consistencia fuerte donde es crítico (pago + reserva) y consistencia eventual donde la latencia y escalabilidad lo requieren (consultas de disponibilidad).
+
+Tácticas usadas en el proyecto
+- Entity Framework Core (HotelContext) como acceso a la base de datos.
+- Patrón Repository + Unit of Work (IRoomRepository, IBookingRepository, IUnitOfWork) para centralizar commits y rollbacks.
+- Transacciones de base de datos para operaciones que afectan varios elementos (por ejemplo: registrar reserva y grabar pago).
+- Caching distribuido con Redis (IDistributedCache) para datos de lectura frecuente como disponibilidad de habitaciones.
+- Estrategia cache-aside con expiraciones cortas e invalidación vía Domain Events cuando hay cambios.
+- Pruebas de integración que aseguran que fallos en pago no dejan datos inconsistentes.
+
+Cómo se aplica aquí
+- BookingService coordina la operación completa: comienza la transacción, intenta cobrar con PaymentGatewayClient (con reintentos); si el cobro va bien hace Commit() del UnitOfWork; si falla hace Rollback() y, si procede, compensa.
+- AvailabilityQueryHandler usa Redis para responder rápido a consultas de disponibilidad; cuando se crea/borra una reserva se publica un evento interno que provoca la invalidación de la caché.
+
+=== Conclusión
+La gestión adecuada de los concerns transversales de Seguridad, Registro y observabilidad, y Persistencia / Consistencia de datos es fundamental para el éxito del sistema HotelBookingSystem. Al aplicar estrategias y tácticas específicas para cada uno de estos aspectos, se garantiza que el sistema no solo cumple con los requisitos funcionales, sino que también ofrece una experiencia segura, confiable y eficiente para sus usuarios. La separación clara de responsabilidades y la integración de frameworks probados permiten mantener un código limpio y fácil de mantener, facilitando futuras ampliaciones y mejoras del sistema.
 

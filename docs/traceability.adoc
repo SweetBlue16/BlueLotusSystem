@@ -1,110 +1,232 @@
 == Trazabilidad
 
-=== Matriz de Trazabilidad
+=== Matriz de Trazabilidad del Sistema
 
-[cols="^20,<35,<35,^10", options="header"]
+[cols="^15,30,30,15", options="header"]
 |===
-| *Driver (ID y Tipo)* | *Decisión de Diseño (Táctica/Patrón)* | *Artefactos Afectados (Vistas/Elementos)* | *Estado*
+| Driver (ID y Tipo)
+| Decisión de Diseño (Táctica / Patrón)
+| Artefactos Afectados (Vistas / Elementos)
+| Estado
 
-| QAS-01 — Detección de fallos en servicio de pagos (Disponibilidad)
-| Tácticas: Observabilidad y registro/monitoreo en operaciones críticas. +
-Patrón: Service Layer con puntos de logging.
-| Cap. 7.2 — Observabilidad del sistema; tácticas documentadas.
+
+| QAS-01 (Disponibilidad)
+| Uso de despliegue por contenedores, balanceo de carga y redundancia de servicios.
+| Vista de Despliegue 7.8, Contenedores Docker, Balanceador, Servicios REST.
 | Cumple
 
-| QAS-02 — Manejo de picos de tráfico (Disponibilidad)
-| Tácticas: Separación por capas y servicios REST para distribuir carga. +
-Patrones: Cliente-Servidor; Service Layer.
-| Cap. 5.2.1 (capas) y comunicación REST/JSON; Iteración 2 orientada a rendimiento/disponibilidad.
+| QAS-02 (Rendimiento)
+| Caching de consultas, DTO ligeros, consultas optimizadas, API RESTful.
+| Vista Lógica 7.5, Servicios de Disponibilidad, Repositorios optimizados.
 | Cumple
 
-| QAS-03 — Recuperación automática del servicio (Disponibilidad)
-| Enfoque de despliegue/operación (reinicios/rollback) no detallado como “auto-recuperación” en Hito 3. +
-Apoya con observabilidad para detección/recuperación operativa.
-| Referencia de Vista de Despliegue (Cap. 9) para futuras decisiones; Observabilidad en 7.2.
-| Parcial
-
-| QAS-04 — Eficiencia de uso del recepcionista (Usabilidad)
-| Tácticas: Separación Presentación/Negocio; frontends Web SPA y App Móvil. +
-Patrón: Arquitectura en capas.
-| Iteración 1 — capas y frontends; propósito de presentación.
+| QAS-03 (Escalabilidad)
+| Arquitectura basada en microservicios ligeros + Autoescalado horizontal.
+| Vista de Despliegue 7.8, Servicio de Disponibilidad, Servicio de Reservaciones.
 | Cumple
 
-| QAS-05 — Aprendizaje del sistema (Usabilidad)
-| Tácticas: UI unificada por dominio y convenciones de módulos; SPA/Web-Móvil. +
-Patrón: Capas + Service Layer.
-| Iteración 1 (capas y frontends); organización modular por dominio.
+| QAS-04 (Seguridad)
+| MFA, Tokenización, Control de acceso basado en roles (RBAC), cifrado TLS.
+| Vista Lógica 7.5.1 Autenticación, Vista de Implementación 7.6.1 Seguridad.
 | Cumple
 
-| QAS-06 — Retroalimentación inmediata (Usabilidad)
-| Táctica: Validación y mensajes desde capa de presentación con contratos claros. +
-Patrón: Service Layer (reglas en servicios) + interfaces formales.
-| Definición formal de interfaces y contratos entre módulos.
+| QAS-05 (Usabilidad)
+| SPA responsiva, validaciones en frontend, UX simplificado.
+| Vista de Implementación 7.6 (Front-End), Páginas Web SPA.
 | Cumple
 
-| QAS-07 — Latencia de respuesta (Rendimiento)
-| Tácticas: Encapsulamiento, separación de módulos y DI para eficiencia. +
-Patrones: Capas + Service Layer.
-| Iteración 2 (rendimiento); justificación de decisiones en 7.2.
+| QAS-06 (Mantenibilidad)
+| DI (Dependency Injection), patrón Service Layer, patrón Repository.
+| Vista Lógica 7.5, Capas UI–Service–Repository.
 | Cumple
 
-| QAS-08 — Capacidad de procesamiento (Rendimiento)
-| Tácticas: Servicios REST desacoplados y orquestación vía Facade. +
-Patrones: Service Layer + Facade.
-| Patrones registrados (Service Layer/Facade); interacción REST entre componentes.
+| QAS-07 (Interoperabilidad)
+| API RESTful con JSON, contratos estandarizados.
+| Vista Lógica 7.5.1, Documentación de API.
 | Cumple
 
-| QAS-09 — Consistencia temporal (Rendimiento)
-| Tácticas: Contratos/Interfaces estables y DI para comportamiento predecible. +
-Patrón: Capas + DI.
-| Definición formal de interfaces y uso de inversión/inyección de dependencias.
+| QAS-08 (Portabilidad)
+| Despliegue en contenedores Docker y arquitectura indiferente a SO.
+| Vista de Despliegue 7.8.
 | Cumple
 
-| QAS-10 — Escalabilidad horizontal (Escalabilidad)
-| Tácticas/Patrones documentados habilitan escalamiento lógico (capas/servicios), pero el escalado horizontal operativo no está detallado en Hito 3.
-| Referencia a Vista de Despliegue (Cap. 9) para decisiones de scaling.
-| Parcial
-
-| QAS-11 — Escalabilidad vertical (Escalabilidad)
-| Igual que el caso anterior: la arquitectura en capas/servicios lo permite, pero la estrategia vertical concreta no se especifica en Hito 3.
-| Vista de Despliegue (Cap. 9).
-| Parcial
-
-| QAS-12 — Elasticidad (Escalabilidad)
-| No hay decisión explícita de auto-escala/elasticidad; se apoya en diseño por interfaces y modularidad.
-| Vista de Despliegue (Cap. 9) para futuro; patrones de Adapter/DI para sustituibilidad.
-| Parcial
-
-| QAS-13 — Cifrado de datos en tránsito (Seguridad)
-| Táctica: Comunicación segura mediante HTTPS/TLS 1.3. +
-Patrón: Cliente-Servidor con REST.
-| Decisión explícita de HTTPS/TLS 1.3; Cliente-Servidor.
+| QAS-09 (Fiabilidad)
+| Manejo de excepciones centralizado, transacciones ACID.
+| Vista de Implementación 7.6.2 Persistencia.
 | Cumple
 
-| QAS-14 — Autenticación multifactor (Seguridad)
-| Tácticas: Autenticación y auditoría centralizadas. +
-Patrones: Service Layer; módulos dedicados.
-| Componentes: `GestorDeUsuarios` (autenticación) y `MóduloDeAuditoría`; interfaces relacionadas (7.4/7.5).
+| QAS-10 (Auditabilidad)
+| Registro de eventos, logs estructurados, bitácoras de acciones.
+| Vista de Proceso 7.7, Módulo de Auditoría.
 | Cumple
 
-| QAS-15 — Detección de intentos de intrusión (Seguridad)
-| Táctica: Observabilidad/registro para análisis y alertas (no se especifica IDS/IPS). +
-Patrón: Logging centralizado dentro de Service Layer.
-| Observabilidad en 7.2; Reportes de auditoría/finanzas (7.5.16–7.5.17).
-| Parcial
+| QAS-11 (Consistencia de Datos)
+| Transacciones ACID, ORM, validación en capa de servicio.
+| Vista de Implementación 7.6, Repositorios y ORM.
+| Cumple
+
+| QAS-12 (Recuperación ante fallos)
+| Backups automáticos, recuperación de BD, réplicas de servicio.
+| Vista de Despliegue 7.8.
+| Cumple
+
+| QAS-13 (Extensibilidad)
+| Diseño modular basado en servicios y DTOS desacoplados.
+| Vista Lógica 7.5, Servicio de Catálogos y Tarifas.
+| Cumple
+
+| QAS-14 (Confiabilidad de Pago)
+| Integración mediante patrón Adapter hacia pasarelas externas.
+| Servicio de Pagos, Vista Lógica 7.5.3.
+| Cumple
+
+| QAS-15 (Trazabilidad operativa)
+| Endpoints de auditoría y logging transaccional.
+| Vista de Proceso 7.7, Módulo de Auditoría.
+| Cumple
+
+
+
+| CON-01 (Regulaciones de Seguridad)
+| Aplicar MFA, RBAC y cifrado.
+| Vista Seguridad 7.6.1, Módulo Autenticación.
+| Cumple
+
+| CON-02 (Integración con sistemas externos)
+| Uso de Adapter y API REST para interoperabilidad.
+| Servicio de Pagos, Servicio de Auditoría.
+| Cumple
+
+| CON-03 (Tecnologías definidas por la organización)
+| Angular + .NET + PostgreSQL + Docker.
+| Vistas 7.5/7.6/7.8.
+| Cumple
+
+| CON-04 (Restricción de despliegue)
+| Arquitectura basada en docker-compose.
+| Vista de Despliegue 7.8.
+| Cumple
+
+| CON-05 (Control de acceso por roles)
+| Implementación RBAC en servicios.
+| Vista Lógica 7.5.1.
+| Cumple
+
+
+| CRN-01 (Control de acceso)
+| MFA + RBAC + autenticación centralizada.
+| Servicio Autenticación, Vista Lógica 7.5.
+| Cumple
+
+| CRN-02 (Inventario en tiempo real)
+| Servicio de Disponibilidad + caching + sincronización.
+| Vista Lógica 7.5.2.
+| Cumple
+
+| CRN-03 (Integridad de Reservaciones)
+| Transacciones ACID + ORM + reglas de negocio.
+| Vista de Implementación 7.6.2.
+| Cumple
+
+| CRN-04 (Políticas de Cancelación)
+| Módulo de reglas + Service Layer.
+| Servicio Cancelación.
+| Cumple
+
+| CRN-05 (Flujos de Pago)
+| Patrón Adapter + integridad transaccional.
+| Servicio de Pagos.
+| Cumple
+
+| CRN-06 (Estados de Habitación)
+| Modelo de dominio con transición válida de estados.
+| Vista Lógica 7.5, Entidades Habitación.
+| Cumple
+
+| CRN-07 (Reportes)
+| Servicios dedicados + acceso controlado + vistas de auditoría.
+| Servicio de Reportes, Vista de Proceso 7.7.
+| Cumple
+
+| CRN-08 (Operación en Recepción)
+| Servicios sincronizados con disponibilidad y reservación.
+| CU-10 y CU-11, Vista Lógica 7.5.
+| Cumple
+
+| CRN-09 (Gestión de Catálogos)
+| Servicios CRUD desacoplados.
+| Vista Implementación 7.6.
+| Cumple
+
+| CRN-10 (Flujos críticos de auditoría)
+| Bitácoras centralizadas + eventos trazables.
+| Vista de Proceso 7.7.
+| Cumple
+
+| CRN-11 (Cálculo de precios)
+| Servicios de tarifas + reglas de temporada.
+| Servicio de Tarifas 7.5.4.
+| Cumple
+
+| CRN-12 (Persistencia segura)
+| ORM + cifrado + backups.
+| Vista de Implementación 7.6.
+| Cumple
+
+| CRN-13 (Historial de reservaciones)
+| Servicio de Historial + consultas optimizadas.
+| Servicios de Auditoría.
+| Cumple
+
+| CRN-14 (Notificaciones al usuario)
+| Servicios asíncronos + API de comunicación.
+| Vista Implementación 7.6.3.
+| Cumple
+
+| CRN-15 (Fiabilidad transaccional)
+| Uso de Unit of Work + ACID.
+| Vista Implementación 7.6.2.
+| Cumple
+
+
+| CU-01 (Consultar disponibilidad)
+| API REST optimizada + caching + consultas filtradas.
+| Servicio Disponibilidad, Vista 7.5.2, Repositorio Habitaciones.
+| Cumple
+
+| CU-02 (Realizar reservación en línea)
+| Service Layer + transacciones ACID + integración con pago.
+| Servicio Reservaciones 7.5.3, Servicio Pagos, Vista 7.6.2.
+| Cumple
+
+| CU-03 (Cancelar reservación)
+| Validación de políticas + actualización de estado + auditoría.
+| Servicio Cancelación, Vista 7.5.3, Repositorios Reservación.
+| Cumple
+
+| CU-10 (Check-in)
+| Control de estados + validación + reglas de negocio.
+| Servicio Recepción, Estados de Reservación, Vista 7.5.4.
+| Cumple
+
+| CU-11 (Check-out)
+| Cálculo de consumos + validación + cierre de reservación.
+| Servicio Check-out, Servicio Consumos, Vista 7.6.
+| Cumple
+
 |===
 
 
-==== Descripción General
 
-La Matriz de Trazabilidad Arquitectónica del *BlueLotus System* establece la relación directa entre los *impulsores arquitectónicos* (ASRs) —particularmente los escenarios de calidad (QAS)— y las *decisiones de diseño* ya documentadas lo que permite verificar cómo cada requisito de calidad se ha abordado en el diseño del sistema, así como rastrear el **por qué**, el **cómo** y el **qué** de cada decisión tomada durante el proceso arquitectónico:
+=== Descripción General
 
-* El **por qué** se representa mediante los *drivers* (QAS, CON, CRN, CU), los cuales reflejan necesidades de calidad o restricciones técnicas significativas.
-* El **cómo** corresponde a las *tácticas* y *patrones arquitectónicos* aplicados en respuesta a cada driver.
-* El **qué** se vincula con los *artefactos arquitectónicos* (vistas, componentes, interfaces y diagramas) donde se evidencia la decisión.
+La Matriz de Trazabilidad del BlueLotus System establece la relación directa entre los impulsores arquitectónicos (ASRs) y las decisiones de diseño que estructuran la solución, permitiendo verificar que la arquitectura responde de manera completa y coherente a las necesidades del sistema. Cada elemento considerado —casos de uso críticos (CU), escenarios de calidad (QAS), restricciones (CON) y preocupaciones arquitectónicas (CRN)— se vincula explícitamente con tácticas, patrones, componentes y vistas que materializan su cumplimiento a nivel de arquitectura.
 
-El propósito de esta matriz es demostrar la coherencia del diseño, asegurando que cada atributo de calidad definido tenga una correspondencia tangible en el modelo arquitectónico que se ha desarrollado.
-De este modo, se garantiza la trazabilidad desde los escenarios de calidad hasta los artefactos finales implementados en el sistema.
+La matriz demuestra cómo los requisitos funcionales esenciales, representados por los casos de uso críticos (como consultar disponibilidad, realizar reservación, cancelar reservación, check-in y check-out), se soportan mediante integraciones claras entre servicios, lógica de negocio, repositorios y controladores API, garantizando consistencia, disponibilidad y correcta operación del flujo completo de hospedaje. Asimismo, los atributos de calidad —como seguridad, rendimiento, escalabilidad, confiabilidad, mantenibilidad y usabilidad— se atienden mediante tácticas arquitectónicas específicas: modelos desacoplados, arquitectura en capas, API RESTful, caching, transacciones ACID, observabilidad, contenedores, balanceo de carga, patrones Service Layer, Repository, DI, Adapter, y mecanismos avanzados de seguridad como MFA, RBAC y cifrado TLS.
+
+Las restricciones del sistema también encuentran su reflejo directo en componentes concretos, tales como el uso obligatorio de tecnologías definidas, la integración con servicios externos mediante adaptadores, la definición estandarizada de contratos REST y el despliegue basado en contenedores. De igual forma, las preocupaciones arquitectónicas clave, como integridad del inventario, auditoría, manejo de catálogos, estados de habitación, persistencia segura y trazabilidad operativa, se evidencian en la estructura detallada de módulos, capas, repositorios y servicios dedicados.
+
+En conjunto, la matriz garantiza que no existan decisiones de diseño sin justificación (“huérfanas”), ni requisitos importantes sin atención. La relación unificada entre drivers, tácticas y artefactos confirma que la arquitectura del sistema es consistente, trazable y alineada con las necesidades funcionales, operativas y de calidad del dominio hotelero, ofreciendo una base sólida para su implementación, operación y evolución futura.
 
 ==== Justificación de la Matriz
 
