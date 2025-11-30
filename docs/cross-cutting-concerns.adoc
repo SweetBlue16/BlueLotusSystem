@@ -1,15 +1,14 @@
-// ...existing code...
 == Aspectos transversales
 
 Este documento describe la estrategia aplicada en el proyecto HotelBookingSystem para gestionar tres concerns transversales clave: Seguridad, Registro y observabilidad, y Persistencia / Consistencia de datos. Las tácticas y frameworks mencionados ya están integrados en el código del sistema (capas API, Application, Infrastructure), y las decisiones de diseño están alineadas con la arquitectura por capas usada en los módulos BookingService, RoomRepository, PaymentGatewayClient y NotificationService.
 
-=== Concerns utilizados (lista explícita)
+=== Concerns utilizados
 - Seguridad (autenticación y autorización)
 - Registro y observabilidad (logs, trazas, métricas, salud del sistema)
 - Persistencia y consistencia de datos (base de datos, transacciones, caché)
-- Resiliencia y tolerancia a fallos (reintentos, circuit breaker) — táctica aplicada dentro de observabilidad/resiliencia.
+- Resiliencia y tolerancia a fallos (reintentos, circuit breaker)  táctica aplicada dentro de observabilidad/resiliencia.
 
-=== Tácticas y frameworks utilizados (lista explícita)
+=== Tácticas y frameworks utilizados
 - Autenticación: JWT + ASP.NET Core Identity
 - Autorización: políticas basadas en claims
 - Validación de entradas: FluentValidation
