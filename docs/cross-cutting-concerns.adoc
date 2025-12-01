@@ -6,7 +6,7 @@ Este documento describe la estrategia aplicada en el proyecto BlueLotusSystem pa
 * Seguridad (autenticación y autorización)
 * Registro y observabilidad (logs, trazas, métricas, salud del sistema)
 * Persistencia y consistencia de datos (base de datos, transacciones, caché)
-* Resiliencia y tolerancia a fallos (reintentos, circuit breaker)  táctica aplicada dentro de observabilidad/resiliencia.
+* Resiliencia y tolerancia a fallos (reintentos, circuit breaker) — táctica aplicada dentro de observabilidad/resiliencia.
 
 === Tácticas y frameworks utilizados
 * Autenticación: JWT + ASP.NET Core Identity
@@ -23,52 +23,60 @@ Este documento describe la estrategia aplicada en el proyecto BlueLotusSystem pa
 * Comunicación interna: Domain Events para invalidación de caché y notificaciones.
 
 === 1. Seguridad
-Estrategia (explicado sencillo)
-* Mantener la lógica de seguridad separada del código de negocio. Es decir, que verificar quién es el usuario y qué puede hacer no esté mezclado con cómo se crea una reserva.
-* Proteger por defecto todas las rutas de la API y permitir explícitamente sólo las que deben ser públicas.
 
-Tácticas usadas en el proyecto
-* Autenticación con tokens JWT y ASP.NET Core Identity para gestionar usuarios.
-* Políticas de autorización basadas en claims (ej. permisos como "Bookings.Create" o "Bookings.ManageAll").
-* Validación de entradas con FluentValidation para evitar que datos mal formados creen problemas de seguridad.
-* Almacenamiento seguro de credenciales externas (User Secrets en desarrollo o Azure Key Vault en producción) para cosas como las claves del pasarela de pago.
-* Middleware en Program.cs que centraliza la comprobación de tokens y políticas; los controllers usan esas políticas.
+==== Estrategia
+* Separar completamente la lógica de seguridad del código de negocio.
+* Proteger todas las rutas por defecto y permitir sólo las que deben ser públicas.
 
-Cómo se aplica aquí
-* Los controllers (p. ej. BookingsController) sólo reciben peticiones ya autenticadas/permitidas.
-* BookingService asume que las comprobaciones de permisos ya se han aplicado; los tests unitarios verifican casos críticos con mocks de autorización.
+==== Tácticas usadas en el proyecto
+* Autenticación con JWT + ASP.NET Core Identity.
+* Autorización mediante políticas basadas en claims (ej: `"Bookings.Create"`, `"Bookings.ManageAll"`).
+* Validación de entradas con FluentValidation.
+* Gestión segura de secretos con User Secrets/Azure Key Vault.
+* Middleware centralizado para autenticación y autorización.
+
+==== Cómo se aplica aquí
+* Controllers reciben únicamente peticiones autenticadas y autorizadas.
+* BookingService asume que los permisos ya fueron validados.
+* Tests unitarios cubren casos críticos de autorización mediante mocks.
 
 === 2. Registro y observabilidad
-Estrategia (explicado sencillo)
-* Tener visibilidad clara de qué pasa en el sistema: guardar logs legibles por máquinas, trazar llamadas que cruzan servicios y exponer métricas de salud para detectar problemas rápidamente.
-* Instrumentar puntos clave (entradas a la API, pagos, creación de reservas) sin mezclar esa instrumentación con la lógica principal.
 
-Tácticas usadas en el proyecto
-* Serilog para logs estructurados (se pueden enviar a archivo, consola o servidores de logs).
-* OpenTelemetry para trazar solicitudes que atraviesan la API y llamadas a servicios externos.
-* Exportación de métricas compatible con Prometheus y endpoint /healthz para comprobar dependencias (BD, Redis, pasarela de pago).
-* Polly para reintentos y circuit-breaker en llamadas externas, y registrar estos eventos para diagnóstico.
+==== Estrategia
+* Obtener visibilidad completa del sistema: logs, trazas, métricas y salud.
+* Instrumentar puntos clave sin mezclar instrumentación con lógica de negocio.
 
-Cómo se aplica aquí
-* Logger se inyecta en controllers y servicios (BookingService, NotificationService).
-* Llamadas a PaymentGatewayClient están envueltas en spans de OpenTelemetry y en políticas de Polly (reintentos y circuit-breaker).
-* El endpoint /healthz usa Health Checks para devolver si la base de datos o Redis están disponibles.
+==== Tácticas usadas en el proyecto
+* Logs estructurados con Serilog.
+* OpenTelemetry para trazas distribuidas.
+* Exportación de métricas para Prometheus.
+* Endpoint `/healthz` con Health Checks.
+* Polly para reintentos y circuit-breaker con registro de eventos.
+
+==== Cómo se aplica aquí
+* Logger inyectado en controllers y servicios.
+* PaymentGatewayClient envuelto en spans de OpenTelemetry y políticas de resiliencia.
+* `/healthz` reporta estado de BD, Redis y pasarela de pagos.
 
 === 3. Persistencia y consistencia de datos
-Estrategia:
-* Mantener los datos correctos cuando ocurren errores: asegurar que si un pago falla no quede una reserva confirmada.
-* Usar consistencia fuerte donde es crítico (pago + reserva) y consistencia eventual donde la latencia y escalabilidad lo requieren (consultas de disponibilidad).
 
-Tácticas usadas en el proyecto
-* Entity Framework Core (HotelContext) como acceso a la base de datos.
-* Patrón Repository + Unit of Work (IRoomRepository, IBookingRepository, IUnitOfWork) para centralizar commits y rollbacks.
-* Transacciones de base de datos para operaciones que afectan varios elementos (por ejemplo: registrar reserva y grabar pago).
-* Caching distribuido con Redis (IDistributedCache) para datos de lectura frecuente como disponibilidad de habitaciones.
-* Estrategia cache-aside con expiraciones cortas e invalidación vía Domain Events cuando hay cambios.
-* Pruebas de integración que aseguran que fallos en pago no dejan datos inconsistentes.
-Cómo se aplica aquí
-* BookingService coordina la operación completa: comienza la transacción, intenta cobrar con PaymentGatewayClient (con reintentos); si el cobro va bien hace Commit() del UnitOfWork; si falla hace Rollback() y, si procede, compensa.
-* AvailabilityQueryHandler usa Redis para responder rápido a consultas de disponibilidad; cuando se crea/borra una reserva se publica un evento interno que provoca la invalidación de la caché.
+==== Estrategia
+* Mantener datos correctos incluso ante fallos.
+* Usar consistencia fuerte para operaciones críticas (pago + reserva) y eventual para consultas rápidas.
+
+==== Tácticas usadas en el proyecto
+* Entity Framework Core como ORM.
+* Repository + Unit of Work para centralizar commits/rollbacks.
+* Transacciones para operaciones que afectan múltiples entidades.
+* Caché distribuido con Redis.
+* Cache-aside con expiración corta y invalidación mediante Domain Events.
+* Pruebas de integración garantizan consistencia cuando fallan pagos.
+
+==== Cómo se aplica aquí
+* BookingService inicia transacción → ejecuta cobro → si éxito hace `Commit()`, si falla → `Rollback()` y compensación.
+* AvailabilityQueryHandler usa Redis para responder consultas rápidas.
+* Eventos internos invalidan la caché cuando se crea o borra una reserva.
+
 
 === Conclusión
 La gestión adecuada de los concerns transversales de Seguridad, Registro y observabilidad, y Persistencia / Consistencia de datos es fundamental para el éxito del sistema BlueLotusSystem. Al aplicar estrategias y tácticas específicas para cada uno de estos aspectos, se garantiza que el sistema no solo cumple con los requisitos funcionales, sino que también ofrece una experiencia segura, confiable y eficiente para sus usuarios. La separación clara de responsabilidades y la integración de frameworks probados permiten mantener un código limpio y fácil de mantener, facilitando futuras ampliaciones y mejoras del sistema.
