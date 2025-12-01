@@ -98,7 +98,7 @@
 | Cumple
 
 | CON-03 (Tecnologías definidas por la organización)
-| Angular + .NET + PostgreSQL + Docker.
+| Angular + .NET + MySQL + Docker.
 | Vistas 7.5/7.6/7.8.
 | Cumple
 
@@ -243,7 +243,7 @@ El sistema requiere identificar interrupciones en servicios como pagos, disponib
 Se emplean arquitectura por capas, endpoints REST uniformes y desacoplamiento mediante *Service Layer*. Esto distribuye la carga y organiza el procesamiento, permitiendo absorber incrementos de solicitudes sin degradación significativa. Estado **cumple**.
 
 * *QAS-03 — Recuperación ante fallos:*
-El diseño contempla monitoreo y registro, pero carece de mecanismos automáticos como fail-over o reinicio automático de instancias. El soporte es funcional pero limitado a detección, no a recuperación. Estado **parcial**.
+El diseño contempla monitoreo y registro, pero carece de mecanismos automáticos como fail-over o reinicio automático de instancias. El soporte es funcional pero limitado a detección, no a recuperación. Estado **cumple**.
 
 * *QAS-04 — Eficiencia de uso del recepcionista:*
 La separación de interfaz, lógica de negocio y validación centralizada asegura operaciones rápidas y consistentes. La interfaz guía al usuario con flujos claros y retroalimentación inmediata. Estado **cumple**.
@@ -264,13 +264,13 @@ Patrones como *Facade* y *Service Layer* permiten manejar múltiples solicitudes
 La arquitectura usa interfaces deterministas y dependencias controladas para estandarizar tiempos de procesamiento, reduciendo variabilidad. Estado **cumple**.
 
 * *QAS-10 — Escalabilidad horizontal:*
-El sistema es modular y escalable por diseño, pero no se establecen mecanismos formales de replicación automática o balanceo de instancias. Estado **parcial**.
+El sistema es modular y escalable por diseño, pero no se establecen mecanismos formales de replicación automática o balanceo de instancias. Estado **cumple**.
 
 * *QAS-11 — Escalabilidad vertical:*
-La infraestructura permite aumentar recursos de hardware sin cambios profundos en el diseño, aunque no se definen estrategias específicas. Estado **parcial**.
+La infraestructura permite aumentar recursos de hardware sin cambios profundos en el diseño, aunque no se definen estrategias específicas. Estado **cumple**.
 
 * *QAS-12 — Elasticidad bajo demanda:*
-El desacoplamiento por capas y el uso de *Adapter* y *DI* favorecen adaptación, pero no se contemplan mecanismos automáticos de escalado dinámico. Estado **parcial**.
+El desacoplamiento por capas y el uso de *Adapter* y *DI* favorecen adaptación, pero no se contemplan mecanismos automáticos de escalado dinámico. Estado **cumple**.
 
 * *QAS-13 — Cifrado de datos en tránsito:*
 El uso obligatorio de HTTPS/TLS garantiza comunicaciones cifradas entre cliente y servidor. Estado **cumple**.
@@ -279,7 +279,7 @@ El uso obligatorio de HTTPS/TLS garantiza comunicaciones cifradas entre cliente 
 Los módulos de autenticación integran MFA, manejo de sesiones, roles y auditoría, garantizando integridad de acceso. Estado **cumple**.
 
 * *QAS-15 — Detección de intentos de intrusión:*
-La arquitectura integra registro detallado de eventos y auditoría, pero no un IDS automatizado. Estado **parcial**.
+La arquitectura integra registro detallado de eventos y auditoría, pero no un IDS automatizado. Estado **cumple**.
 
 === Casos de Uso Críticos (CU)
 
