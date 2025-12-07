@@ -1,8 +1,8 @@
 == Portada del documento
 :author: Equipo 01
 
-:revnumber: Hito 5
-:revdate: 2025-11-30
+:revnumber: Hito 6
+:revdate: 2025-12-07
 :toc: left
 :doctype: book
 :toclevels: 2
@@ -18,7 +18,7 @@
 * **Programa Educativo**: Ingeniería de Software
 * **Experiencia Educativa**: Diseño de Software
 * **Profesor**: Dr. Jorge Octavio Ocharán Hernández
-* **Fecha (quinto hito)**: 30 de noviembre de 2025
+* **Fecha (sexto hito)**: 07 de diciembre de 2025
 * **Repositorio**: https://github.com/SweetBlue16/BlueLotusSystem
 
 === Control de versiones
@@ -32,4 +32,5 @@
 | 0.4 | 02/11/2025 | Todos | Hito 3 completado con secciones de vista de implementación.
 | 0.5 | 16/11/2025 | Todos | Hito 4 completado con refinamiento de vista de implementación y matriz de trazabilidad.
 | 0.6 | 30/11/2025 | Todos | Hito 5 completado con vista de procesos, vista de despliegue y conclusiones.
+| 1.0 | 07/12/2025 | Todos | Hito 6 completado con revisión final, matriz de trazabilidad finalizada y ajustes en documentación.
 |===

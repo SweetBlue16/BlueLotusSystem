@@ -1,0 +1,34 @@
+== Conclusiones y Riesgos
+
+=== Conclusiones
+
+Al finalizar el diseño de la arquitectura del **BlueLotus System**, como equipo hemos logrado transformar un conjunto de necesidades de negocio y problemas operativos en una solución técnica estructurada y fundamentada. A lo largo de este curso, la aplicación de la metodología de **Diseño Guiado por Atributos (ADD)** fue fundamental. Nos dimos cuenta de que diseñar software no se trata solo de "hacer que funcione" (funcionalidad), sino de "hacer que funcione bien" bajo condiciones específicas de estrés, seguridad y cambio (requisitos no funcionales).
+
+Una de las lecciones más importantes fue entender el juego de los **trade-offs**. Al principio, queríamos que el sistema fuera perfecto en todo: rapidísimo, súper seguro y fácil de modificar. Sin embargo, aprendimos que cada decisión arquitectónica conlleva un sacrificio. Por ejemplo, al elegir una arquitectura de servicios contenerizados con Kubernetes para ganar **Escalabilidad** y **Disponibilidad**, tuvimos que aceptar un aumento considerable en la complejidad de la infraestructura y el despliegue. Del mismo modo, al implementar patrones como _Cache-Aside_ para mejorar el **Rendimiento**, aceptamos el riesgo de tener consistencia eventual en los datos de lectura.
+
+La división del diseño en **Vistas (4+1)** nos permitió atacar el problema desde diferentes ángulos sin abrumarnos:
+
+* **Vista Lógica:** Nos ayudó a organizar el código en capas y separar responsabilidades, asegurando que la lógica de negocio no se mezclara con la interfaz.
+* **Vista de Implementación:** Nos obligó a definir contratos claros entre componentes, lo que permitirá que trabajemos en paralelo sin romper el código de los demás.
+* **Vista de Proceso:** Fue clave para entender "la vida" de una petición, obligándonos a pensar en problemas difíciles como la concurrencia al reservar una habitación y los fallos al cobrar.
+* **Vista de Despliegue:** Nos aterrizó en la realidad física, haciéndonos planear cómo se vería esto en un entorno de producción real.
+
+En conclusión, el diseño del BlueLotus System es una arquitectura robusta, modular y moderna, preparada para soportar el crecimiento de la cadena hotelera, pero sobre todo, es una arquitectura **documentada y justificada**, donde cada pieza existe por una razón específica derivada de los drivers del negocio.
+
+=== Riesgos Identificados
+
+A pesar de haber aplicado patrones para mitigar problemas, reconocemos que ninguna arquitectura está exenta de riesgos. Identificamos los siguientes puntos críticos que el equipo de desarrollo y operaciones deberá vigilar durante la construcción y mantenimiento del sistema:
+
+* **Complejidad Operativa (Curva de Aprendizaje):** +
+La decisión de usar **Kubernetes** y una arquitectura distribuida aporta gran elasticidad, pero introduce una complejidad técnica alta. Existe el riesgo de que el equipo de desarrollo (nosotros), al no ser expertos en DevOps, cometa errores en la configuración del clúster, las redes virtuales o los balanceadores de carga, lo que podría causar caídas del servicio que la arquitectura teóricamente debería evitar.
+
+* **Consistencia de Datos en Caché:** +
+Para cumplir con los 300 QPS y la latencia de 500ms, dependemos fuertemente de **Redis**. Existe el riesgo de **"Stale Data"** (datos viejos), donde un usuario podría ver una habitación como "disponible" en la búsqueda (porque viene de la caché), pero al intentar reservarla (que va a la BD maestra), ya esté ocupada. Aunque diseñamos validaciones para esto, es un punto de fricción que podría frustrar a algunos usuarios.
+
+* **Dependencia de Servicios Externos (Pasarela de Pagos):** +
+Nuestro sistema delega el cobro a un tercero (Stripe/PayPal). Aunque implementamos el patrón **Circuit Breaker**, si el proveedor externo sufre una caída total y prolongada, nuestra capacidad de generar ingresos se detiene por completo. La arquitectura protege al sistema de "colgarse", pero no puede solucionar la falta de servicio del proveedor.
+
+* **Integridad en Transacciones Distribuidas:** +
+Aunque usamos transacciones ACID locales y mecanismos de compensación (Rollback manual en código), la orquestación de operaciones que tocan inventario, pagos y auditoría es compleja. Existe el riesgo de que, ante un fallo catastrófico del servidor justo en medio de una operación (por ejemplo, después de cobrar pero antes de confirmar), el sistema quede en un estado inconsistente que requiera intervención manual o procesos de reconciliación nocturnos.
+
+Reconocer estos riesgos desde la etapa de diseño nos permite planificar mejor las pruebas y estar preparados para mitigar estos escenarios cuando el sistema pase a producción.
