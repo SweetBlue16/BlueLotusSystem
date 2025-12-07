@@ -204,6 +204,36 @@
 | Servicio Cancelación, Vista 7.5.3, Repositorios Reservación.
 | Cumple
 
+| CU-04 (Consultar estado de reservación)
+| Consultas de lectura optimizadas + DTOs de proyección.
+| Servicio Reservaciones, Vista Lógica 7.5.
+| Cumple
+
+| CU-05 (Seleccionar servicios adicionales en reservación)
+| Patrón Decorator o agregación en entidad Reservación + Actualización transaccional.
+| Servicio Reservaciones, Servicio Catálogo, Vista 7.5.
+| Cumple
+
+| CU-06 (Consultar historial de reservaciones)
+| Filtrado en repositorio + Paginación en API.
+| Servicio Historial/Reservas, Repositorio Reservas.
+| Cumple
+
+| CU-07 (Gestionar cuenta de usuario)
+| CRUD estándar + Validación de identidad (Identity Management).
+| Servicio Usuarios, Vista de Implementación 7.6.
+| Cumple
+
+| CU-08 (Guardar métodos de pago)
+| Tokenización segura (PCI-DSS compliance) + Integración externa.
+| Servicio Pagos, Integración Pasarela.
+| Cumple
+
+| CU-09 (Dejar reseña)
+| Asociación de entidad Reseña con Reservación + Validación de estado "Finalizada".
+| Servicio Reseñas, Repositorio Reseñas.
+| Cumple
+
 | CU-10 (Check-in)
 | Control de estados + validación + reglas de negocio.
 | Servicio Recepción, Estados de Reservación, Vista 7.5.4.
@@ -212,6 +242,156 @@
 | CU-11 (Check-out)
 | Cálculo de consumos + validación + cierre de reservación.
 | Servicio Check-out, Servicio Consumos, Vista 7.6.
+| Cumple
+
+| CU-12 (Realizar reservación en recepción)
+| Reutilización de lógica de negocio (Service Layer) con permisos de Recepcionista.
+| Servicio Reservaciones, Servicio Disponibilidad.
+| Cumple
+
+| CU-13 (Cancelar reservación en recepción)
+| Extensión de lógica de cancelación + Auditoría de usuario interno.
+| Servicio Cancelación, Módulo Auditoría.
+| Cumple
+
+| CU-14 (Cambiar a huésped de habitación)
+| Transacción atómica (Liberar actual + Ocupar nueva) + Ajuste de cargos.
+| Servicio Estancias, Servicio Disponibilidad.
+| Cumple
+
+| CU-15 (Registrar consumos y servicios)
+| Asociación de consumos a la cuenta de la habitación (Folio).
+| Servicio Consumos, Entidad Estancia.
+| Cumple
+
+| CU-16 (Consultar estado de reservación en recepción)
+| Visualización detallada para rol administrativo + Consultas Join.
+| Servicio Recepción, Vista de UI Recepcionista.
+| Cumple
+
+| CU-17 (Extender estancia del huésped)
+| Validación de disponibilidad futura + Recálculo de tarifa.
+| Servicio Estancias, Motor de Precios.
+| Cumple
+
+| CU-18 (Consultar disponibilidad local)
+| Misma lógica de CU-01 pero sin caché agresivo (datos en tiempo real).
+| Servicio Disponibilidad, Acceso directo a BD.
+| Cumple
+
+| CU-19 (Reportar incidencia)
+| Registro de tickets + Notificación asíncrona a mantenimiento.
+| Gestor de Incidentes, Servicio Notificaciones.
+| Cumple
+
+| CU-20 (Añadir hotel al catálogo)
+| CRUD Administrativo + Validación de integridad referencial.
+| Gestor de Catálogo, Repositorio Hoteles.
+| Cumple
+
+| CU-21 (Editar hotel)
+| Actualización de entidad + Invalidación de caché de disponibilidad.
+| Gestor de Catálogo, Servicio Caché.
+| Cumple
+
+| CU-22 (Crear tipo de habitación)
+| Definición de metadatos y capacidades en catálogo.
+| Gestor de Catálogo, Entidad TipoHabitación.
+| Cumple
+
+| CU-23 (Actualizar tipo de habitación)
+| Modificación de atributos + Control de impacto en reservas futuras.
+| Gestor de Catálogo.
+| Cumple
+
+| CU-24 (Registrar habitación)
+| Alta de inventario físico + Asignación de estado inicial.
+| Gestor de Inventario, Repositorio Habitaciones.
+| Cumple
+
+| CU-25 (Modificar habitación)
+| Gestión de estados operativos (Mantenimiento, Limpieza).
+| Gestor de Inventario.
+| Cumple
+
+| CU-26 (Administrar precios diarios)
+| Estrategia de precios (Revenue Management) + Actualización masiva.
+| Servicio Tarifas, Base de Datos.
+| Cumple
+
+| CU-27 (Agregar consumo al catálogo)
+| Gestión de inventario de productos/servicios vendibles.
+| Gestor de Catálogo.
+| Cumple
+
+| CU-28 (Agregar servicio al catálogo)
+| Definición de servicios intangibles y costos base.
+| Gestor de Catálogo.
+| Cumple
+
+| CU-29 (Editar consumo)
+| Actualización de precios y descripciones en catálogo.
+| Gestor de Catálogo.
+| Cumple
+
+| CU-30 (Editar servicio)
+| Actualización de parámetros de servicio.
+| Gestor de Catálogo.
+| Cumple
+
+| CU-31 (Generar reportes financieros)
+| Agregación de datos (Data Warehouse o consultas pesadas) + Exportación.
+| Servicio Reportes, Vista Proceso.
+| Cumple
+
+| CU-32 (Auditar cancelaciones y reembolsos)
+| Consulta de logs de auditoría filtrados por tipo de evento.
+| Módulo Auditoría, Vista Lógica 7.5.
+| Cumple
+
+| CU-33 (Consultar historial de reservaciones)
+| Vista global de reservas sin restricciones de usuario.
+| Servicio Reportes, Repositorio Reservas.
+| Cumple
+
+| CU-34 (Ver logs de acceso al sistema)
+| Consulta a repositorio de logs de seguridad/acceso.
+| Módulo Auditoría, Servicio Seguridad.
+| Cumple
+
+| CU-35 (Generar reportes de cumplimiento)
+| Verificación de reglas de negocio contra registros históricos.
+| Servicio Reportes, Motor de Reglas.
+| Cumple
+
+| CU-36 (Crear perfil de administrador)
+| Alta de usuario con rol privilegiado + Auditoría estricta.
+| Servicio Usuarios, RBAC.
+| Cumple
+
+| CU-37 (Editar perfil de administrador)
+| Gestión de credenciales y permisos.
+| Servicio Usuarios, Módulo Auth.
+| Cumple
+
+| CU-38 (Eliminar perfil de administrador)
+| Baja lógica (Soft Delete) para mantener integridad referencial.
+| Servicio Usuarios.
+| Cumple
+
+| CU-39 (Crear perfil de recepcionista)
+| Alta de usuario operativo con restricciones de acceso.
+| Servicio Usuarios, RBAC.
+| Cumple
+
+| CU-40 (Editar perfil de recepcionista)
+| Modificación de datos operativos.
+| Servicio Usuarios.
+| Cumple
+
+| CU-41 (Eliminar perfil de recepcionista)
+| Baja lógica de usuario operativo.
+| Servicio Usuarios.
 | Cumple
 
 |===
