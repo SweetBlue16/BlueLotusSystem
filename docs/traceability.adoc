@@ -112,80 +112,130 @@
 | Vista Lógica 7.5.1.
 | Cumple
 
+| CON-06 (Integración con pasarela de pagos externa)
+| Uso de patrón Adapter y API segura para aislar proveedor.
+| Servicio de Pagos, Componente PasarelaDePagos.
+| Cumple
+
+| CON-07 (Arquitectura Cliente-Servidor)
+| Separación física y lógica de UI y Backend.
+| Vista Lógica 7.5, Vista de Despliegue 7.8.
+| Cumple
+
+| CON-08 (Modelo en capas)
+| Organización estricta: Presentación -> Negocio -> Datos.
+| Vista Lógica 7.5, Estructura de paquetes Backend.
+| Cumple
+
+| CON-09 (Comunicación segura)
+| Enforce de HTTPS y TLS 1.3 en Gateway y Nginx.
+| Vista de Despliegue 7.8 (Balanceador de Carga).
+| Cumple
+
+| CON-10 (Registro obligatorio de transacciones)
+| Logging transaccional síncrono en base de datos.
+| Módulo de Auditoría, Entidad AuditoriaInfo.
+| Cumple
+
+| CON-11 (Multiplataforma web y móvil)
+| API RESTful agnóstica consumida por SPA y Apps.
+| Capa de Cliente (Vista 7.5), Controladores REST.
+| Cumple
+
+| CON-12 (Desacoplamiento entre cliente y servidor)
+| API Contract First, DTOs para transferencia de datos.
+| Interfaces de Servicio, Controladores REST.
+| Cumple
+
+| CON-13 (Rendimiento mínimo garantizado)
+| Optimización de queries, índices y caché distribuido.
+| Vista de Implementación (Persistencia), Redis.
+| Cumple
+
+| CON-14 (Política de recuperación ante desastres)
+| Replicación de BD Maestro-Esclavo y Backups programados.
+| Vista de Despliegue 7.8 (Nodos de BD).
+| Cumple
+
+| CON-15 (Despliegue modular y escalable)
+| Contenedores independientes para cada capa/servicio.
+| Dockerfile por servicio, docker-compose/K8s.
+| Cumple
+
 
 | CRN-01 (Control de acceso)
 | MFA + RBAC + autenticación centralizada.
 | Servicio Autenticación, Vista Lógica 7.5.
 | Cumple
 
-| CRN-02 (Inventario en tiempo real)
-| Servicio de Disponibilidad + caching + sincronización.
-| Vista Lógica 7.5.2.
+| CRN-02 (Experiencia fluida del usuario)
+| SPA con gestión de estado local y carga asíncrona.
+| Capa de Cliente (App Web/Móvil), React/Angular.
 | Cumple
 
-| CRN-03 (Integridad de Reservaciones)
-| Transacciones ACID + ORM + reglas de negocio.
-| Vista de Implementación 7.6.2.
+| CRN-03 (Seguridad de datos y autenticación)
+| Centralización en Identity Provider + cifrado en reposo.
+| Módulo de Autenticación, Base de Datos Segura.
 | Cumple
 
-| CRN-04 (Políticas de Cancelación)
-| Módulo de reglas + Service Layer.
-| Servicio Cancelación.
+| CRN-04 (Escalabilidad progresiva)
+| Diseño stateless en servicios para escalado horizontal.
+| Vista de Despliegue (Cluster K8s/Docker).
 | Cumple
 
-| CRN-05 (Flujos de Pago)
-| Patrón Adapter + integridad transaccional.
-| Servicio de Pagos.
+| CRN-05 (Mantenibilidad por capas)
+| Inyección de Dependencias para desacoplar capas.
+| Configuración de DI, Interfaces de Servicios.
 | Cumple
 
-| CRN-06 (Estados de Habitación)
-| Modelo de dominio con transición válida de estados.
-| Vista Lógica 7.5, Entidades Habitación.
+| CRN-06 (Eficiencia en la comunicación cliente-servidor)
+| Payloads JSON compactos, compresión GZIP, paginación.
+| API Gateway, DTOs optimizados.
 | Cumple
 
-| CRN-07 (Reportes)
-| Servicios dedicados + acceso controlado + vistas de auditoría.
-| Servicio de Reportes, Vista de Proceso 7.7.
+| CRN-07 (Disponibilidad continua)
+| Health Checks, probes de Kubernetes y reinicio automático.
+| Configuración de Despliegue, Endpoint /healthz.
 | Cumple
 
-| CRN-08 (Operación en Recepción)
-| Servicios sincronizados con disponibilidad y reservación.
-| CU-10 y CU-11, Vista Lógica 7.5.
+| CRN-08 (Observabilidad y monitoreo)
+| Logs estructurados (Serilog), Métricas (Prometheus).
+| Stack de Observabilidad, Middleware de Logging.
 | Cumple
 
-| CRN-09 (Gestión de Catálogos)
-| Servicios CRUD desacoplados.
-| Vista Implementación 7.6.
+| CRN-09 (Integración con servicios externos)
+| Facades y Adapters para encapsular terceros.
+| Componentes de Integración (Email, Pagos).
 | Cumple
 
-| CRN-10 (Flujos críticos de auditoría)
-| Bitácoras centralizadas + eventos trazables.
-| Vista de Proceso 7.7.
+| CRN-10 (Consistencia e integridad de datos)
+| Transacciones ACID para operaciones críticas.
+| Gestor de Reservas (Transaction Scope).
 | Cumple
 
-| CRN-11 (Cálculo de precios)
-| Servicios de tarifas + reglas de temporada.
-| Servicio de Tarifas 7.5.4.
+| CRN-11 (Recuperación ante fallos)
+| Circuit Breaker (Polly) y Retries automáticos.
+| Clientes HTTP resilientes, Vista Proceso 8.3.
 | Cumple
 
-| CRN-12 (Persistencia segura)
-| ORM + cifrado + backups.
-| Vista de Implementación 7.6.
+| CRN-12 (Despliegue controlado)
+| Migraciones de BD versionadas y Pipelines CI/CD.
+| Scripts de Migración, Configuración de Pipeline.
 | Cumple
 
-| CRN-13 (Historial de reservaciones)
-| Servicio de Historial + consultas optimizadas.
-| Servicios de Auditoría.
+| CRN-13 (Separación de responsabilidades)
+| Definición estricta de límites de contexto (Bounded Contexts).
+| Estructura de Solución, Namespaces.
 | Cumple
 
-| CRN-14 (Notificaciones al usuario)
-| Servicios asíncronos + API de comunicación.
-| Vista Implementación 7.6.3.
+| CRN-14 (Compatibilidad con dispositivos móviles)
+| Diseño Responsive y API única para todos los clientes.
+| Frontend CSS/Framework, API REST unificada.
 | Cumple
 
-| CRN-15 (Fiabilidad transaccional)
-| Uso de Unit of Work + ACID.
-| Vista Implementación 7.6.2.
+| CRN-15 (Evolución tecnológica)
+| Uso de interfaces estándar para facilitar reemplazo.
+| Definición de Interfaces (Contratos).
 | Cumple
 
 
